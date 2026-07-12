@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Logo from '../assets/logo.png';
+import Inaripo from '../components/Inaripo.astro';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -125,6 +126,39 @@ const featured = posts[0];
 				color: rgb(var(--gray-dark));
 			}
 
+			/* ---- Inaripo greeter ---- */
+			.greeter {
+				display: flex;
+				align-items: center;
+				gap: 1.5em;
+				background: var(--accent-tint);
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 20px;
+				padding: 1.75em 2em;
+				margin: 0 0 3.5em;
+			}
+			.greeter-text {
+				flex: 1;
+			}
+			.greeter-text .name {
+				font-family: var(--font-heading), serif;
+				font-weight: 700;
+				color: var(--accent-dark);
+				margin: 0 0 0.2em;
+				font-size: 1.15em;
+			}
+			.greeter-text .name .jp {
+				font-weight: 400;
+				font-size: 0.72em;
+				color: rgb(var(--gray));
+				margin-left: 0.3em;
+			}
+			.greeter-text p {
+				margin: 0;
+				color: rgb(var(--gray-dark));
+				font-size: 1.02em;
+			}
+
 			/* ---- Featured ---- */
 			.section-label {
 				text-align: center;
@@ -192,6 +226,12 @@ const featured = posts[0];
 				.featured-body {
 					padding: 1.5em;
 				}
+				.greeter {
+					flex-direction: column;
+					text-align: center;
+					gap: 1em;
+					padding: 1.5em;
+				}
 			}
 		</style>
 	</head>
@@ -235,6 +275,17 @@ const featured = posts[0];
 						<span class="emoji">🎯</span>
 						<h3>Straight to the point</h3>
 						<p>Short, scannable rankings. Skip the wall of text, grab the winner.</p>
+					</div>
+				</div>
+
+				<div class="greeter">
+					<Inaripo expression="yum" size={104} />
+					<div class="greeter-text">
+						<p class="name">Hi, I'm Inaripo! <span class="jp">いなりぽ</span></p>
+						<p>
+							I'm a little fox who eats his way across Japan so you never waste a bite — or a souvenir
+							budget. Follow my nose and I'll point you to the good stuff. 🦊
+						</p>
 					</div>
 				</div>
 			</section>

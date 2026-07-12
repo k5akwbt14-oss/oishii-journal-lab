@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets';
+import happy from '../assets/inaripo/inaripo-happy.png';
+import wink from '../assets/inaripo/inaripo-wink.png';
+import surprise from '../assets/inaripo/inaripo-surprise.png';
+import angry from '../assets/inaripo/inaripo-angry.png';
+import yum from '../assets/inaripo/inaripo-yum.png';
+
+const faces = { happy, wink, surprise, angry, yum };
+
+interface Props {
+	expression?: keyof typeof faces;
+	size?: number;
+	alt?: string;
+	class?: string;
+}
+
+const {
+	expression = 'happy',
+	size = 88,
+	alt = 'Inaripo, the hungry little fox',
+	class: className = '',
+} = Astro.props;
+
+const src = faces[expression] ?? faces.happy;
+---
+
+<span class={`inaripo-avatar ${className}`} style={`width:${size}px;height:${size}px;`}>
+	<Image src={src} alt={alt} width={size * 2} height={size * 2} />
+</span>
+
+<style>
+	.inaripo-avatar {
+		display: inline-block;
+		border-radius: 50%;
+		overflow: hidden;
+		background: #fff;
+		border: 3px solid var(--accent-tint);
+		box-shadow: 0 3px 10px rgba(var(--gray), 30%);
+		flex: none;
+	}
+	.inaripo-avatar :global(img) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 0;
+		margin: 0;
+	}
+</style>

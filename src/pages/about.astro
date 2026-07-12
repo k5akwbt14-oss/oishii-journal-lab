@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE } from '../consts';
 import Logo from '../assets/logo.png';
+import InaripoPortrait from '../assets/inaripo/inaripo-portrait.png';
 
 const description =
 	'OISHII JOURNAL LAB. is a no-fail guide to Japan’s best snacks and souvenir sweets, tasted and ranked for curious American snackers.';
@@ -124,6 +125,65 @@ const description =
 				color: rgb(var(--black));
 			}
 
+			/* ---- Meet Inaripo ---- */
+			.mascot {
+				display: grid;
+				grid-template-columns: 300px 1fr;
+				gap: 2em;
+				align-items: center;
+				background: #fff;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 20px;
+				overflow: hidden;
+				box-shadow: var(--box-shadow);
+				margin: 2.5em 0;
+			}
+			.mascot-photo {
+				position: relative;
+				align-self: stretch;
+				min-height: 260px;
+				background: linear-gradient(160deg, var(--accent-tint), #fff);
+			}
+			.mascot-photo :global(img) {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				object-position: 60% 50%;
+				border-radius: 0;
+				margin: 0;
+			}
+			.mascot-body {
+				padding: 2em 2em 2em 0;
+			}
+			.mascot-body .kicker {
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				font-size: 0.78em;
+				font-weight: 700;
+				color: var(--accent);
+				margin-bottom: 0.3em;
+			}
+			.mascot-body h2 {
+				font-size: 1.7em;
+				margin-bottom: 0.5em;
+			}
+			.mascot-body .name-jp {
+				font-size: 0.6em;
+				color: rgb(var(--gray));
+				font-weight: 400;
+			}
+			.mascot-body p {
+				font-size: 1em;
+			}
+			.mascot-body .jp {
+				color: rgb(var(--gray-dark));
+				font-size: 0.95em;
+				border-top: 1px dashed rgb(var(--gray-light));
+				padding-top: 1em;
+				margin-top: 1em;
+			}
+
 			/* ---- CTA ---- */
 			.cta-block {
 				text-align: center;
@@ -171,6 +231,18 @@ const description =
 				}
 				.promise {
 					padding: 1.5em 1.5em;
+				}
+				.mascot {
+					grid-template-columns: 1fr;
+				}
+				.mascot-photo {
+					min-height: 220px;
+				}
+				.mascot-photo :global(img) {
+					object-position: 60% 35%;
+				}
+				.mascot-body {
+					padding: 0 1.5em 1.75em;
 				}
 			}
 		</style>
@@ -223,6 +295,30 @@ const description =
 						<li><b>Real-world details.</b> Where to buy it, what it costs, and how well it travels.</li>
 						<li><b>No fluff.</b> Short, honest write-ups you can skim on the way to the register.</li>
 					</ul>
+				</div>
+			</section>
+
+			<section class="wrap">
+				<div class="mascot">
+					<div class="mascot-photo">
+						<Image src={InaripoPortrait} alt="Inaripo, a plump little fox, happily eating a rice ball" width={900} height={780} />
+					</div>
+					<div class="mascot-body">
+						<p class="kicker">Meet your guide</p>
+						<h2>Inaripo <span class="name-jp">· いなりぽ</span></h2>
+						<p>
+							Inaripo is a little fox with a <b>very</b> big appetite. He's named after <i>inari</i> — the
+							fox of Japan's rice shrines — and after <i>inarizushi</i>, the sweet tofu-wrapped sushi he
+							can never say no to. He's nibbled his way across Japan one snack at a time, so if a treat
+							makes his fluffy tail wag, it earns a place on the list. If it doesn't, he'll tell you
+							straight — usually with his mouth still full.
+						</p>
+						<p class="jp">
+							いなりぽは、食べることが大好きな食いしん坊の子ぎつね。名前の由来は、お稲荷さん（狐）と、大好物の
+							いなり寿司から。日本中のおやつを食べ歩くのが生きがいで、ふさふさのしっぽがふりふり揺れたら
+							「本気でおいしい」の合図です。イマイチなときは……口いっぱいでも正直にお伝えします。
+						</p>
+					</div>
 				</div>
 			</section>
 

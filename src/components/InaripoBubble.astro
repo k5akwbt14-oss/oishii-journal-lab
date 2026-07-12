@@ -1,0 +1,81 @@
+---
+import Inaripo from './Inaripo.astro';
+
+interface Props {
+	expression?: 'happy' | 'wink' | 'surprise' | 'angry' | 'yum';
+	name?: string;
+	flip?: boolean;
+}
+
+const { expression = 'happy', name = 'Inaripo', flip = false } = Astro.props;
+---
+
+<aside class:list={['inaripo-bubble', { flip }]}>
+	<Inaripo expression={expression} size={92} />
+	<div class="bubble">
+		<p class="who">{name} <span class="jp">いなりぽ</span></p>
+		<div class="say"><slot /></div>
+	</div>
+</aside>
+
+<style>
+	.inaripo-bubble {
+		display: flex;
+		align-items: flex-start;
+		gap: 1em;
+		margin: 2em 0;
+	}
+	.inaripo-bubble.flip {
+		flex-direction: row-reverse;
+	}
+	.bubble {
+		position: relative;
+		flex: 1;
+		background: var(--accent-tint);
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 16px;
+		padding: 1em 1.25em;
+	}
+	/* speech-bubble tail pointing at the avatar */
+	.bubble::before {
+		content: '';
+		position: absolute;
+		top: 26px;
+		left: -9px;
+		width: 16px;
+		height: 16px;
+		background: var(--accent-tint);
+		border-left: 1px solid rgb(var(--gray-light));
+		border-bottom: 1px solid rgb(var(--gray-light));
+		transform: rotate(45deg);
+	}
+	.inaripo-bubble.flip .bubble::before {
+		left: auto;
+		right: -9px;
+		transform: rotate(225deg);
+	}
+	.who {
+		margin: 0 0 0.15em 0;
+		font-family: var(--font-heading), serif;
+		font-weight: 700;
+		color: var(--accent-dark);
+		font-size: 1em;
+	}
+	.who .jp {
+		font-weight: 400;
+		font-size: 0.82em;
+		color: rgb(var(--gray));
+		margin-left: 0.25em;
+	}
+	.say :global(p) {
+		margin: 0;
+	}
+	.say :global(p + p) {
+		margin-top: 0.6em;
+	}
+	@media (max-width: 720px) {
+		.inaripo-bubble {
+			gap: 0.7em;
+		}
+	}
+</style>
