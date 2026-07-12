@@ -1,0 +1,72 @@
+---
+import { SITE_TITLE } from '../consts';
+const today = new Date();
+---
+
+<footer>
+	<p class="brand-line">{SITE_TITLE}</p>
+	<p class="tagline">Japanese snack exploration — tasted, ranked, and worth the suitcase space.</p>
+	<div class="social-links">
+		<!-- TODO: swap the "#" placeholders for your real Instagram / Pinterest URLs -->
+		<a href="#" aria-label="Follow us on Instagram">
+			<span class="sr-only">Follow us on Instagram</span>
+			<svg viewBox="0 0 24 24" aria-hidden="true" width="28" height="28" fill="none"
+				><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"
+				></rect><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"></circle><circle
+					cx="17.5"
+					cy="6.5"
+					r="1.2"
+					fill="currentColor"></circle></svg
+			>
+		</a>
+		<a href="#" aria-label="Follow us on Pinterest">
+			<span class="sr-only">Follow us on Pinterest</span>
+			<svg viewBox="0 0 24 24" aria-hidden="true" width="28" height="28" fill="none"
+				><path
+					d="M12 2.5a9.5 9.5 0 0 0-3.5 18.32c-.08-.77-.15-1.96.03-2.8.16-.75 1.06-4.8 1.06-4.8s-.27-.54-.27-1.34c0-1.26.73-2.2 1.64-2.2.77 0 1.15.58 1.15 1.28 0 .78-.5 1.94-.75 3.02-.22.9.45 1.64 1.34 1.64 1.6 0 2.84-1.7 2.84-4.14 0-2.17-1.56-3.68-3.78-3.68-2.57 0-4.08 1.93-4.08 3.92 0 .78.3 1.61.67 2.06a.27.27 0 0 1 .06.26c-.07.28-.22.9-.25 1.02-.04.17-.13.2-.3.12-1.13-.52-1.83-2.17-1.83-3.5 0-2.85 2.07-5.47 5.97-5.47 3.13 0 5.57 2.23 5.57 5.22 0 3.11-1.96 5.62-4.69 5.62-.91 0-1.77-.47-2.07-1.03l-.56 2.15c-.2.78-.75 1.76-1.12 2.36A9.5 9.5 0 1 0 12 2.5Z"
+					fill="currentColor"></path></svg
+			>
+		</a>
+	</div>
+	<p class="disclosure">
+		As an Amazon Associate we earn from qualifying purchases. &copy; {today.getFullYear()}
+		{SITE_TITLE} All rights reserved.
+	</p>
+</footer>
+<style>
+	footer {
+		padding: 2.5em 1em 5em 1em;
+		background: linear-gradient(to top, var(--accent-tint), var(--cream));
+		color: rgb(var(--gray));
+		text-align: center;
+	}
+	.brand-line {
+		font-family: var(--font-heading), serif;
+		font-weight: 700;
+		font-size: 1.25em;
+		color: rgb(var(--black));
+		margin: 0 0 0.25em 0;
+	}
+	.tagline {
+		margin: 0 0 1em 0;
+		font-style: italic;
+	}
+	.social-links {
+		display: flex;
+		justify-content: center;
+		gap: 1em;
+		margin-bottom: 1.25em;
+	}
+	.social-links a {
+		text-decoration: none;
+		color: rgb(var(--gray));
+	}
+	.social-links a:hover {
+		color: var(--accent);
+	}
+	.disclosure {
+		font-size: 0.8em;
+		margin: 0;
+		color: rgb(var(--gray));
+	}
+</style>

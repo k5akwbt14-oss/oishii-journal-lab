@@ -1,0 +1,241 @@
+---
+import { Image } from 'astro:assets';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+import Logo from '../assets/logo.png';
+
+const description =
+	'OISHII JOURNAL LAB. is a no-fail guide to Japan’s best snacks and souvenir sweets, tasted and ranked for curious American snackers.';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`About · ${SITE_TITLE}`} description={description} />
+		<style>
+			main {
+				width: 100%;
+				max-width: 100%;
+				padding: 0;
+			}
+			.wrap {
+				width: 760px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+			}
+
+			/* ---- Hero ---- */
+			.hero {
+				text-align: center;
+				padding: 3.5em 0 1em;
+			}
+			.hero-logo {
+				width: 160px;
+				height: 160px;
+				margin: 0 auto 1.25em;
+				border-radius: 50%;
+				overflow: hidden;
+				box-shadow: var(--box-shadow);
+			}
+			.hero-logo :global(img) {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transform: scale(1.05);
+				border-radius: 0;
+				margin: 0;
+			}
+			.hero h1 {
+				font-size: 3em;
+				line-height: 1.05;
+				margin-bottom: 0.35em;
+			}
+			.hero .lede {
+				font-size: 1.25em;
+				color: rgb(var(--gray-dark));
+				max-width: 30ch;
+				margin: 0 auto;
+			}
+			.hero .pop {
+				color: var(--accent);
+			}
+
+			/* ---- Story ---- */
+			.story {
+				padding: 2.5em 0 0.5em;
+			}
+			.story p {
+				font-size: 1.08em;
+			}
+
+			/* ---- What you'll find ---- */
+			.grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1em;
+				margin: 2.5em 0;
+			}
+			.card {
+				background: #fff;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 14px;
+				padding: 1.4em;
+			}
+			.card .emoji {
+				font-size: 1.8em;
+				display: block;
+				margin-bottom: 0.35em;
+			}
+			.card h3 {
+				font-size: 1.12em;
+				margin-bottom: 0.25em;
+			}
+			.card p {
+				margin: 0;
+				font-size: 0.95em;
+				color: rgb(var(--gray-dark));
+			}
+
+			/* ---- Promise / how we pick ---- */
+			.promise {
+				background: var(--accent-tint);
+				border-radius: 18px;
+				padding: 2em 2.25em;
+				margin: 2.5em 0;
+			}
+			.promise h2 {
+				font-size: 1.5em;
+				margin-bottom: 0.75em;
+			}
+			.promise ul {
+				margin: 0;
+				padding-left: 1.2em;
+			}
+			.promise li {
+				margin-bottom: 0.5em;
+			}
+			.promise li:last-child {
+				margin-bottom: 0;
+			}
+			.promise b {
+				color: rgb(var(--black));
+			}
+
+			/* ---- CTA ---- */
+			.cta-block {
+				text-align: center;
+				padding: 1em 0 4em;
+			}
+			.cta-block h2 {
+				font-size: 1.6em;
+				margin-bottom: 0.75em;
+			}
+			.btn {
+				display: inline-block;
+				text-decoration: none;
+				padding: 0.75em 1.7em;
+				border-radius: 999px;
+				font-weight: 700;
+				font-size: 1.05em;
+				background: var(--accent);
+				color: #fff;
+			}
+			.btn:hover {
+				background: var(--accent-dark);
+				color: #fff;
+			}
+
+			.disclosure {
+				font-size: 0.85em;
+				color: rgb(var(--gray));
+				text-align: center;
+				padding-bottom: 3em;
+			}
+
+			@media (max-width: 720px) {
+				.hero {
+					padding: 2em 0 0.5em;
+				}
+				.hero h1 {
+					font-size: 2.2em;
+				}
+				.hero-logo {
+					width: 128px;
+					height: 128px;
+				}
+				.grid {
+					grid-template-columns: 1fr;
+				}
+				.promise {
+					padding: 1.5em 1.5em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero wrap">
+				<div class="hero-logo">
+					<Image src={Logo} alt={`${SITE_TITLE} logo`} width={320} height={320} />
+				</div>
+				<h1>We taste Japan’s snacks <span class="pop">so you don’t have to guess.</span></h1>
+				<p class="lede">A friendly little lab for figuring out which Japanese treats are actually worth it.</p>
+			</section>
+
+			<section class="story wrap">
+				<p>
+					Standing in front of a wall of 200 beautifully boxed sweets at Tokyo Station — with a train to
+					catch — is not the time to gamble. <b>OISHII JOURNAL LAB.</b> exists to make that call easy: we
+					try the snacks, the souvenir sweets, and the konbini classics, then tell you plainly which ones
+					deliver and which ones to skip.
+				</p>
+			</section>
+
+			<section class="wrap">
+				<div class="grid">
+					<div class="card">
+						<span class="emoji">🍡</span>
+						<h3>Souvenir sweets</h3>
+						<p>The omiyage that never disappoint — and the ones that just look pretty.</p>
+					</div>
+					<div class="card">
+						<span class="emoji">🏪</span>
+						<h3>Konbini finds</h3>
+						<p>The convenience-store snacks locals grab on repeat, decoded for first-timers.</p>
+					</div>
+					<div class="card">
+						<span class="emoji">📊</span>
+						<h3>Clear rankings</h3>
+						<p>Taste, price, and where to buy — laid out so you can decide in seconds.</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="wrap">
+				<div class="promise">
+					<h2>How we pick</h2>
+					<ul>
+						<li><b>Taste first.</b> If we wouldn’t bring it home ourselves, it doesn’t make the list.</li>
+						<li><b>Real-world details.</b> Where to buy it, what it costs, and how well it travels.</li>
+						<li><b>No fluff.</b> Short, honest write-ups you can skim on the way to the register.</li>
+					</ul>
+				</div>
+			</section>
+
+			<section class="cta-block wrap">
+				<h2>Hungry yet?</h2>
+				<a class="btn" href="/blog">Explore the guides</a>
+			</section>
+
+			<p class="disclosure wrap">
+				Some links are affiliate links — as an Amazon Associate we earn from qualifying purchases at no
+				extra cost to you.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>

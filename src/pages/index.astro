@@ -1,0 +1,264 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Logo from '../assets/logo.png';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const featured = posts[0];
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 100%;
+				max-width: 100%;
+				padding: 0;
+			}
+			.wrap {
+				width: 960px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+			}
+
+			/* ---- Hero ---- */
+			.hero {
+				text-align: center;
+				padding: 3.5em 0 2.5em;
+			}
+			.hero-logo {
+				width: 168px;
+				height: 168px;
+				margin: 0 auto 1.25em;
+				border-radius: 50%;
+				overflow: hidden;
+				box-shadow: var(--box-shadow);
+			}
+			.hero-logo :global(img) {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				transform: scale(1.05);
+				border-radius: 0;
+				margin: 0;
+			}
+			.hero h1 {
+				font-size: 3.2em;
+				line-height: 1.05;
+				margin-bottom: 0.35em;
+			}
+			.hero h1 .pop {
+				color: var(--accent);
+			}
+			.hero .sub {
+				font-size: 1.15em;
+				color: rgb(var(--gray-dark));
+				max-width: 34ch;
+				margin: 0 auto 1.5em;
+			}
+			.cta-row {
+				display: flex;
+				gap: 0.75em;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+			.btn {
+				display: inline-block;
+				text-decoration: none;
+				padding: 0.7em 1.5em;
+				border-radius: 999px;
+				font-weight: 700;
+				font-size: 1.02em;
+			}
+			.btn-primary {
+				background: var(--accent);
+				color: #fff;
+			}
+			.btn-primary:hover {
+				background: var(--accent-dark);
+				color: #fff;
+			}
+			.btn-ghost {
+				border: 2px solid var(--accent);
+				color: var(--accent);
+			}
+			.btn-ghost:hover {
+				background: var(--accent-tint);
+				color: var(--accent-dark);
+			}
+
+			/* ---- Value strip ---- */
+			.values {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1em;
+				margin: 1em 0 3em;
+			}
+			.value {
+				background: #fff;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 14px;
+				padding: 1.25em;
+				text-align: center;
+			}
+			.value .emoji {
+				font-size: 1.8em;
+				display: block;
+				margin-bottom: 0.35em;
+			}
+			.value h3 {
+				font-size: 1.1em;
+				margin-bottom: 0.25em;
+			}
+			.value p {
+				margin: 0;
+				font-size: 0.92em;
+				color: rgb(var(--gray-dark));
+			}
+
+			/* ---- Featured ---- */
+			.section-label {
+				text-align: center;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				font-size: 0.8em;
+				font-weight: 700;
+				color: var(--accent);
+				margin-bottom: 0.5em;
+			}
+			.featured {
+				display: grid;
+				grid-template-columns: 1.1fr 1fr;
+				gap: 0;
+				background: #fff;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 18px;
+				overflow: hidden;
+				box-shadow: var(--box-shadow);
+				margin-bottom: 4em;
+			}
+			.featured :global(img) {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				border-radius: 0;
+				margin: 0;
+			}
+			.featured-body {
+				padding: 2em;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+			.featured-body h2 {
+				font-size: 1.7em;
+				margin-bottom: 0.4em;
+			}
+			.featured-body p {
+				color: rgb(var(--gray-dark));
+				margin-bottom: 1.25em;
+			}
+			.featured-body .btn {
+				align-self: flex-start;
+			}
+
+			@media (max-width: 720px) {
+				.hero {
+					padding: 2em 0 1.5em;
+				}
+				.hero h1 {
+					font-size: 2.2em;
+				}
+				.hero-logo {
+					width: 130px;
+					height: 130px;
+				}
+				.values {
+					grid-template-columns: 1fr;
+				}
+				.featured {
+					grid-template-columns: 1fr;
+				}
+				.featured-body {
+					padding: 1.5em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero wrap">
+				<div class="hero-logo">
+					<Image src={Logo} alt={`${SITE_TITLE} logo`} width={336} height={336} />
+				</div>
+				<h1>Japanese snacks, <span class="pop">decoded</span> for Americans.</h1>
+				<p class="sub">
+					No-fail guides to Japan's cult-favorite sweets, konbini finds, and souvenir treats — so you
+					always know exactly what to grab.
+				</p>
+				<div class="cta-row">
+					{
+						featured && (
+							<a class="btn btn-primary" href={`/blog/${featured.id}/`}>
+								Start with our top guide
+							</a>
+						)
+					}
+					<a class="btn btn-ghost" href="/blog">Browse all guides</a>
+				</div>
+			</section>
+
+			<section class="wrap">
+				<div class="values">
+					<div class="value">
+						<span class="emoji">😋</span>
+						<h3>Tasted, not guessed</h3>
+						<p>Every pick comes with what it actually tastes like — texture, flavor, the works.</p>
+					</div>
+					<div class="value">
+						<span class="emoji">🧳</span>
+						<h3>Travel-smart</h3>
+						<p>Where to buy it, what it costs, and whether it survives your suitcase home.</p>
+					</div>
+					<div class="value">
+						<span class="emoji">🎯</span>
+						<h3>Straight to the point</h3>
+						<p>Short, scannable rankings. Skip the wall of text, grab the winner.</p>
+					</div>
+				</div>
+			</section>
+
+			{
+				featured && (
+					<section class="wrap">
+						<p class="section-label">Latest guide</p>
+						<article class="featured">
+							{featured.data.heroImage && (
+								<Image width={720} height={540} src={featured.data.heroImage} alt="" />
+							)}
+							<div class="featured-body">
+								<h2>{featured.data.title}</h2>
+								<p>{featured.data.description}</p>
+								<a class="btn btn-primary" href={`/blog/${featured.id}/`}>
+									Read the guide
+								</a>
+							</div>
+						</article>
+					</section>
+				)
+			}
+		</main>
+		<Footer />
+	</body>
+</html>
