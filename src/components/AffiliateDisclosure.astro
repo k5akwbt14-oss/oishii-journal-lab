@@ -1,0 +1,46 @@
+---
+// FTC-compliant affiliate disclosure. US law (16 CFR Part 255) requires this to be
+// "clear and conspicuous" and placed BEFORE the first affiliate link in a post.
+// Usage: <AffiliateDisclosure /> near the top of a review/comparison article.
+interface Props {
+	/** Optional: override the default wording. */
+	text?: string;
+	/** Set when the post contains Amazon links — appends Amazon's required disclosure sentence. */
+	amazon?: boolean;
+}
+const {
+	text = "This post contains affiliate links. If you buy through them, we may earn a small commission — at no extra cost to you. We only feature snacks we genuinely think are worth it.",
+	amazon = false,
+} = Astro.props;
+// Amazon Associates Operating Agreement requires this exact sentence to appear.
+const amazonText = "As an Amazon Associate, Oishii Journal Lab earns from qualifying purchases.";
+---
+
+<aside class="affiliate-disclosure" role="note" aria-label="Affiliate disclosure">
+	<span class="icon" aria-hidden="true">🦊</span>
+	<p>{text}{amazon ? ` ${amazonText}` : ''}</p>
+</aside>
+
+<style>
+	.affiliate-disclosure {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.7em;
+		background: var(--accent-tint);
+		border: 1px solid rgb(var(--gray-light));
+		border-left: 4px solid var(--accent);
+		border-radius: 8px;
+		padding: 0.8em 1em;
+		margin: 1.5em 0;
+		font-size: 0.85em;
+		color: rgb(var(--gray-dark));
+	}
+	.affiliate-disclosure .icon {
+		font-size: 1.1em;
+		line-height: 1.4;
+	}
+	.affiliate-disclosure p {
+		margin: 0;
+		line-height: 1.5;
+	}
+</style>

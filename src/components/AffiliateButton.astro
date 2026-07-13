@@ -1,0 +1,64 @@
+---
+// Reusable affiliate call-to-action button.
+// Automatically adds rel="sponsored noopener" + target="_blank" — the correct
+// attributes for a paid/affiliate outbound link (Google Search guidelines).
+// Usage:
+//   <AffiliateButton href="https://www.bokksu.com/..." price="From $49.99/mo">
+//     Get Bokksu &rarr;
+//   </AffiliateButton>
+interface Props {
+	/** Affiliate destination URL. */
+	href: string;
+	/** Optional price/label shown under the button (e.g. "From $49.99/mo"). */
+	price?: string;
+	/** Visual style: solid (primary) or outline (secondary). */
+	variant?: 'solid' | 'outline';
+}
+const { href, price, variant = 'solid' } = Astro.props;
+---
+
+<div class={`aff-cta aff-cta--${variant}`}>
+	<a href={href} target="_blank" rel="sponsored noopener">
+		<slot />
+	</a>
+	{price && <span class="aff-price">{price}</span>}
+</div>
+
+<style>
+	.aff-cta {
+		margin: 1.25em 0;
+	}
+	.aff-cta a {
+		display: inline-block;
+		text-decoration: none;
+		font-weight: 700;
+		padding: 0.7em 1.6em;
+		border-radius: 8px;
+		transition: background 0.15s ease, color 0.15s ease;
+	}
+	/* Solid (primary) */
+	.aff-cta--solid a {
+		background: var(--accent);
+		color: #fff;
+	}
+	.aff-cta--solid a:hover {
+		background: var(--accent-dark);
+		color: #fff;
+	}
+	/* Outline (secondary) */
+	.aff-cta--outline a {
+		background: transparent;
+		color: var(--accent);
+		border: 2px solid var(--accent);
+	}
+	.aff-cta--outline a:hover {
+		background: var(--accent);
+		color: #fff;
+	}
+	.aff-price {
+		display: block;
+		margin-top: 0.4em;
+		font-size: 0.8em;
+		color: rgb(var(--gray));
+	}
+</style>
