@@ -6,9 +6,9 @@ import { defineConfig, fontProviders } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	// After you create the Cloudflare Pages project, set this to your real URL
-	// (e.g. https://<your-project-name>.pages.dev, or your custom domain later).
-	site: 'https://oishii-journal-lab.pages.dev',
+	// Production custom domain (registered via Cloudflare, connected to the
+	// oishii-journal-lab Pages project).
+	site: 'https://oishiijournal.com',
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
