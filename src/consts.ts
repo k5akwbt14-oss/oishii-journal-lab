@@ -3,4 +3,4 @@
 
 export const SITE_TITLE = 'OISHII JOURNAL LAB.';
 export const SITE_DESCRIPTION =
-	'Japanese snack exploration for curious American snackers — the omiyage, konbini treats, and cult-favorite sweets worth the suitcase space, tasted and ranked so you know exactly what to grab.';
+	'日本のお菓子・お土産スイーツを実際に食べて、正直にランキング。おみやげ定番からコンビニの名品まで、「これを買えば間違いない」がすぐ分かるガイド。';

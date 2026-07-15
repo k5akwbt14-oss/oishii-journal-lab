@@ -21,10 +21,10 @@ export default defineConfig({
 		},
 		{
 			provider: fontProviders.google(),
-			name: 'Lora',
+			name: 'Inter',
 			cssVariable: '--font-body',
-			fallbacks: ['serif'],
-			weights: [400, 500, 600],
+			fallbacks: ['sans-serif'],
+			weights: [400, 500, 600, 700],
 			styles: ['normal', 'italic'],
 		},
 	],

@@ -1,0 +1,428 @@
+---
+import { Image } from 'astro:assets';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Inaripo from '../components/Inaripo.astro';
+import { SITE_TITLE } from '../consts';
+import Header from '../components/Header.astro';
+import Dummy from '../assets/dummy.png';
+
+// ─────────────────────────────────────────────────────────────
+// MAGAZINE CARD-GRID template ("Browse like a magazine, grab like
+// a card"). Big feature cards on the left, a rail of compact cards
+// on the right. All images use the placeholder art (Dummy); swap in
+// real photos later — the layout stays the same.
+// ─────────────────────────────────────────────────────────────
+
+const tabs = ['おすすめ', 'レビュー', 'ランキング', 'Q&A'];
+
+// Big feature cards (left masonry area)
+const featureCards = [
+	{
+		cat: 'ガイド',
+		title: '日本のお菓子 入門',
+		icons: ['🍬', '💡', '🔰'],
+		desc: '日本のお菓子は初めて？ 最初のひと口はここから。',
+		cta: 'ガイドを読む →',
+		pick: true,
+	},
+	{
+		cat: 'レビュー',
+		title: 'Bokksuボックスを開封',
+		icons: ['📦', '⭐', '🍵'],
+		desc: 'ひと月分の日本が玄関に届く——その価値は？',
+		cta: 'レビューを読む →',
+	},
+	{
+		cat: 'ランキング',
+		title: '東京みやげ ベスト3',
+		icons: ['🥇', '🚄', '🎁'],
+		desc: '地元の人が実際に買う、駅のお菓子。',
+		cta: 'ランキングを見る →',
+	},
+	{
+		cat: 'おすすめ',
+		title: 'コンビニ必買スナック',
+		icons: ['🏪', '🔥', '💴'],
+		desc: 'わざわざ寄る価値がある、コンビニの逸品。',
+		cta: 'おすすめを見る →',
+	},
+	{
+		cat: 'フレーバー',
+		title: '抹茶スイーツ特集',
+		icons: ['🍵', '🌿', '😋'],
+		desc: 'やさしい味から濃厚まで、抹茶のデザート。',
+		cta: 'フレーバーを見る →',
+	},
+	{
+		cat: '比較',
+		title: 'スナックボックス頂上決戦',
+		icons: ['⚖️', '📦', '💰'],
+		desc: 'Bokksu vs Sakuraco vs TokyoTreat を横並び比較。',
+		cta: 'ボックスを比較 →',
+	},
+];
+
+// Compact cards (right rail)
+const railCards = [
+	{ cat: 'おすすめ', title: 'ポッキーとその仲間', cta: '見る →' },
+	{ cat: 'ランキング', title: 'キットカット日本の味', cta: '見る →' },
+	{ cat: 'ガイド', title: 'もち、まるわかり', cta: '読む →' },
+	{ cat: 'ガイド', title: 'せんべい入門', cta: '読む →' },
+	{ cat: 'おすすめ', title: 'レトロ駄菓子の発見', cta: '見る →' },
+	{ cat: 'Q&A', title: '和菓子の保存方法', cta: '読む →' },
+	{ cat: 'ランキング', title: '空港で買える名品', cta: '見る →' },
+	{ cat: 'ガイド', title: '原材料表示の読み方', cta: '読む →' },
+	{ cat: 'おすすめ', title: '桜シーズンの限定菓子', cta: '見る →' },
+	{ cat: 'レビュー', title: 'Sakuracoを実食', cta: '読む →' },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<BaseHead
+			title={`ショッピング · ${SITE_TITLE}`}
+			description="Browse like a magazine, grab like a card — Japan's best snacks, tasted and ranked."
+		/>
+		<style>
+			body {
+				/* flatter, magazine-y background instead of the tall gradient */
+				background: var(--cream);
+			}
+			main {
+				width: 100%;
+				max-width: 100%;
+				padding: 0;
+				overflow-x: hidden;
+			}
+			.shell {
+				width: 1120px;
+				max-width: calc(100% - 2.5em);
+				margin-inline: auto;
+			}
+
+			/* ===== Top bar: brand · tagline · search ===== */
+			.mag-top {
+				display: grid;
+				grid-template-columns: 1fr auto;
+				align-items: center;
+				gap: 1.5em;
+				padding: 1.8em 0 1.2em;
+			}
+			.mag-brand {
+				display: flex;
+				align-items: center;
+				gap: 0.6em;
+				text-decoration: none;
+			}
+			.mag-brand .logo {
+				width: 46px;
+				height: 46px;
+				border-radius: 50%;
+				overflow: hidden;
+				flex: none;
+				box-shadow: 0 2px 6px rgba(var(--black), 15%);
+			}
+			.mag-brand .logo :global(img) {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				margin: 0;
+				border-radius: 0;
+				transform: scale(1.05);
+			}
+			.mag-brand .wordmark {
+				font-family: var(--font-heading), serif;
+				font-weight: 700;
+				font-size: 1.15em;
+				line-height: 1.05;
+				color: rgb(var(--black));
+				max-width: 7em;
+			}
+			.mag-tagline {
+				justify-self: center;
+				text-align: center;
+				margin: 0;
+				font-family: var(--font-heading), serif;
+				font-size: 1.15em;
+				font-weight: 600;
+				color: rgb(var(--gray-dark));
+			}
+			.mag-search {
+				display: flex;
+				align-items: center;
+				background: #fff;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 999px;
+				padding: 0.35em 0.5em 0.35em 1em;
+				box-shadow: 0 1px 4px rgba(var(--black), 5%);
+			}
+			.mag-search input {
+				border: 0;
+				outline: 0;
+				background: transparent;
+				font-size: 0.95em;
+				width: 12ch;
+			}
+			.mag-search button {
+				border: 0;
+				background: var(--accent);
+				color: #fff;
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				cursor: pointer;
+				font-size: 0.9em;
+				flex: none;
+			}
+
+			/* ===== Category tabs ===== */
+			.mag-tabs {
+				display: flex;
+				justify-content: center;
+				gap: 0.4em;
+				flex-wrap: wrap;
+				padding-bottom: 1.8em;
+				border-bottom: 1px solid rgb(var(--gray-light));
+			}
+			.mag-tabs a {
+				text-decoration: none;
+				font-weight: 700;
+				font-size: 0.95em;
+				color: rgb(var(--gray-dark));
+				padding: 0.5em 1.2em;
+				border-radius: 999px;
+			}
+			.mag-tabs a.active {
+				background: var(--accent);
+				color: #fff;
+			}
+			.mag-tabs a:not(.active):hover {
+				background: var(--accent-tint);
+				color: var(--accent-dark);
+			}
+
+			/* ===== Two-region layout: feature masonry + rail ===== */
+			.mag-layout {
+				display: grid;
+				grid-template-columns: minmax(0, 2.5fr) minmax(0, 1fr);
+				gap: 24px;
+				padding: 2em 0 3em;
+			}
+			.mag-main {
+				columns: 2;
+				column-gap: 20px;
+			}
+			.mag-rail {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 16px;
+				align-content: start;
+			}
+
+			/* ===== Card base ===== */
+			.card {
+				display: block;
+				text-decoration: none;
+				background: #fff;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 18px;
+				overflow: hidden;
+				box-shadow: 0 4px 14px rgba(var(--gray), 14%);
+				transition: transform 0.16s ease, box-shadow 0.16s ease;
+			}
+			.card:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 12px 26px rgba(var(--gray), 24%);
+			}
+			.thumb {
+				position: relative;
+				aspect-ratio: 16 / 10;
+				background: radial-gradient(120% 120% at 50% 20%, #fff 0%, var(--accent-tint) 72%, #fbe1d6 100%);
+				display: grid;
+				place-items: center;
+			}
+			.thumb :global(img) {
+				width: 62%;
+				height: auto;
+				margin: 0;
+				border-radius: 0;
+				filter: drop-shadow(0 10px 16px rgba(var(--gray), 30%));
+			}
+			.pick-badge {
+				position: absolute;
+				top: 10px;
+				left: 10px;
+				display: flex;
+				align-items: center;
+				gap: 0.4em;
+				background: #fff;
+				border-radius: 999px;
+				padding: 0.25em 0.7em 0.25em 0.3em;
+				font-size: 0.72em;
+				font-weight: 700;
+				color: var(--accent-dark);
+				box-shadow: 0 2px 6px rgba(var(--black), 12%);
+			}
+
+			/* ===== Feature card body ===== */
+			.mag-main .card {
+				break-inside: avoid;
+				margin-bottom: 20px;
+			}
+			.card-body {
+				padding: 1.1em 1.2em 1.3em;
+			}
+			.eyebrow {
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				font-size: 0.68em;
+				font-weight: 700;
+				color: var(--accent);
+				margin: 0 0 0.4em;
+			}
+			.card h3 {
+				font-size: 1.35em;
+				line-height: 1.15;
+				margin: 0 0 0.4em;
+			}
+			.icon-row {
+				display: flex;
+				gap: 0.5em;
+				font-size: 1.05em;
+				margin: 0 0 0.55em;
+			}
+			.card .desc {
+				margin: 0 0 1em;
+				font-size: 0.95em;
+				color: rgb(var(--gray-dark));
+			}
+			.pill {
+				display: inline-block;
+				background: var(--accent);
+				color: #fff;
+				text-decoration: none;
+				font-weight: 700;
+				font-size: 0.9em;
+				padding: 0.55em 1.2em;
+				border-radius: 999px;
+			}
+			.card:hover .pill {
+				background: var(--accent-dark);
+			}
+
+			/* ===== Compact rail card ===== */
+			.card.compact h4 {
+				font-family: var(--font-heading), serif;
+				font-size: 1em;
+				line-height: 1.2;
+				margin: 0.8em 0.9em 0.7em;
+				color: rgb(var(--black));
+			}
+			.card.compact .thumb {
+				aspect-ratio: 4 / 3;
+			}
+			.card.compact .thumb :global(img) {
+				width: 68%;
+			}
+			.card.compact .pill {
+				margin: 0 0.9em 1em;
+				font-size: 0.8em;
+				padding: 0.45em 1em;
+			}
+
+			/* ===== Responsive ===== */
+			@media (max-width: 900px) {
+				.mag-layout {
+					grid-template-columns: 1fr;
+				}
+				.mag-rail {
+					grid-template-columns: repeat(3, 1fr);
+				}
+			}
+			@media (max-width: 720px) {
+				.mag-top {
+					grid-template-columns: 1fr;
+					justify-items: center;
+					gap: 0.9em;
+					text-align: center;
+				}
+				.mag-main {
+					columns: 1;
+				}
+				.mag-rail {
+					grid-template-columns: 1fr 1fr;
+				}
+			}
+			@media (max-width: 460px) {
+				.mag-rail {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<div class="shell">
+				<!-- Page intro: tagline + search -->
+				<header class="mag-top">
+					<p class="mag-tagline">雑誌のように眺めて、カードのように拾う——新しい発見を。</p>
+					<div class="mag-search">
+						<input type="search" placeholder="お菓子を検索…" aria-label="お菓子を検索" />
+						<button type="button" aria-label="検索">🔍</button>
+					</div>
+				</header>
+
+				<!-- Category tabs -->
+				<nav class="mag-tabs">
+					{tabs.map((t, i) => <a href="#" class={i === 0 ? 'active' : ''}>{t}</a>)}
+				</nav>
+
+				<!-- Feature masonry + rail -->
+				<div class="mag-layout">
+					<section class="mag-main" aria-label="注目の記事">
+						{
+							featureCards.map((c) => (
+								<a class="card" href="#">
+									<div class="thumb">
+										{c.pick && (
+											<span class="pick-badge">
+												<Inaripo expression="yum" size={20} alt="" /> いなりぽのおすすめ
+											</span>
+										)}
+										<Image src={Dummy} alt={c.title} width={520} height={325} />
+									</div>
+									<div class="card-body">
+										<p class="eyebrow">{c.cat}</p>
+										<h3>{c.title}</h3>
+										<div class="icon-row">{c.icons.map((ic) => <span>{ic}</span>)}</div>
+										<p class="desc">{c.desc}</p>
+										<span class="pill">{c.cta}</span>
+									</div>
+								</a>
+							))
+						}
+					</section>
+
+					<aside class="mag-rail" aria-label="もっと読む">
+						{
+							railCards.map((c) => (
+								<a class="card compact" href="#">
+									<div class="thumb">
+										<Image src={Dummy} alt={c.title} width={240} height={180} />
+									</div>
+									<h4>{c.title}</h4>
+									<span class="pill">{c.cta}</span>
+								</a>
+							))
+						}
+					</aside>
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>

@@ -7,13 +7,13 @@ interface Props {
 	flip?: boolean;
 }
 
-const { expression = 'happy', name = 'Inaripo', flip = false } = Astro.props;
+const { expression = 'happy', name = 'いなりぽ', flip = false } = Astro.props;
 ---
 
 <aside class:list={['inaripo-bubble', { flip }]}>
 	<Inaripo expression={expression} size={92} />
 	<div class="bubble">
-		<p class="who">{name} <span class="jp">いなりぽ</span></p>
+		<p class="who">{name}</p>
 		<div class="say"><slot /></div>
 	</div>
 </aside>
