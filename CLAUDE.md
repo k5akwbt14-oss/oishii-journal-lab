@@ -52,6 +52,12 @@ npm run gemini    # ask the external Gemini teammate (tools/ask-gemini.mjs)
 - To publish: edit → `git add` / `git commit` / `git push` → Cloudflare rebuilds automatically. Confirm pages return HTTP 200 after deploy.
 - Custom domain is `oishiijournal.com`; keep `site` in `astro.config.mjs` in sync if the domain ever changes.
 
+## File storage / ファイルの保存先
+- **The Google Drive「アフィリエイト」folder is the default home for deliverables & assets**（作業データ、スプレッドシート、記事素材、画像、PDF など）。新しく作ったファイル/シートは原則ここ（またはこの中の適切なサブフォルダ）に入れる。
+  - URL: https://drive.google.com/drive/folders/1pKuTZs6U5OeQN89kiB2879raVKXHDKZX （フォルダ名: 「アフィリエイト」, マイドライブ直下）
+- **Code stays out of Drive / コードはDriveに入れない** — the website source (`my-blog`) belongs in **GitHub** (`k5akwbt14-oss/oishii-journal-lab`). Drive は素材・ドキュメント専用。
+- **Constraint / 制約**: the assistant CANNOT upload local PC files to Drive directly (the OS file-picker can't be automated). Google-native files (Sheets 等) can be created/moved on Drive; local md/PDF/images must be added by the user via drag-drop or Google Drive for Desktop sync.
+
 ## Working with Gemini / Gemini との連携
 - The owner consults an external **Gemini Pro** for ideas, but **I own all implementation** — I cannot access their Gemini account directly (except via `npm run gemini`).
 - Treat Gemini output as a suggestion, not truth: it has stale training data and has been wrong on current dates/prices. Verify against live sources and the actual current date.
