@@ -3,6 +3,9 @@
 This is the my-blog Astro project. Follow the rules below on every task.
 （このファイルはこのフォルダで作業するとき毎回自動で読み込まれます。以下のルールを守ること。）
 
+## Working style / 進め方
+- **Be autonomous; minimize approval requests / なるべく自分で考えて進め、ユーザーへの確認・許可を減らす.** Make the sensible default decision and act, then report the result concisely. Only stop to ask when an action is genuinely irreversible/destructive, outward-facing (publishing, sending, sharing, spending), or a real preference only the user can decide. Prefer doing over asking; don't offer menus of options for choices that have an obvious best answer — just pick it and say why.
+
 ## What this site is / サイトの正体
 - **OISHII JOURNAL LAB.** — an affiliate blog introducing Japanese snacks & omiyage (souvenir sweets) to curious **American** readers.
 - Monetization: **US Amazon Associates** (account exists) + snack-box subscriptions (**Bokksu** via Impact) + display ads.
@@ -53,10 +56,12 @@ npm run gemini    # ask the external Gemini teammate (tools/ask-gemini.mjs)
 - Custom domain is `oishiijournal.com`; keep `site` in `astro.config.mjs` in sync if the domain ever changes.
 
 ## File storage / ファイルの保存先
-- **The Google Drive「アフィリエイト」folder is the default home for deliverables & assets**（作業データ、スプレッドシート、記事素材、画像、PDF など）。新しく作ったファイル/シートは原則ここ（またはこの中の適切なサブフォルダ）に入れる。
-  - URL: https://drive.google.com/drive/folders/1pKuTZs6U5OeQN89kiB2879raVKXHDKZX （フォルダ名: 「アフィリエイト」, マイドライブ直下）
+- **The「アフィリエイト」folder is the default home for deliverables & assets**（作業データ、スプレッドシート、記事素材、画像、PDF など）。新しく作ったファイルは原則ここ（または適切なサブフォルダ）に入れる。
+- **This folder is synced by Google Drive for Desktop（双方向・リアルタイム）**, so it has two equivalent addresses:
+  - **Local / ローカル**: `C:\Users\s2230\OneDrive - 静岡県立大学 食品栄養科学部\デスクトップ\アフィリエイト`
+  - **Google Drive**: パソコン > マイ ノートパソコン > デスクトップ > アフィリエイト （URL: https://drive.google.com/drive/folders/1pKuTZs6U5OeQN89kiB2879raVKXHDKZX ）
+- **How the assistant saves to Drive / Driveへの保存方法**: just **Write the file to the local path above** — Drive for Desktop auto-uploads it. No browser upload needed. ローカルに書き出すだけでDriveに上がる。(Existing article materials live under `…\アフィリエイト\記事参考\…`.)
 - **Code stays out of Drive / コードはDriveに入れない** — the website source (`my-blog`) belongs in **GitHub** (`k5akwbt14-oss/oishii-journal-lab`). Drive は素材・ドキュメント専用。
-- **Constraint / 制約**: the assistant CANNOT upload local PC files to Drive directly (the OS file-picker can't be automated). Google-native files (Sheets 等) can be created/moved on Drive; local md/PDF/images must be added by the user via drag-drop or Google Drive for Desktop sync.
 
 ## Working with Gemini / Gemini との連携
 - The owner consults an external **Gemini Pro** for ideas, but **I own all implementation** — I cannot access their Gemini account directly (except via `npm run gemini`).
