@@ -9,7 +9,7 @@ import PostCard from '../components/PostCard.astro';
 import { SITE_TITLE, SNACK_BOXES } from '../consts';
 
 const DESCRIPTION =
-	'Bokksu・Sakuraco・TokyoTreat — 日本のお菓子が毎月届くスナックBOXを、実際に開けて比べました。どれがあなた向きか、ここで決まります。';
+	'定期便は毎月続くものだから、最初の選択がいちばん大事。実際に開けたBokksu・Sakuraco・TokyoTreatの中身を隠さず見せます。読み終える頃には、あなたに合う一箱が分かります。';
 
 // Box reviews & comparisons live in the 特集 pillar.
 const related = (await getCollection('blog', ({ data }) => data.category === 'features')).sort(
@@ -27,7 +27,7 @@ const related = (await getCollection('blog', ({ data }) => data.category === 'fe
 		<main>
 			<header class="page-head">
 				<p class="crumb"><a href="/">ホーム</a> <span aria-hidden="true">/</span> スナックBOX</p>
-				<h1>日本のお菓子が、<span class="pop">毎月届く。</span></h1>
+				<h1>契約する前に、<span class="pop">読む場所。</span></h1>
 				<p class="lead">{DESCRIPTION}</p>
 			</header>
 
@@ -85,7 +85,7 @@ const related = (await getCollection('blog', ({ data }) => data.category === 'fe
 			<p class="note">
 				<Inaripo expression="happy" size={56} />
 				<span>
-					値段や個数は各社でよく変わるから、ここでは書かないでおくね。最新の金額は公式サイトで確かめて！
+					値段や個数は変わりやすいので、ここには書きません。最新は公式サイトで確認を。ぼくは食べるほうの担当なので。
 				</span>
 			</p>
 

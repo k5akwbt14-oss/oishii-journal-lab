@@ -13,8 +13,8 @@ export const CATEGORIES = [
 		href: '/features',
 		title: '特集',
 		titleEn: 'FEATURES',
-		tagline: '季節もの・ギフト・スナックBOXの徹底比較。',
-		blurb: '限定フレーバー、贈り物選び、定期便レビュー。テーマごとに掘り下げた読み物。',
+		tagline: '新作が出たら、食べに行く係です。',
+		blurb: '限定フレーバーは出会いもの。しっとり半生のクッキーから、ほろ苦く香る抹茶まで、食べた順に正直な感想を並べます。',
 	},
 	{
 		id: 'regional',
@@ -22,8 +22,8 @@ export const CATEGORIES = [
 		href: '/regional',
 		title: 'ご当地',
 		titleEn: 'REGIONAL',
-		tagline: 'その土地でしか買えない、お土産の名品。',
-		blurb: '東京バナナから白い恋人まで。どこで買えて、いくらで、日本のどこの味なのかまで分かるガイド。',
+		tagline: '海の向こうから買う前に、読む。',
+		blurb: 'パリッと割れる白い恋人、冷蔵だからこそ作りたてのロイズ生チョコ。取り寄せる価値があるか、現地で実食して判定します。',
 	},
 	{
 		id: 'classics',
@@ -31,8 +31,8 @@ export const CATEGORIES = [
 		href: '/classics',
 		title: '定番',
 		titleEn: 'CLASSICS',
-		tagline: '日本人なら誰でも知っている、いつものお菓子。',
-		blurb: 'ポッキー、じゃがりこ、カントリーマアム。まず一度は食べておきたい殿堂入りを、実食ランキングで。',
+		tagline: '日本人が、結局戻ってくるお菓子。',
+		blurb: 'パキッと鳴るポッキー、お湯でポテトサラダに化けるじゃがりこ、半生みたいにしっとりのカントリーマアム。殿堂入りを実食ランキングで。',
 	},
 ] as const;
 
@@ -44,12 +44,13 @@ export type CategoryId = (typeof CATEGORIES)[number]['id'];
  * US readers navigate by famous city/region names, not by prefecture geography.
  */
 export const REGIONS = [
-	{ id: 'hokkaido', name: '北海道', nameEn: 'Hokkaido', emoji: '🐻', known: '白い恋人・ロイズ' },
-	{ id: 'tokyo', name: '東京', nameEn: 'Tokyo', emoji: '🗼', known: '東京バナナ' },
-	{ id: 'kyoto', name: '京都', nameEn: 'Kyoto', emoji: '⛩️', known: '抹茶・八ツ橋' },
-	{ id: 'osaka', name: '大阪', nameEn: 'Osaka', emoji: '🐙', known: 'たこ焼き味' },
-	{ id: 'kyushu', name: '九州', nameEn: 'Kyushu', emoji: '🌋', known: '博多・明太子' },
-	{ id: 'okinawa', name: '沖縄', nameEn: 'Okinawa', emoji: '🌺', known: '紅いも・ちんすこう' },
+	// known: fact-hook copy (R4 winner 案40). 英訳時の注意: 「琉球」はOkinawaに寄せる。
+	{ id: 'hokkaido', name: '北海道', nameEn: 'Hokkaido', emoji: '🐻', known: '冷蔵必須の生チョコ' },
+	{ id: 'tokyo', name: '東京', nameEn: 'Tokyo', emoji: '🗼', known: '累計20億個の味' },
+	{ id: 'kyoto', name: '京都', nameEn: 'Kyoto', emoji: '⛩️', known: '抹茶菓子の本場' },
+	{ id: 'osaka', name: '大阪', nameEn: 'Osaka', emoji: '🐙', known: 'たこ焼き味の街' },
+	{ id: 'kyushu', name: '九州', nameEn: 'Kyushu', emoji: '🌋', known: '博多の明太子味' },
+	{ id: 'okinawa', name: '沖縄', nameEn: 'Okinawa', emoji: '🌺', known: '琉球うまれの甘さ' },
 ] as const;
 
 /**
@@ -69,7 +70,7 @@ export const SNACK_BOXES = [
 		blurb: '職人がつくる本格派を厳選。日本各地の老舗メーカーから直送。',
 		offer: '初回10%OFF',
 		href: '#',
-		bestFor: '本物志向の人・ギフト',
+		bestFor: '量より質を選ぶ人',
 		points: ['日本各地の老舗・小規模メーカーの菓子', '各菓子の背景を紹介する冊子つき', 'お茶とのペアリング前提の構成'],
 		catch: '価格帯は高め。まず「日本のお菓子を試したい」だけなら過剰かも。',
 	},
@@ -81,7 +82,7 @@ export const SNACK_BOXES = [
 		blurb: '和菓子とお茶が毎月届く。伝統的な日本のおやつ時間をそのまま。',
 		offer: '初回10%OFF',
 		href: '#',
-		bestFor: '和菓子・お茶が好きな人',
+		bestFor: '静かに日本を味わいたい人',
 		points: ['もち・羊羹など伝統的な和菓子中心', '毎月お茶が1種類つく', '器などの雑貨が入ることも'],
 		catch: 'ポッキーやキットカットのような「コンビニ系」はほぼ入らない。',
 	},
@@ -93,27 +94,31 @@ export const SNACK_BOXES = [
 		blurb: 'コンビニ限定・話題のフレーバー中心。日本の「今」が届く。',
 		offer: '初回$5OFF',
 		href: '#',
-		bestFor: '初めての人・家族や子ども',
+		bestFor: '初めての一箱に',
 		points: ['期間限定フレーバーや話題の新商品', 'スナック菓子・ドリンクなど量が多い', '日本のコンビニの雰囲気に近い'],
 		catch: '伝統的な和菓子を期待すると方向性が違う。',
 	},
 ] as const;
 
-/** Trust block — why read this site. */
+/**
+ * Trust block — why read this site. (R4 winner 案36, ② reworked by supervisor:
+ * the original「広告文は、書きません」would sit right under the affiliate rail —
+ * an FTC-shaped contradiction — so ② keeps the independence claim without it.)
+ */
 export const WHY_US = [
 	{
 		icon: 'check',
-		title: '全部、実際に食べています',
-		body: '味も食感も自分たちで確かめてから書いています。',
+		title: 'あなたの代わりに、食べています',
+		body: '味も食感も、確かめる前には書きません。',
 	},
 	{
 		icon: 'shield',
-		title: '正直なランキング',
-		body: 'おいしくないものは、おいしくないと書きます。',
+		title: '評価は、自分の舌で決めます',
+		body: '売り手の言葉ではなく実食で。おいしくないものは、おいしくないと書きます。',
 	},
 	{
 		icon: 'gift',
-		title: 'ギフトにも強い',
-		body: '値段・日持ち・買える場所まで分かるので、贈り物選びに迷いません。',
+		title: '迷う時間を、短くします',
+		body: '値段と日持ちが分かるから、贈り物選びで迷いません。',
 	},
 ] as const;
