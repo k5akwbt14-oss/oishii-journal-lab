@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { SITE_TITLE } from '../consts';
+import { CATEGORIES, SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
 import Inaripo from './Inaripo.astro';
 import Logo from '../assets/logo.png';
@@ -17,11 +17,14 @@ import Logo from '../assets/logo.png';
 			</a>
 		</h2>
 		<div class="internal-links">
-			<HeaderLink href="/shop">ショッピング</HeaderLink>
-			<HeaderLink href="/blog">お土産</HeaderLink>
+			{CATEGORIES.map((c) => <HeaderLink href={c.href}>{c.title}</HeaderLink>)}
 			<HeaderLink href="/about">サイトについて</HeaderLink>
 		</div>
 		<div class="nav-right">
+			<a class="box-cta" href="/boxes">
+				<span class="box-cta-icon" aria-hidden="true">📦</span>
+				スナックBOX
+			</a>
 			<span class="header-mascot" title="Inaripo · いなりぽ">
 				<Inaripo expression="wink" size={38} alt="Inaripo the fox" />
 			</span>
@@ -105,10 +108,45 @@ import Logo from '../assets/logo.png';
 		text-decoration: none;
 		border-bottom-color: var(--accent);
 	}
+	.internal-links a {
+		transition:
+			color 0.15s ease,
+			border-color 0.15s ease;
+	}
+	.internal-links a:hover {
+		color: var(--accent);
+		border-bottom-color: var(--accent-tint);
+	}
 	.nav-right {
 		display: flex;
 		align-items: center;
 		gap: 0.75em;
+	}
+	/* The money page gets button weight rather than another plain nav link. */
+	.box-cta {
+		display: flex;
+		align-items: center;
+		gap: 0.4em;
+		background: var(--accent);
+		color: #fff;
+		padding: 0.5em 1.1em;
+		border-radius: 999px;
+		border-bottom: 0;
+		font-weight: 700;
+		font-size: 0.82em;
+		white-space: nowrap;
+		box-shadow: 0 2px 8px rgba(200, 65, 44, 30%);
+		transition:
+			background 0.15s ease,
+			transform 0.15s ease;
+	}
+	.box-cta:hover {
+		background: var(--accent-dark);
+		color: #fff;
+		transform: translateY(-1px);
+	}
+	.box-cta-icon {
+		font-size: 1.05em;
 	}
 	.header-mascot {
 		display: flex;

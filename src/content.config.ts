@@ -14,6 +14,10 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
+			// Home page pillars: 定番 / ご当地 / 特集
+			category: z.enum(['classics', 'regional', 'features']).default('features'),
+			// Only for category: 'regional' — matches an id in REGIONS (src/consts.ts).
+			region: z.string().optional(),
 		}),
 });
 

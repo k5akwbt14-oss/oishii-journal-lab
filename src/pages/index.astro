@@ -4,85 +4,173 @@ import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import Logo from '../assets/logo.png';
+import PostCard from '../components/PostCard.astro';
+import SnackBoxRail from '../components/SnackBoxRail.astro';
+import WhyUs from '../components/WhyUs.astro';
+import { CATEGORIES, REGIONS, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import Inaripo from '../components/Inaripo.astro';
+import JagarikoImage from '../assets/snacks/jagariko.jpg';
+import AlfortImage from '../assets/snacks/alfort.webp';
+import CountryMaamImage from '../assets/snacks/country-maam.webp';
+import HiChewImage from '../assets/snacks/hi-chew.jpg';
+import ClassicsImage from '../assets/snacks/pocky.jpg';
+import RegionalImage from '../assets/sweet-potato-tamago-style.jpg';
+import FeaturesImage from '../assets/sugar-butter-sand-style.jpg';
+
+const covers = {
+	classics: ClassicsImage,
+	regional: RegionalImage,
+	features: FeaturesImage,
+};
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-const featured = posts[0];
+const latest = posts.slice(0, 3);
 ---
 
 <!doctype html>
 <html lang="ja">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="home">
+				<div class="col-main">
+					<!-- ---- Hero ---- -->
+					<section class="hero">
+						<div class="hero-copy">
+							<h1>日本のお菓子、<br /><span class="pop">まるごと</span>ガイド。</h1>
+							<p>定番からご当地の名品まで — 実際に食べて選んだ「これを買えば間違いない」。</p>
+							<div class="hero-cta">
+								<a class="btn btn-primary" href="#pillars">お菓子を探す <span aria-hidden="true">→</span></a>
+								<span class="hero-guide">
+									<Inaripo expression="yum" size={48} />
+									<span>案内はぼく、<strong>いなりぽ</strong>！</span>
+								</span>
+							</div>
+						</div>
+						<div class="hero-mosaic" aria-hidden="true">
+							<Image src={JagarikoImage} alt="" width={320} height={320} loading="eager" />
+							<Image src={AlfortImage} alt="" width={320} height={320} loading="eager" />
+							<Image src={CountryMaamImage} alt="" width={320} height={320} loading="eager" />
+							<Image src={HiChewImage} alt="" width={320} height={320} loading="eager" />
+						</div>
+					</section>
+
+					<!-- ---- The three pillars ---- -->
+					<section id="pillars" class="pillars" aria-label="3つのカテゴリ">
+						{
+							CATEGORIES.map((c) => (
+								<article class="pillar">
+									<h2>
+										<span class="num" aria-hidden="true">
+											{c.num}
+										</span>
+										<a href={c.href}>
+											{c.title}
+											<span class="en">{c.titleEn}</span>
+										</a>
+									</h2>
+									<p class="tagline">{c.tagline}</p>
+									<Image class="pillar-img" src={covers[c.id]} alt="" width={420} height={260} />
+									<p class="blurb">{c.blurb}</p>
+									<a class="btn btn-ghost" href={c.href}>
+										{c.title}を見る <span aria-hidden="true">→</span>
+									</a>
+								</article>
+							))
+						}
+					</section>
+
+					<!-- ---- Regional picker ---- -->
+					<section class="areas" aria-labelledby="areas-heading">
+						<h2 id="areas-heading">
+							<span class="pin" aria-hidden="true">📍</span>
+							ご当地から探す
+						</h2>
+						<p class="areas-sub">その土地でしか買えない名品。行き先から選んでください。</p>
+						<ul class="area-grid">
+							{
+								REGIONS.map((r) => (
+									<li>
+										<a href={`/regional/#${r.id}`}>
+											<span class="area-emoji" aria-hidden="true">
+												{r.emoji}
+											</span>
+											<span class="area-text">
+												<span class="area-name">
+													{r.name}
+													<span class="area-en">{r.nameEn}</span>
+												</span>
+												<span class="area-known">{r.known}</span>
+											</span>
+										</a>
+									</li>
+								))
+							}
+						</ul>
+					</section>
+
+					<!-- ---- Latest ---- -->
+					<section class="latest" aria-labelledby="latest-heading">
+						<h2 id="latest-heading">最新ガイド</h2>
+						<div class="latest-grid">
+							{latest.map((post) => <PostCard post={post} />)}
+						</div>
+						<p class="more"><a href="/blog">ガイドをすべて見る <span aria-hidden="true">→</span></a></p>
+					</section>
+				</div>
+
+				<!-- ---- Sidebar ---- -->
+				<div class="col-rail">
+					<SnackBoxRail />
+					<WhyUs />
+				</div>
+			</div>
+		</main>
+		<Footer />
+
 		<style>
 			main {
-				width: 100%;
-				max-width: 100%;
-				padding: 0;
-			}
-			.wrap {
-				width: 960px;
+				width: 1180px;
 				max-width: calc(100% - 2em);
 				margin: 0 auto;
+				padding: 2em 0 3em;
+			}
+			.home {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) 300px;
+				gap: 1.75em;
+				align-items: start;
+			}
+			.col-main {
+				display: grid;
+				gap: 2.75em;
+			}
+			.col-rail {
+				display: grid;
+				gap: 1.25em;
+				position: sticky;
+				top: 5.5em;
 			}
 
-			/* ---- Hero ---- */
-			.hero {
-				text-align: center;
-				padding: 3.5em 0 2.5em;
-			}
-			.hero-logo {
-				width: 168px;
-				height: 168px;
-				margin: 0 auto 1.25em;
-				border-radius: 50%;
-				overflow: hidden;
-				box-shadow: var(--box-shadow);
-			}
-			.hero-logo :global(img) {
-				display: block;
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-				transform: scale(1.05);
-				border-radius: 0;
-				margin: 0;
-			}
-			.hero h1 {
-				font-size: 3.2em;
-				line-height: 1.05;
-				margin-bottom: 0.35em;
-			}
-			.hero h1 .pop {
-				color: var(--accent);
-			}
-			.hero .sub {
-				font-size: 1.15em;
-				color: rgb(var(--gray-dark));
-				max-width: 34ch;
-				margin: 0 auto 1.5em;
-			}
-			.cta-row {
-				display: flex;
-				gap: 0.75em;
-				justify-content: center;
-				flex-wrap: wrap;
-			}
+			/* ---- Buttons ---- */
 			.btn {
 				display: inline-block;
 				text-decoration: none;
-				padding: 0.7em 1.5em;
-				border-radius: 999px;
 				font-weight: 700;
-				font-size: 1.02em;
+				border-radius: 999px;
+				white-space: nowrap;
 			}
 			.btn-primary {
 				background: var(--accent);
 				color: #fff;
+				padding: 0.75em 1.6em;
+				font-size: 0.9em;
+				letter-spacing: 0.04em;
 			}
 			.btn-primary:hover {
 				background: var(--accent-dark);
@@ -91,221 +179,312 @@ const featured = posts[0];
 			.btn-ghost {
 				border: 2px solid var(--accent);
 				color: var(--accent);
+				background: #fff;
+				padding: 0.5em 1.1em;
+				font-size: 0.78em;
 			}
 			.btn-ghost:hover {
-				background: var(--accent-tint);
-				color: var(--accent-dark);
+				background: var(--accent);
+				color: #fff;
 			}
 
-			/* ---- Value strip ---- */
-			.values {
+			/* ---- Hero ----
+			   Split rather than text-over-photo: the headline sits on a flat panel so it
+			   stays legible, and the snack mosaic carries "Japanese snacks" on its own. */
+			.hero {
 				display: grid;
-				grid-template-columns: repeat(3, 1fr);
-				gap: 1em;
-				margin: 1em 0 3em;
-			}
-			.value {
-				background: #fff;
-				border: 1px solid rgb(var(--gray-light));
-				border-radius: 14px;
-				padding: 1.25em;
-				text-align: center;
-			}
-			.value .emoji {
-				font-size: 1.8em;
-				display: block;
-				margin-bottom: 0.35em;
-			}
-			.value h3 {
-				font-size: 1.1em;
-				margin-bottom: 0.25em;
-			}
-			.value p {
-				margin: 0;
-				font-size: 0.92em;
-				color: rgb(var(--gray-dark));
-			}
-
-			/* ---- Inaripo greeter ---- */
-			.greeter {
-				display: flex;
-				align-items: center;
-				gap: 1.5em;
-				background: var(--accent-tint);
-				border: 1px solid rgb(var(--gray-light));
-				border-radius: 20px;
-				padding: 1.75em 2em;
-				margin: 0 0 3.5em;
-			}
-			.greeter-text {
-				flex: 1;
-			}
-			.greeter-text .name {
-				font-family: var(--font-heading), serif;
-				font-weight: 700;
-				color: var(--accent-dark);
-				margin: 0 0 0.2em;
-				font-size: 1.15em;
-			}
-			.greeter-text .name .jp {
-				font-weight: 400;
-				font-size: 0.72em;
-				color: rgb(var(--gray));
-				margin-left: 0.3em;
-			}
-			.greeter-text p {
-				margin: 0;
-				color: rgb(var(--gray-dark));
-				font-size: 1.02em;
-			}
-
-			/* ---- Featured ---- */
-			.section-label {
-				text-align: center;
-				text-transform: uppercase;
-				letter-spacing: 0.12em;
-				font-size: 0.8em;
-				font-weight: 700;
-				color: var(--accent);
-				margin-bottom: 0.5em;
-			}
-			.featured {
-				display: grid;
-				grid-template-columns: 1.1fr 1fr;
-				gap: 0;
-				background: #fff;
-				border: 1px solid rgb(var(--gray-light));
+				grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
 				border-radius: 18px;
 				overflow: hidden;
-				box-shadow: var(--box-shadow);
-				margin-bottom: 4em;
+				background: linear-gradient(150deg, #fff 0%, var(--accent-tint) 100%);
+				border: 1px solid rgb(var(--gray-light));
+				box-shadow: 0 6px 20px rgba(var(--gray), 18%);
 			}
-			.featured :global(img) {
+			.hero-copy {
+				padding: 2.6em 2.4em;
+				align-self: center;
+			}
+			.hero-copy h1 {
+				font-size: 2.3em;
+				line-height: 1.2;
+				margin: 0 0 0.45em;
+			}
+			.hero-copy h1 .pop {
+				color: var(--accent);
+			}
+			.hero-copy p {
+				color: rgb(var(--gray-dark));
+				font-size: 0.95em;
+				line-height: 1.7;
+				margin: 0 0 1.6em;
+				max-width: 24em;
+			}
+			.hero-cta {
+				display: flex;
+				align-items: center;
+				gap: 1em;
+				flex-wrap: wrap;
+			}
+			.hero-guide {
+				display: flex;
+				align-items: center;
+				gap: 0.5em;
+				font-size: 0.76em;
+				color: rgb(var(--gray-dark));
+			}
+			/* Packages sit as separate tiles on white rather than a seamless 田 grid,
+			   so the hero reads as a curated shelf instead of a catalogue dump. */
+			.hero-mosaic {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				grid-template-rows: 1fr 1fr;
+				gap: 10px;
+				padding: 10px;
+				background: #fff;
+			}
+			.hero-mosaic :global(img) {
 				display: block;
 				width: 100%;
 				height: 100%;
+				min-height: 0;
 				object-fit: cover;
-				border-radius: 0;
+				border-radius: 10px;
 				margin: 0;
-			}
-			.featured-body {
-				padding: 2em;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-			}
-			.featured-body h2 {
-				font-size: 1.7em;
-				margin-bottom: 0.4em;
-			}
-			.featured-body p {
-				color: rgb(var(--gray-dark));
-				margin-bottom: 1.25em;
-			}
-			.featured-body .btn {
-				align-self: flex-start;
+				box-shadow: 0 2px 8px rgba(var(--gray), 22%);
 			}
 
-			@media (max-width: 720px) {
+			/* ---- Pillars ---- */
+			.pillars {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1.1em;
+			}
+			.pillar {
+				background: #fff;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 16px;
+				padding: 1.3em 1.2em 1.4em;
+				text-align: center;
+				display: flex;
+				flex-direction: column;
+				transition:
+					transform 0.15s ease,
+					box-shadow 0.15s ease;
+			}
+			.pillar:hover {
+				transform: translateY(-3px);
+				box-shadow: 0 10px 26px rgba(var(--gray), 25%);
+			}
+			.pillar h2 {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.4em;
+				font-size: 1.4em;
+				margin: 0 0 0.25em;
+				white-space: nowrap;
+			}
+			.pillar h2 a {
+				color: rgb(var(--black));
+				text-decoration: none;
+				display: flex;
+				align-items: baseline;
+				gap: 0.4em;
+			}
+			.pillar h2 a:hover {
+				color: var(--accent);
+			}
+			.pillar h2 .en {
+				font-family: var(--font-body), sans-serif;
+				font-size: 0.46em;
+				font-weight: 700;
+				letter-spacing: 0.12em;
+				color: var(--accent);
+			}
+			.num {
+				flex: none;
+				width: 1.35em;
+				height: 1.35em;
+				display: grid;
+				place-items: center;
+				border-radius: 50%;
+				background: var(--accent);
+				color: #fff;
+				font-size: 0.62em;
+				font-family: var(--font-body), sans-serif;
+				line-height: 1;
+			}
+			.tagline {
+				margin: 0 0 0.9em;
+				font-size: 0.78em;
+				color: rgb(var(--gray-dark));
+			}
+			.pillar-img {
+				display: block;
+				width: 100%;
+				aspect-ratio: 16 / 10;
+				object-fit: cover;
+				border-radius: 10px;
+				margin: 0 0 0.9em;
+			}
+			.blurb {
+				margin: 0 0 1.1em;
+				font-size: 0.76em;
+				line-height: 1.6;
+				color: rgb(var(--gray-dark));
+				text-align: left;
+			}
+			.pillar .btn-ghost {
+				margin: auto auto 0;
+			}
+
+			/* ---- Areas ---- */
+			.areas {
+				background: #fff;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 16px;
+				padding: 1.6em;
+			}
+			.areas h2 {
+				display: flex;
+				align-items: center;
+				gap: 0.4em;
+				font-size: 1.5em;
+				margin: 0 0 0.2em;
+			}
+			.pin {
+				font-size: 0.8em;
+			}
+			.areas-sub {
+				margin: 0 0 1.2em;
+				font-size: 0.82em;
+				color: rgb(var(--gray-dark));
+			}
+			.area-grid {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 0.8em;
+			}
+			.area-grid a {
+				display: flex;
+				align-items: center;
+				gap: 0.7em;
+				padding: 0.8em 0.9em;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 12px;
+				text-decoration: none;
+				background: #fff;
+				box-shadow: 0 1px 3px rgba(var(--gray), 18%);
+				transition:
+					border-color 0.15s ease,
+					background 0.15s ease,
+					transform 0.15s ease,
+					box-shadow 0.15s ease;
+			}
+			.area-grid a:hover {
+				border-color: var(--accent);
+				background: var(--accent-tint);
+				transform: translateY(-2px);
+				box-shadow: 0 5px 14px rgba(var(--gray), 26%);
+			}
+			.area-emoji {
+				font-size: 1.6em;
+				line-height: 1;
+				flex: none;
+			}
+			.area-text {
+				min-width: 0;
+			}
+			.area-name {
+				display: flex;
+				align-items: baseline;
+				gap: 0.4em;
+				font-weight: 700;
+				color: rgb(var(--black));
+				font-size: 0.92em;
+				line-height: 1.3;
+			}
+			.area-en {
+				font-weight: 400;
+				font-size: 0.62em;
+				letter-spacing: 0.06em;
+				color: var(--accent);
+			}
+			.area-known {
+				display: block;
+				font-size: 0.66em;
+				line-height: 1.4;
+				color: rgb(var(--gray));
+			}
+
+			/* ---- Latest ---- */
+			.latest h2 {
+				font-size: 1.5em;
+				margin: 0 0 0.8em;
+			}
+			.latest-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1.1em;
+			}
+			.more {
+				margin: 1.1em 0 0;
+				text-align: center;
+			}
+			.more a {
+				font-size: 0.85em;
+				font-weight: 700;
+				text-decoration: none;
+			}
+			.more a:hover {
+				text-decoration: underline;
+			}
+
+			/* ---- Responsive ---- */
+			@media (max-width: 1024px) {
+				.home {
+					grid-template-columns: 1fr;
+				}
+				.col-rail {
+					position: static;
+					grid-template-columns: 1fr 1fr;
+				}
+			}
+			@media (max-width: 860px) {
+				.pillars,
+				.latest-grid,
+				.area-grid {
+					grid-template-columns: 1fr 1fr;
+				}
+			}
+			@media (max-width: 640px) {
+				main {
+					padding: 1em 0 2em;
+				}
 				.hero {
-					padding: 2em 0 1.5em;
-				}
-				.hero h1 {
-					font-size: 2.2em;
-				}
-				.hero-logo {
-					width: 130px;
-					height: 130px;
-				}
-				.values {
 					grid-template-columns: 1fr;
 				}
-				.featured {
+				.hero-copy {
+					padding: 1.75em 1.5em;
+					order: 2;
+				}
+				.hero-copy h1 {
+					font-size: 2em;
+				}
+				.hero-mosaic {
+					grid-template-columns: repeat(4, 1fr);
+					aspect-ratio: 4 / 1;
+				}
+				.pillars,
+				.latest-grid,
+				.area-grid,
+				.col-rail {
 					grid-template-columns: 1fr;
-				}
-				.featured-body {
-					padding: 1.5em;
-				}
-				.greeter {
-					flex-direction: column;
-					text-align: center;
-					gap: 1em;
-					padding: 1.5em;
 				}
 			}
 		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section class="hero wrap">
-				<div class="hero-logo">
-					<Image src={Logo} alt={`${SITE_TITLE} logo`} width={336} height={336} />
-				</div>
-				<h1>日本のお菓子を、<span class="pop">まるごと</span>ガイド。</h1>
-				<p class="sub">
-					日本の名品スイーツとコンビニの逸品を、実際に食べてランキング。買うべきものがひと目で分かる。
-				</p>
-				<div class="cta-row">
-					{
-						featured && (
-							<a class="btn btn-primary" href={`/blog/${featured.id}/`}>
-								まずは一番人気のガイドから
-							</a>
-						)
-					}
-					<a class="btn btn-ghost" href="/blog">ガイドをすべて見る</a>
-				</div>
-			</section>
-
-			<section class="wrap">
-				<div class="values">
-					<div class="value">
-						<span class="emoji">😋</span>
-						<h3>推測じゃなく実食</h3>
-						<p>食感も味も、全部自分たちで食べて確かめています。</p>
-					</div>
-					<div class="value">
-						<span class="emoji">🧳</span>
-						<h3>旅に強い</h3>
-						<p>どこで買えるか、値段、持ち帰りやすさまで。</p>
-					</div>
-					<div class="value">
-						<span class="emoji">🎯</span>
-						<h3>とにかく簡潔</h3>
-						<p>短いランキング。勝者だけ手に取り、あとはスキップ。</p>
-					</div>
-				</div>
-
-				<div class="greeter">
-					<Inaripo expression="yum" size={104} />
-					<div class="greeter-text">
-						<p class="name">はじめまして、いなりぽです！</p>
-						<p>日本中を食べ歩く子ぎつね。ぼくの鼻について来れば、おいしいものに出会えるよ。🦊</p>
-					</div>
-				</div>
-			</section>
-
-			{
-				featured && (
-					<section class="wrap">
-						<p class="section-label">最新ガイド</p>
-						<article class="featured">
-							{featured.data.heroImage && (
-								<Image width={720} height={540} src={featured.data.heroImage} alt="" />
-							)}
-							<div class="featured-body">
-								<h2>{featured.data.title}</h2>
-								<p>{featured.data.description}</p>
-								<a class="btn btn-primary" href={`/blog/${featured.id}/`}>
-									ガイドを読む
-								</a>
-							</div>
-						</article>
-					</section>
-				)
-			}
-		</main>
-		<Footer />
 	</body>
 </html>

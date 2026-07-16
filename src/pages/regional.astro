@@ -1,0 +1,134 @@
+---
+import { getCollection } from 'astro:content';
+import CategoryPage from '../layouts/CategoryPage.astro';
+import Inaripo from '../components/Inaripo.astro';
+import PostCard from '../components/PostCard.astro';
+import { REGIONS } from '../consts';
+
+const posts = (await getCollection('blog', ({ data }) => data.category === 'regional')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const areas = REGIONS.map((region) => ({
+	...region,
+	posts: posts.filter((p) => p.data.region === region.id),
+}));
+---
+
+<CategoryPage category="regional" posts={posts}>
+	<nav slot="intro" class="jump" aria-label="エリアで移動">
+		{
+			REGIONS.map((r) => (
+				<a href={`#${r.id}`}>
+					<span aria-hidden="true">{r.emoji}</span> {r.name}
+				</a>
+			))
+		}
+	</nav>
+
+	{
+		areas.map((area) => (
+			<section id={area.id} class="area">
+				<h2>
+					<span class="emoji" aria-hidden="true">
+						{area.emoji}
+					</span>
+					{area.name}
+					<span class="en">{area.nameEn}</span>
+					<span class="known">{area.known}</span>
+				</h2>
+				{area.posts.length > 0 ? (
+					<div class="grid">
+						{area.posts.map((post) => (
+							<PostCard post={post} showCategory={false} />
+						))}
+					</div>
+				) : (
+					<p class="soon">
+						<Inaripo expression="yum" size={52} />
+						<span>
+							{area.name}のガイドは取材中！ぼくがいま食べに行ってるところ。
+						</span>
+					</p>
+				)}
+			</section>
+		))
+	}
+</CategoryPage>
+
+<style>
+	.jump {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5em;
+	}
+	.jump a {
+		background: #fff;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 999px;
+		padding: 0.4em 0.9em;
+		font-size: 0.78em;
+		font-weight: 700;
+		text-decoration: none;
+		color: rgb(var(--black));
+	}
+	.jump a:hover {
+		border-color: var(--accent);
+		background: var(--accent-tint);
+		color: var(--accent-dark);
+	}
+
+	.area {
+		scroll-margin-top: 5.5em;
+	}
+	.area h2 {
+		display: flex;
+		align-items: baseline;
+		gap: 0.4em;
+		font-size: 1.4em;
+		margin: 0 0 0.7em;
+		padding-bottom: 0.4em;
+		border-bottom: 2px solid var(--accent-tint);
+	}
+	.area h2 .emoji {
+		font-size: 0.9em;
+	}
+	.area h2 .en {
+		font-family: var(--font-body), sans-serif;
+		font-size: 0.45em;
+		font-weight: 700;
+		letter-spacing: 0.1em;
+		color: var(--accent);
+	}
+	.area h2 .known {
+		margin-left: auto;
+		font-family: var(--font-body), sans-serif;
+		font-size: 0.45em;
+		font-weight: 400;
+		color: rgb(var(--gray));
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.1em;
+	}
+	.soon {
+		display: flex;
+		align-items: center;
+		gap: 0.8em;
+		margin: 0;
+		padding: 1em 1.2em;
+		background: var(--accent-tint);
+		border-radius: 12px;
+		font-size: 0.82em;
+		color: rgb(var(--gray-dark));
+	}
+	@media (max-width: 640px) {
+		.grid {
+			grid-template-columns: 1fr;
+		}
+		.area h2 .known {
+			display: none;
+		}
+	}
+</style>

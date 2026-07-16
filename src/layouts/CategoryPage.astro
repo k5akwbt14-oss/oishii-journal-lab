@@ -1,0 +1,184 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Inaripo from '../components/Inaripo.astro';
+import PostCard from '../components/PostCard.astro';
+import SnackBoxRail from '../components/SnackBoxRail.astro';
+import { CATEGORIES, SITE_TITLE, type CategoryId } from '../consts';
+
+interface Props {
+	category: CategoryId;
+	posts: CollectionEntry<'blog'>[];
+}
+
+const { category, posts } = Astro.props;
+const meta = CATEGORIES.find((c) => c.id === category)!;
+
+// Pages that need their own arrangement (e.g. /regional groups by area) pass it
+// as the default slot; otherwise we render the standard card grid.
+const hasCustomBody = Astro.slots.has('default');
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<BaseHead title={`${meta.title}（${meta.titleEn}） | ${SITE_TITLE}`} description={meta.blurb} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<header class="page-head">
+				<p class="crumb"><a href="/">ホーム</a> <span aria-hidden="true">/</span> {meta.title}</p>
+				<h1>
+					<span class="num" aria-hidden="true">{meta.num}</span>
+					{meta.title}
+					<span class="en">{meta.titleEn}</span>
+				</h1>
+				<p class="tagline">{meta.tagline}</p>
+				<p class="blurb">{meta.blurb}</p>
+			</header>
+
+			<div class="body">
+				<div class="col-main">
+					<slot name="intro" />
+					<slot />
+
+					{
+						hasCustomBody ? null : posts.length > 0 ? (
+							<div class="grid">
+								{posts.map((post) => (
+									<PostCard post={post} showCategory={false} />
+								))}
+							</div>
+						) : (
+							<p class="empty">
+								<Inaripo expression="surprise" size={72} />
+								<span>
+									このカテゴリの記事はまだ準備中です。<br />
+									もうちょっとだけ待ってね！
+								</span>
+							</p>
+						)
+					}
+				</div>
+				<div class="col-rail">
+					<SnackBoxRail />
+				</div>
+			</div>
+		</main>
+		<Footer />
+
+		<style>
+			main {
+				width: 1180px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+				padding: 2em 0 3em;
+			}
+			.page-head {
+				margin-bottom: 2em;
+			}
+			.crumb {
+				font-size: 0.75em;
+				color: rgb(var(--gray));
+				margin: 0 0 0.6em;
+			}
+			.crumb a {
+				text-decoration: none;
+			}
+			.crumb a:hover {
+				text-decoration: underline;
+			}
+			h1 {
+				display: flex;
+				align-items: baseline;
+				gap: 0.45em;
+				font-size: 2.4em;
+				margin: 0 0 0.2em;
+			}
+			.num {
+				flex: none;
+				align-self: center;
+				width: 1.5em;
+				height: 1.5em;
+				display: grid;
+				place-items: center;
+				border-radius: 50%;
+				background: var(--accent);
+				color: #fff;
+				font-size: 0.5em;
+				font-family: var(--font-body), sans-serif;
+				line-height: 1;
+			}
+			h1 .en {
+				font-family: var(--font-body), sans-serif;
+				font-size: 0.4em;
+				font-weight: 700;
+				letter-spacing: 0.12em;
+				color: var(--accent);
+			}
+			.tagline {
+				margin: 0 0 0.3em;
+				font-weight: 700;
+				color: rgb(var(--gray-dark));
+			}
+			.blurb {
+				margin: 0;
+				font-size: 0.9em;
+				color: rgb(var(--gray-dark));
+				max-width: 46em;
+			}
+
+			.body {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) 300px;
+				gap: 1.75em;
+				align-items: start;
+			}
+			.col-main {
+				display: grid;
+				gap: 1.75em;
+				align-content: start;
+			}
+			.col-rail {
+				position: sticky;
+				top: 5.5em;
+			}
+			.grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 1.1em;
+			}
+			.empty {
+				display: flex;
+				align-items: center;
+				gap: 1em;
+				background: var(--accent-tint);
+				border-radius: 16px;
+				padding: 1.5em;
+				margin: 0;
+				font-size: 0.9em;
+				line-height: 1.6;
+			}
+
+			@media (max-width: 1024px) {
+				.body {
+					grid-template-columns: 1fr;
+				}
+				.col-rail {
+					position: static;
+				}
+			}
+			@media (max-width: 640px) {
+				h1 {
+					font-size: 1.8em;
+				}
+				.grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</body>
+</html>

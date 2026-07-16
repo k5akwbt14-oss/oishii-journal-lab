@@ -1,0 +1,95 @@
+---
+import { WHY_US } from '../consts';
+import Inaripo from './Inaripo.astro';
+
+const icons = {
+	check: 'M20 6 9 17l-5-5',
+	shield: 'M12 3l8 3v6c0 5-3.4 8.4-8 9.5C7.4 20.4 4 17 4 12V6z',
+	gift: 'M20 12v9H4v-9M2 8h20v4H2zM12 8V21M12 8S10.5 3 8 3a2.5 2.5 0 0 0 0 5M12 8s1.5-5 4-5a2.5 2.5 0 0 1 0 5',
+};
+---
+
+<aside class="why" aria-labelledby="why-heading">
+	<h2 id="why-heading">選ばれる理由</h2>
+
+	<ul>
+		{
+			WHY_US.map((item) => (
+				<li>
+					<svg viewBox="0 0 24 24" aria-hidden="true" width="26" height="26" fill="none">
+						<path
+							d={icons[item.icon]}
+							stroke="currentColor"
+							stroke-width="1.8"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
+					</svg>
+					<div>
+						<h3>{item.title}</h3>
+						<p>{item.body}</p>
+					</div>
+				</li>
+			))
+		}
+	</ul>
+
+	<p class="mascot">
+		<Inaripo expression="happy" size={64} />
+		<span>案内役はぼく、<strong>いなりぽ</strong>。<br />鼻について来てね。🦊</span>
+	</p>
+</aside>
+
+<style>
+	.why {
+		background: var(--accent-tint);
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 16px;
+		padding: 1.2em;
+	}
+	h2 {
+		text-align: center;
+		font-size: 0.95em;
+		color: var(--accent-dark);
+		margin: 0 0 1em;
+	}
+	ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		gap: 0.9em;
+	}
+	li {
+		display: flex;
+		gap: 0.7em;
+		align-items: flex-start;
+	}
+	li svg {
+		flex: none;
+		color: var(--accent);
+		margin-top: 0.15em;
+	}
+	li h3 {
+		font-size: 0.88em;
+		margin: 0 0 0.15em;
+		font-family: var(--font-body), sans-serif;
+	}
+	li p {
+		margin: 0;
+		font-size: 0.78em;
+		line-height: 1.55;
+		color: rgb(var(--gray-dark));
+	}
+	.mascot {
+		display: flex;
+		align-items: center;
+		gap: 0.75em;
+		margin: 1.2em 0 0;
+		padding-top: 1.1em;
+		border-top: 1px solid rgba(var(--gray), 20%);
+		font-size: 0.8em;
+		line-height: 1.5;
+		color: rgb(var(--gray-dark));
+	}
+</style>

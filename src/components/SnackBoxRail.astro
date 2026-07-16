@@ -1,0 +1,150 @@
+---
+import { SNACK_BOXES } from '../consts';
+---
+
+<aside class="rail" aria-labelledby="rail-heading">
+	<h2 id="rail-heading" class="rail-heading">
+		<span class="dots" aria-hidden="true"></span>
+		人気のスナックBOX
+	</h2>
+
+	{
+		SNACK_BOXES.map((box) => (
+			<article class="box">
+				<span class="badge" aria-hidden="true">
+					{box.badge}
+				</span>
+				<div class="box-body">
+					<h3>{box.name}</h3>
+					<p class="stars" aria-label={`5点中${box.rating}点`}>
+						<span aria-hidden="true">
+							{'★'.repeat(box.rating)}
+							<span class="star-off">{'★'.repeat(5 - box.rating)}</span>
+						</span>
+					</p>
+					<p class="blurb">{box.blurb}</p>
+					<p class="offer">{box.offer}</p>
+					{/* NOTE: placeholder — swap for the real affiliate URL once approved. */}
+					<a class="visit" href={box.href} rel="sponsored noopener" target="_blank">
+						{box.name}を見る <span aria-hidden="true">→</span>
+					</a>
+				</div>
+			</article>
+		))
+	}
+
+	<a class="rail-more" href="/boxes">3つを詳しく比べる <span aria-hidden="true">→</span></a>
+</aside>
+
+<style>
+	.rail {
+		background: #fff;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 16px;
+		padding: 1.1em 1.1em 1.3em;
+	}
+	.rail-heading {
+		display: flex;
+		align-items: center;
+		gap: 0.45em;
+		font-size: 0.82em;
+		font-family: var(--font-body), sans-serif;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+		margin: 0 0 0.9em;
+		padding-bottom: 0.8em;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+	.dots {
+		width: 14px;
+		height: 10px;
+		flex: none;
+		background:
+			radial-gradient(circle, var(--accent) 55%, transparent 57%) 0 0/6px 6px no-repeat,
+			radial-gradient(circle, var(--accent-bright) 55%, transparent 57%) 8px 4px/6px 6px no-repeat;
+	}
+
+	.box {
+		display: flex;
+		gap: 0.8em;
+		padding: 1.2em 0;
+		border-bottom: 1px solid rgb(var(--gray-light));
+	}
+	.box:last-child {
+		border-bottom: 0;
+		padding-bottom: 0;
+	}
+	.badge {
+		flex: none;
+		width: 52px;
+		height: 52px;
+		display: grid;
+		place-items: center;
+		border-radius: 10px;
+		background: var(--accent-tint);
+		color: var(--accent-dark);
+		font-family: var(--font-heading), serif;
+		font-size: 1.5em;
+		font-weight: 700;
+		line-height: 1;
+	}
+	.box-body {
+		min-width: 0;
+	}
+	.box h3 {
+		font-size: 1em;
+		margin: 0 0 0.25em;
+		letter-spacing: 0.02em;
+	}
+	.stars {
+		margin: 0 0 0.5em;
+		font-size: 0.8em;
+		color: var(--accent-bright);
+		line-height: 1;
+	}
+	.star-off {
+		color: rgb(var(--gray-light));
+	}
+	.blurb {
+		margin: 0 0 0.5em;
+		font-size: 0.78em;
+		line-height: 1.7;
+		color: rgb(var(--gray-dark));
+	}
+	.offer {
+		margin: 0 0 0.6em;
+		font-size: 0.78em;
+		font-weight: 700;
+		color: var(--accent-dark);
+	}
+	.visit {
+		display: inline-block;
+		background: var(--accent);
+		color: #fff;
+		text-decoration: none;
+		font-size: 0.72em;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		padding: 0.5em 0.9em;
+		border-radius: 6px;
+	}
+	.visit:hover {
+		background: var(--accent-dark);
+		color: #fff;
+	}
+
+	.rail-more {
+		display: block;
+		margin-top: 1.1em;
+		padding-top: 1em;
+		border-top: 1px solid rgb(var(--gray-light));
+		text-align: center;
+		font-size: 0.78em;
+		font-weight: 700;
+		text-decoration: none;
+	}
+	.rail-more:hover {
+		text-decoration: underline;
+	}
+</style>

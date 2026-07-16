@@ -1,0 +1,10 @@
+---
+import { getCollection } from 'astro:content';
+import CategoryPage from '../layouts/CategoryPage.astro';
+
+const posts = (await getCollection('blog', ({ data }) => data.category === 'classics')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<CategoryPage category="classics" posts={posts} />
