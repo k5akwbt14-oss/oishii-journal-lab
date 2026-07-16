@@ -9,7 +9,7 @@ import PostCard from '../components/PostCard.astro';
 import { SITE_TITLE, SNACK_BOXES } from '../consts';
 
 const DESCRIPTION =
-	"A subscription shows up every month, so the first pick matters most. We opened Bokksu, Sakuraco, and TokyoTreat ourselves and show you exactly what's inside. By the end of this page, you'll know which box is yours.";
+	"A subscription shows up every month, so the first pick matters most. We break down exactly what goes into Bokksu, Sakuraco, and TokyoTreat — the good and the catch. By the end of this page, you'll know which box is yours.";
 
 // Box reviews & comparisons live in the Features pillar.
 const related = (await getCollection('blog', ({ data }) => data.category === 'features')).sort(
