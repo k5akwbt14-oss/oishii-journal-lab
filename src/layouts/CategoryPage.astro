@@ -22,19 +22,19 @@ const hasCustomBody = Astro.slots.has('default');
 ---
 
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 	<head>
-		<BaseHead title={`${meta.title}（${meta.titleEn}） | ${SITE_TITLE}`} description={meta.blurb} />
+		<BaseHead title={`${meta.title} | ${SITE_TITLE}`} description={meta.blurb} />
 	</head>
 	<body>
 		<Header />
 		<main>
 			<header class="page-head">
-				<p class="crumb"><a href="/">ホーム</a> <span aria-hidden="true">/</span> {meta.title}</p>
+				<p class="crumb"><a href="/">Home</a> <span aria-hidden="true">/</span> {meta.title}</p>
 				<h1>
 					<span class="num" aria-hidden="true">{meta.num}</span>
 					{meta.title}
-					<span class="en">{meta.titleEn}</span>
+					<span class="en">{meta.titleJa}</span>
 				</h1>
 				<p class="tagline">{meta.tagline}</p>
 				<p class="blurb">{meta.blurb}</p>
@@ -56,8 +56,8 @@ const hasCustomBody = Astro.slots.has('default');
 							<p class="empty">
 								<Inaripo expression="surprise" size={72} />
 								<span>
-									このカテゴリは現在調査中。<br />
-									ぼくの胃袋が、もうすぐ結論を出します。
+									This category is still under investigation.<br />
+									My stomach is close to a verdict.
 								</span>
 							</p>
 						)

@@ -9,33 +9,33 @@ import PostCard from '../components/PostCard.astro';
 import { SITE_TITLE, SNACK_BOXES } from '../consts';
 
 const DESCRIPTION =
-	'定期便は毎月続くものだから、最初の選択がいちばん大事。実際に開けたBokksu・Sakuraco・TokyoTreatの中身を隠さず見せます。読み終える頃には、あなたに合う一箱が分かります。';
+	"A subscription shows up every month, so the first pick matters most. We opened Bokksu, Sakuraco, and TokyoTreat ourselves and show you exactly what's inside. By the end of this page, you'll know which box is yours.";
 
-// Box reviews & comparisons live in the 特集 pillar.
+// Box reviews & comparisons live in the Features pillar.
 const related = (await getCollection('blog', ({ data }) => data.category === 'features')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 	<head>
-		<BaseHead title={`スナックBOX | ${SITE_TITLE}`} description={DESCRIPTION} />
+		<BaseHead title={`Snack Boxes | ${SITE_TITLE}`} description={DESCRIPTION} />
 	</head>
 	<body>
 		<Header />
 		<main>
 			<header class="page-head">
-				<p class="crumb"><a href="/">ホーム</a> <span aria-hidden="true">/</span> スナックBOX</p>
-				<h1>契約する前に、<span class="pop">読む場所。</span></h1>
+				<p class="crumb"><a href="/">Home</a> <span aria-hidden="true">/</span> Snack Boxes</p>
+				<h1>Before you subscribe, <span class="pop">read this.</span></h1>
 				<p class="lead">{DESCRIPTION}</p>
 			</header>
 
-			<AffiliateDisclosure />
+			<AffiliateDisclosure text="If you subscribe through a link on this page, we may earn a commission." />
 
 			{/* NOTE: every href below is a placeholder — swap in the real affiliate URLs
 			    once Bokksu (Impact) / Sakuraco / TokyoTreat are approved. */}
-			<section class="boxes" aria-label="スナックBOX一覧">
+			<section class="boxes" aria-label="The snack box lineup">
 				{
 					SNACK_BOXES.map((box) => (
 						<article class="box">
@@ -45,7 +45,7 @@ const related = (await getCollection('blog', ({ data }) => data.category === 'fe
 								</span>
 								<div>
 									<h2>{box.name}</h2>
-									<p class="stars" aria-label={`5点中${box.rating}点`}>
+									<p class="stars" aria-label={`Rated ${box.rating} out of 5 stars`}>
 										<span aria-hidden="true">
 											{'★'.repeat(box.rating)}
 											<span class="star-off">{'★'.repeat(5 - box.rating)}</span>
@@ -55,7 +55,7 @@ const related = (await getCollection('blog', ({ data }) => data.category === 'fe
 							</header>
 
 							<p class="best-for">
-								<span>こんな人に</span>
+								<span>Best for</span>
 								{box.bestFor}
 							</p>
 							<p class="blurb">{box.blurb}</p>
@@ -74,7 +74,7 @@ const related = (await getCollection('blog', ({ data }) => data.category === 'fe
 							<footer class="box-foot">
 								<p class="offer">{box.offer}</p>
 								<a class="visit" href={box.href} rel="sponsored noopener" target="_blank">
-									{box.name}を見る <span aria-hidden="true">→</span>
+									Visit {box.name} <span aria-hidden="true">→</span>
 								</a>
 							</footer>
 						</article>
@@ -85,14 +85,14 @@ const related = (await getCollection('blog', ({ data }) => data.category === 'fe
 			<p class="note">
 				<Inaripo expression="happy" size={56} />
 				<span>
-					値段や個数は変わりやすいので、ここには書きません。最新は公式サイトで確認を。ぼくは食べるほうの担当なので。
+					Prices and item counts change too often to print here — check each official site for the latest. I handle the eating side of this operation.
 				</span>
 			</p>
 
 			{
 				related.length > 0 && (
 					<section class="related" aria-labelledby="related-heading">
-						<h2 id="related-heading">じっくり読みたい人へ</h2>
+						<h2 id="related-heading">Want the full story?</h2>
 						<div class="related-grid">
 							{related.map((post) => (
 								<PostCard post={post} showCategory={false} />

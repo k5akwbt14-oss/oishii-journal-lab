@@ -30,7 +30,7 @@ const latest = posts.slice(0, 3);
 ---
 
 <!doctype html>
-<html lang="ja">
+<html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
@@ -42,15 +42,15 @@ const latest = posts.slice(0, 3);
 					<!-- ---- Hero ---- -->
 					<section class="hero">
 						<div class="hero-copy">
-							<h1>全部、<span class="pop">食べてから</span>書く。</h1>
+							<h1>We eat <span class="pop">everything</span>. Then we write.</h1>
 							<p>
-								広告みたいな褒め言葉はナシ。ハイチュウのその先にある「間違いない」日本のお菓子だけを、実際に食べて選びました。
+								No empty praise. We ate our way past Hi-Chew to find the Japanese snacks you can't go wrong with.
 							</p>
 							<div class="hero-cta">
-								<a class="btn btn-primary" href="#pillars">名品に会う <span aria-hidden="true">→</span></a>
+								<a class="btn btn-primary" href="#pillars">Meet the good stuff <span aria-hidden="true">→</span></a>
 								<span class="hero-guide">
 									<Inaripo expression="yum" size={48} />
-									<span>調査担当の<strong>いなりぽ</strong>です。調査方法は「食べる」。</span>
+									<span>I'm <strong>Inaripo</strong>, snack investigator. Research method: eating.</span>
 								</span>
 							</div>
 						</div>
@@ -63,7 +63,7 @@ const latest = posts.slice(0, 3);
 					</section>
 
 					<!-- ---- The three pillars ---- -->
-					<section id="pillars" class="pillars" aria-label="3つのカテゴリ">
+					<section id="pillars" class="pillars" aria-label="The three categories">
 						{
 							CATEGORIES.map((c) => (
 								<article class="pillar">
@@ -73,14 +73,14 @@ const latest = posts.slice(0, 3);
 										</span>
 										<a href={c.href}>
 											{c.title}
-											<span class="en">{c.titleEn}</span>
+											<span class="en">{c.titleJa}</span>
 										</a>
 									</h2>
 									<p class="tagline">{c.tagline}</p>
 									<Image class="pillar-img" src={covers[c.id]} alt="" width={420} height={260} />
 									<p class="blurb">{c.blurb}</p>
 									<a class="btn btn-ghost" href={c.href}>
-										{c.title}を見る <span aria-hidden="true">→</span>
+										See {c.title} <span aria-hidden="true">→</span>
 									</a>
 								</article>
 							))
@@ -91,9 +91,9 @@ const latest = posts.slice(0, 3);
 					<section class="areas" aria-labelledby="areas-heading">
 						<h2 id="areas-heading">
 							<span class="pin" aria-hidden="true">📍</span>
-							ご当地から探す
+							Explore by region
 						</h2>
-						<p class="areas-sub">その土地でしか買えない名品。行き先から選んでください。</p>
+						<p class="areas-sub">Gems you can only buy where they're made. Pick a destination.</p>
 						<ul class="area-grid">
 							{
 								REGIONS.map((r) => (
@@ -105,7 +105,7 @@ const latest = posts.slice(0, 3);
 											<span class="area-text">
 												<span class="area-name">
 													{r.name}
-													<span class="area-en">{r.nameEn}</span>
+													<span class="area-en">{r.nameJa}</span>
 												</span>
 												<span class="area-known">{r.known}</span>
 											</span>
@@ -118,11 +118,11 @@ const latest = posts.slice(0, 3);
 
 					<!-- ---- Latest ---- -->
 					<section class="latest" aria-labelledby="latest-heading">
-						<h2 id="latest-heading">最新ガイド</h2>
+						<h2 id="latest-heading">Latest Guides</h2>
 						<div class="latest-grid">
 							{latest.map((post) => <PostCard post={post} />)}
 						</div>
-						<p class="more"><a href="/blog">ガイドをすべて見る <span aria-hidden="true">→</span></a></p>
+						<p class="more"><a href="/blog">See all guides <span aria-hidden="true">→</span></a></p>
 					</section>
 				</div>
 

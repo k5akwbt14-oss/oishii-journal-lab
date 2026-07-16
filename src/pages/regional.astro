@@ -16,7 +16,7 @@ const areas = REGIONS.map((region) => ({
 ---
 
 <CategoryPage category="regional" posts={posts}>
-	<nav slot="intro" class="jump" aria-label="エリアで移動">
+	<nav slot="intro" class="jump" aria-label="Jump to a region">
 		{
 			REGIONS.map((r) => (
 				<a href={`#${r.id}`}>
@@ -34,7 +34,7 @@ const areas = REGIONS.map((region) => ({
 						{area.emoji}
 					</span>
 					{area.name}
-					<span class="en">{area.nameEn}</span>
+					<span class="en">{area.nameJa}</span>
 					<span class="known">{area.known}</span>
 				</h2>
 				{area.posts.length > 0 ? (
@@ -47,7 +47,7 @@ const areas = REGIONS.map((region) => ({
 					<p class="soon">
 						<Inaripo expression="yum" size={52} />
 						<span>
-							{area.name}は現在調査中。ぼくの胃袋が、もうすぐ結論を出します。
+							{area.name} is still under investigation. My stomach is close to a verdict.
 						</span>
 					</p>
 				)}

@@ -9,11 +9,11 @@ interface Props {
 	amazon?: boolean;
 }
 const {
-	text = "この記事にはアフィリエイトリンクが含まれます。リンク経由でご購入いただくと、当サイトが少額の手数料を受け取ることがあります（あなたの負担は増えません）。掲載しているのは、本当に価値があると考えたお菓子だけです。",
+	text = "This post contains affiliate links. If you buy through one, we may earn a small commission (at no extra cost to you). We only feature snacks we genuinely think are worth your money.",
 	amazon = false,
 } = Astro.props;
-// Amazon Associates Operating Agreement requires this exact sentence to appear.
-const amazonText = "当サイトはAmazonアソシエイトとして、適格販売により収益を得ています。";
+// Amazon Associates Operating Agreement requires this sentence ("we" variant — verify against the OA at launch).
+const amazonText = "As an Amazon Associate, we earn from qualifying purchases.";
 ---
 
 <aside class="affiliate-disclosure" role="note" aria-label="Affiliate disclosure">

@@ -5,7 +5,7 @@ import { SNACK_BOXES } from '../consts';
 <aside class="rail" aria-labelledby="rail-heading">
 	<h2 id="rail-heading" class="rail-heading">
 		<span class="dots" aria-hidden="true"></span>
-		箱ごと、取り寄せてみた。
+		We ordered every box ourselves.
 	</h2>
 
 	{
@@ -16,7 +16,7 @@ import { SNACK_BOXES } from '../consts';
 				</span>
 				<div class="box-body">
 					<h3>{box.name}</h3>
-					<p class="stars" aria-label={`5点中${box.rating}点`}>
+					<p class="stars" aria-label={`Rated ${box.rating} out of 5 stars`}>
 						<span aria-hidden="true">
 							{'★'.repeat(box.rating)}
 							<span class="star-off">{'★'.repeat(5 - box.rating)}</span>
@@ -26,14 +26,14 @@ import { SNACK_BOXES } from '../consts';
 					<p class="offer">{box.offer}</p>
 					{/* NOTE: placeholder — swap for the real affiliate URL once approved. */}
 					<a class="visit" href={box.href} rel="sponsored noopener" target="_blank">
-						{box.name}を見る <span aria-hidden="true">→</span>
+						Visit {box.name} <span aria-hidden="true">→</span>
 					</a>
 				</div>
 			</article>
 		))
 	}
 
-	<a class="rail-more" href="/boxes">3つを詳しく比べる <span aria-hidden="true">→</span></a>
+	<a class="rail-more" href="/boxes">Compare all three <span aria-hidden="true">→</span></a>
 </aside>
 
 <style>
