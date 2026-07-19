@@ -87,7 +87,7 @@ export const OMIYAGE_BLOCKS: RegionBlock[] = [
 				ja: '岩手',
 				items: [
 					{ name: 'Kamome no Tamago', hook: 'Seagull-egg cakes: white bean paste in a marbled shell', link: japanOnly },
-					{ name: 'Nanbu senbei', hook: 'Rustic wheat crackers studded with peanuts or sesame', link: amazon('nanbu senbei') },
+					{ name: 'Nanbu senbei', hook: 'Rustic wheat crackers studded with peanuts or sesame', link: japanOnly },
 				],
 			},
 			{
@@ -444,7 +444,7 @@ export const OMIYAGE_BLOCKS: RegionBlock[] = [
 				name: 'Kochi',
 				ja: '高知',
 				items: [
-					{ name: 'Imo kenpi', hook: 'Candied sweet-potato matchsticks — one bag is never enough', link: amazon('imo kenpi') },
+					{ name: 'Imo kenpi', hook: 'Candied sweet-potato matchsticks — one bag is never enough', link: japanOnly },
 				],
 			},
 		],
