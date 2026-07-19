@@ -1,98 +1,72 @@
 ---
-// Clickable deformed "bento-block" map of Japan for the /regional hub.
-// Original SVG artwork (no stock assets). Active areas link to the region
-// sections below (#hokkaido etc. — ids come from REGIONS in consts.ts);
-// gray areas are not yet covered and pop an Inaripo "still investigating"
-// bubble instead. Active = solid stroke + emoji, inactive = dashed stroke,
-// so the two states never rely on color alone.
+// Clickable deformed map of Japan for the /regional hub — v2 artwork.
+// Original SVG (no stock assets; the operator's reference images are
+// unlicensed stock previews and must never be published). Honshu is a single
+// landmass path with one shared coastline stroke so the country reads as one
+// silhouette; regions are fill overlays with thin internal borders. Signed off
+// at 85/100 by the Gemini art-director review (2026-07-19).
+// Active areas link to the region sections below (#hokkaido etc. — ids come
+// from REGIONS in consts.ts); gray areas pop an Inaripo "still investigating"
+// bubble. Active = warm pink fill + emoji + red label, inactive = greige fill
+// + gray label, so the states never rely on color alone.
 import Inaripo from './Inaripo.astro';
 ---
 
 <figure class="jmap" aria-label="Map of Japan — pick a region">
-	<svg viewBox="0 0 900 760" role="group" aria-label="Deformed map of Japan. Colored regions link to their snack sections; gray regions are still under investigation.">
-		<!-- ===== Hokkaido (active) ===== -->
-		<a class="area" href="#hokkaido" aria-label="Hokkaido — jump to Hokkaido snacks">
-			<rect class="cell" x="690" y="50" width="160" height="80" rx="14" />
-			<rect class="cell" x="650" y="136" width="200" height="62" rx="14" />
-			<rect class="cell" x="640" y="204" width="80" height="42" rx="12" />
-			<text class="label" x="750" y="176"><tspan class="emoji">🐻</tspan> Hokkaido</text>
-		</a>
+	<svg viewBox="0 0 1020 900" role="group" aria-label="Deformed map of Japan. Pink regions link to their snack sections; gray regions are still under investigation.">
+		<!-- ===== Honshu: one landmass (base) ===== -->
+		<path class="land" d="M 832,312 L 846,284 L 868,299 L 879,281 L 906,306 L 916,420 L 908,520 L 921,562 L 913,602 L 928,634 L 896,650 L 876,634 L 858,656 L 821,650 L 770,672 L 708,676 L 660,662 L 632,684 L 598,712 L 560,700 L 548,672 L 524,664 L 506,636 L 436,646 L 352,648 L 286,638 L 254,616 L 264,586 L 332,566 L 422,560 L 509,585 L 560,568 L 610,560 L 654,558 L 662,554 C 658,530 664,510 674,502 C 682,496 690,508 690,520 C 690,532 692,542 696,548 L 724,540 L 756,532 L 790,540 L 772,470 L 786,394 L 806,338 Z"/>
 
-		<!-- ===== Tohoku (soon) ===== -->
+		<!-- ===== soon regions on Honshu (hover + bubble) ===== -->
 		<g class="soon" role="button" tabindex="0" data-name="Tohoku" aria-label="Tohoku — still under investigation">
-			<rect class="cell" x="680" y="250" width="80" height="54" rx="12" />
-			<rect class="cell" x="766" y="250" width="80" height="54" rx="12" />
-			<rect class="cell" x="680" y="310" width="80" height="54" rx="12" />
-			<rect class="cell" x="766" y="310" width="80" height="54" rx="12" />
-			<rect class="cell" x="680" y="370" width="80" height="54" rx="12" />
-			<rect class="cell" x="766" y="370" width="80" height="54" rx="12" />
-			<text class="label" x="763" y="342">Tohoku</text>
+			<path class="fill" d="M 832,312 L 846,284 L 868,299 L 879,281 L 906,306 L 916,420 L 908,520 L 790,540 L 772,470 L 786,394 L 806,338 Z"/>
+			<text class="label" x="848" y="428">Tohoku</text>
 		</g>
-
-		<!-- ===== Tokyo / Kanto (active) ===== -->
-		<a class="area" href="#tokyo" aria-label="Tokyo — jump to Tokyo snacks">
-			<rect class="cell" x="640" y="455" width="86" height="56" rx="12" />
-			<rect class="cell" x="732" y="455" width="86" height="56" rx="12" />
-			<rect class="cell" x="640" y="517" width="86" height="56" rx="12" />
-			<rect class="cell" x="732" y="517" width="86" height="56" rx="12" />
-			<text class="label" x="729" y="522"><tspan class="emoji">🗼</tspan> Tokyo</text>
-		</a>
-
-		<!-- ===== Chubu (soon) ===== -->
 		<g class="soon" role="button" tabindex="0" data-name="Chubu" aria-label="Chubu — still under investigation">
-			<rect class="cell" x="448" y="398" width="34" height="26" rx="9" />
-			<rect class="cell" x="430" y="430" width="90" height="52" rx="12" />
-			<rect class="cell" x="526" y="430" width="90" height="52" rx="12" />
-			<rect class="cell" x="430" y="488" width="90" height="52" rx="12" />
-			<rect class="cell" x="526" y="488" width="90" height="52" rx="12" />
-			<text class="label" x="523" y="490">Chubu</text>
+			<path class="fill" d="M 790,540 L 776,566 L 781,634 L 821,650 L 770,672 L 708,676 L 660,662 L 648,600 L 654,558 L 662,554 C 658,530 664,510 674,502 C 682,496 690,508 690,520 C 690,532 692,542 696,548 L 724,540 L 756,532 Z"/>
+			<text class="label" x="716" y="606">Chubu</text>
 		</g>
-
-		<!-- ===== Kansai: Kyoto & Osaka (active) ===== -->
-		<a class="area" href="#kyoto" aria-label="Kansai: Kyoto and Osaka — jump to Kyoto snacks">
-			<rect class="hit" x="255" y="440" width="165" height="135" />
-			<rect class="cell" x="270" y="455" width="64" height="50" rx="12" />
-			<rect class="cell" x="340" y="455" width="64" height="50" rx="12" />
-			<rect class="cell" x="270" y="511" width="64" height="50" rx="12" />
-			<rect class="cell" x="340" y="511" width="64" height="50" rx="12" />
-			<text class="label two" x="337" y="497"><tspan class="emoji">⛩️</tspan> Kyoto</text>
-			<text class="label two" x="337" y="534"><tspan class="emoji">🐙</tspan> Osaka</text>
-		</a>
-
-		<!-- ===== Chugoku (soon) ===== -->
 		<g class="soon" role="button" tabindex="0" data-name="Chugoku" aria-label="Chugoku — still under investigation">
-			<rect class="cell" x="100" y="430" width="76" height="48" rx="12" />
-			<rect class="cell" x="182" y="430" width="76" height="48" rx="12" />
-			<rect class="cell" x="100" y="484" width="76" height="48" rx="12" />
-			<rect class="cell" x="182" y="484" width="76" height="48" rx="12" />
-			<text class="label" x="179" y="487">Chugoku</text>
+			<path class="fill" d="M 509,585 L 506,636 L 436,646 L 352,648 L 286,638 L 254,616 L 264,586 L 332,566 L 422,560 Z"/>
+			<text class="label" x="378" y="612">Chugoku</text>
 		</g>
 
-		<!-- ===== Shikoku (soon) ===== -->
-		<g class="soon" role="button" tabindex="0" data-name="Shikoku" aria-label="Shikoku — still under investigation">
-			<rect class="cell" x="170" y="565" width="70" height="44" rx="12" />
-			<rect class="cell" x="246" y="565" width="70" height="44" rx="12" />
-			<text class="label" x="243" y="592">Shikoku</text>
+		<!-- ===== active regions on Honshu ===== -->
+		<a class="area" href="#tokyo" aria-label="Tokyo — jump to Tokyo snacks">
+			<path class="fill" d="M 790,540 L 908,520 L 921,562 L 913,602 L 928,634 L 896,650 L 876,634 L 858,656 L 821,650 L 781,634 L 776,566 Z"/>
+			<text class="label" x="850" y="592"><tspan class="emoji">🗼</tspan> Tokyo</text>
+		</a>
+		<a class="area" href="#kyoto" aria-label="Kansai: Kyoto and Osaka — jump to Kyoto snacks">
+			<path class="fill" d="M 654,558 L 648,600 L 660,662 L 632,684 L 598,712 L 560,700 L 548,672 L 524,664 L 506,636 L 509,585 L 560,568 L 610,560 Z"/>
+			<text class="label two" x="580" y="612"><tspan class="emoji">⛩️</tspan> Kyoto</text>
+			<text class="label two" x="580" y="642"><tspan class="emoji">🐙</tspan> Osaka</text>
+		</a>
+
+		<!-- internal region borders -->
+		<path class="border" d="M 790,540 L 908,520 M 790,540 L 776,566 L 781,634 L 821,650 M 654,558 L 648,600 L 660,662 M 509,585 L 506,636"/>
+		<!-- shared coastline on top -->
+		<path class="coast" d="M 832,312 L 846,284 L 868,299 L 879,281 L 906,306 L 916,420 L 908,520 L 921,562 L 913,602 L 928,634 L 896,650 L 876,634 L 858,656 L 821,650 L 770,672 L 708,676 L 660,662 L 632,684 L 598,712 L 560,700 L 548,672 L 524,664 L 506,636 L 436,646 L 352,648 L 286,638 L 254,616 L 264,586 L 332,566 L 422,560 L 509,585 L 560,568 L 610,560 L 654,558 L 662,554 C 658,530 664,510 674,502 C 682,496 690,508 690,520 C 690,532 692,542 696,548 L 724,540 L 756,532 L 790,540 L 772,470 L 786,394 L 806,338 Z"/>
+
+		<!-- ===== islands ===== -->
+		<a class="area island" href="#hokkaido" aria-label="Hokkaido — jump to Hokkaido snacks">
+			<path class="fill isl" d="M 814,70 L 884,96 L 964,156 L 910,196 L 928,246 L 874,264 L 824,240 L 796,276 L 764,262 L 778,212 L 756,176 L 778,126 Z"/>
+			<text class="label" x="850" y="192"><tspan class="emoji">🐻</tspan> Hokkaido</text>
+		</a>
+		<g class="soon island" role="button" tabindex="0" data-name="Shikoku" aria-label="Shikoku — still under investigation">
+			<path class="fill isl" d="M 336,684 L 424,672 L 480,684 L 472,724 L 402,744 L 336,730 Z"/>
+			<text class="label" x="406" y="714">Shikoku</text>
 		</g>
-
-		<!-- ===== Kyushu (active) ===== -->
-		<a class="area" href="#kyushu" aria-label="Kyushu — jump to Kyushu snacks">
-			<rect class="hit" x="14" y="542" width="155" height="180" />
-			<rect class="cell" x="28" y="555" width="60" height="48" rx="12" />
-			<rect class="cell" x="94" y="555" width="60" height="48" rx="12" />
-			<rect class="cell" x="28" y="609" width="60" height="48" rx="12" />
-			<rect class="cell" x="94" y="609" width="60" height="48" rx="12" />
-			<rect class="cell" x="28" y="663" width="60" height="44" rx="12" />
-			<text class="label sm" x="91" y="637"><tspan class="emoji">🌋</tspan> Kyushu</text>
+		<a class="area island" href="#kyushu" aria-label="Kyushu — jump to Kyushu snacks">
+			<path class="fill isl" d="M 168,604 L 214,594 L 242,618 L 232,658 L 248,694 L 222,738 L 202,776 L 158,784 L 134,742 L 144,694 L 130,650 L 140,614 Z"/>
+			<text class="label sm" x="196" y="696"><tspan class="emoji">🌋</tspan> Kyushu</text>
 		</a>
-
-		<!-- ===== Okinawa (active) ===== -->
-		<a class="area" href="#okinawa" aria-label="Okinawa — jump to Okinawa snacks">
-			<rect class="hit" x="8" y="700" width="230" height="58" />
-			<rect class="frame" x="20" y="712" width="90" height="46" rx="10" />
-			<rect class="cell" x="32" y="722" width="66" height="26" rx="9" />
-			<text class="label side" x="122" y="742"><tspan class="emoji">🌺</tspan> Okinawa</text>
+		<a class="area island" href="#okinawa" aria-label="Okinawa — jump to Okinawa snacks">
+			<rect class="hit" x="30" y="780" width="230" height="64" />
+			<rect class="fill isl" x="44" y="798" width="62" height="30" rx="12"/>
+			<text class="label sm side" x="116" y="820"><tspan class="emoji">🌺</tspan> Okinawa</text>
 		</a>
+		<!-- Sado, decorative -->
+		<path class="sado" aria-hidden="true" d="M 738,466 C 734,456 742,448 752,446 C 762,444 768,452 764,462 C 760,470 748,474 742,470 C 740,469 739,468 738,466 Z"/>
 	</svg>
 
 	<figcaption class="legend">
@@ -154,34 +128,54 @@ import Inaripo from './Inaripo.astro';
 		height: auto;
 	}
 
-	/* --- shared cell look --- */
-	.cell {
+	/* --- landmass & coastline --- */
+	.land {
+		fill: #efe9dd;
+	}
+	.coast {
+		fill: none;
+		stroke: #7c5c49;
+		stroke-width: 5;
+		stroke-linejoin: round;
+		stroke-linecap: round;
+		pointer-events: none;
+	}
+	.border {
+		fill: none;
+		stroke: #7c5c49;
+		stroke-width: 2;
+		stroke-dasharray: 6 5;
+		opacity: 0.5;
+		pointer-events: none;
+	}
+	.sado {
+		fill: #efe9dd;
+		stroke: #7c5c49;
 		stroke-width: 3;
-		transition: fill 0.15s ease;
+		stroke-linejoin: round;
 	}
 	.hit {
 		fill: transparent;
 	}
+
+	/* --- labels --- */
 	.label {
 		font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
-		font-size: 24px;
+		font-size: 26px;
 		font-weight: 800;
 		text-anchor: middle;
 		paint-order: stroke;
-		stroke: #fff;
+		stroke: #fffdf8;
 		stroke-width: 5;
 		stroke-linejoin: round;
 		pointer-events: none;
 	}
-	.label.two {
+	.label.two,
+	.label.sm {
 		font-size: 21px;
 	}
 	.label.side {
 		text-anchor: start;
-		font-size: 20px;
-	}
-	.label.sm {
-		font-size: 19px;
 	}
 	.emoji {
 		stroke: none;
@@ -191,36 +185,38 @@ import Inaripo from './Inaripo.astro';
 	.area {
 		cursor: pointer;
 	}
-	.area .cell,
-	.area .frame {
+	.area .fill {
 		fill: var(--accent-tint);
 		stroke: var(--accent);
+		stroke-width: 2.5;
+		stroke-linejoin: round;
+		transition: fill 0.15s ease;
 	}
-	.area .frame {
-		fill: none;
-		stroke-dasharray: 4 6;
-		stroke-width: 2;
+	.area .fill.isl {
+		stroke: #7c5c49;
+		stroke-width: 5;
 	}
 	.area .label {
 		fill: var(--accent-dark);
 	}
-	.area:hover .cell,
-	.area:focus-visible .cell {
+	.area:hover .fill,
+	.area:focus-visible .fill {
 		fill: #fbd9cb;
 	}
 	.area:hover,
 	.area:focus-visible {
 		outline: none;
 	}
-	.area:focus-visible .cell {
+	.area:focus-visible .fill {
+		stroke: var(--accent);
 		stroke-width: 5;
 	}
 	@media (prefers-reduced-motion: no-preference) {
-		.area {
+		.area.island {
 			transition: transform 0.15s ease;
 		}
-		.area:hover,
-		.area:focus-visible {
+		.area.island:hover,
+		.area.island:focus-visible {
 			transform: translateY(-3px);
 		}
 	}
@@ -229,24 +225,26 @@ import Inaripo from './Inaripo.astro';
 	.soon {
 		cursor: help;
 	}
-	.soon .cell {
+	.soon .fill {
 		fill: #efe9dd;
-		stroke: #c7bda9;
-		stroke-dasharray: 7 5;
+		stroke: none;
+		transition: fill 0.15s ease;
+	}
+	.soon .fill.isl {
+		stroke: #7c5c49;
+		stroke-width: 5;
+		stroke-linejoin: round;
 	}
 	.soon .label {
 		fill: #948a76;
 		font-size: 21px;
 	}
-	.soon:hover .cell,
-	.soon:focus-visible .cell {
-		fill: #e7dfcf;
+	.soon:hover .fill,
+	.soon:focus-visible .fill {
+		fill: #e5dcc9;
 	}
 	.soon:focus-visible {
 		outline: none;
-	}
-	.soon:focus-visible .cell {
-		stroke-width: 4;
 	}
 
 	/* --- legend: parked in the map's empty top-left "ocean" --- */
@@ -277,7 +275,7 @@ import Inaripo from './Inaripo.astro';
 	}
 	.soon-key i {
 		background: #efe9dd;
-		border: 2px dashed #c7bda9;
+		border: 2px solid #7c5c49;
 	}
 
 	/* --- Inaripo bubble --- */
