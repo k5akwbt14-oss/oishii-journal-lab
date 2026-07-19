@@ -27,9 +27,6 @@ const areas = REGIONS.map((region) => ({
 		areas.map((area) => (
 			<section id={`guide-${area.id}`} class="area">
 				<h2>
-					<span class="emoji" aria-hidden="true">
-						{area.emoji}
-					</span>
 					{area.name}
 					<span class="en">{area.nameJa}</span>
 					<span class="known">{area.known}</span>
@@ -69,9 +66,6 @@ const areas = REGIONS.map((region) => ({
 		margin: 0 0 0.7em;
 		padding-bottom: 0.4em;
 		border-bottom: 2px solid var(--accent-tint);
-	}
-	.area h2 .emoji {
-		font-size: 0.9em;
 	}
 	.area h2 .en {
 		font-family: var(--font-body), sans-serif;

@@ -1,4 +1,4 @@
----
+﻿---
 // Clickable Japan map for the /regional hub — v4.
 // Base artwork: the operator-supplied deformed prefecture map (licensed,
 // per operator 2026-07-19), recolored to the site palette with
@@ -36,28 +36,28 @@ import mapImage from '../assets/illust/japan-map.webp';
 			<!-- active regions -->
 			<a class="area" href="#hokkaido" aria-label="Hokkaido — jump to Hokkaido snacks">
 				<rect class="hit" x="758" y="48" width="285" height="232" />
-				<text class="label" x="900" y="180"><tspan class="emoji">🐻</tspan> Hokkaido</text>
+				<text class="label" x="900" y="180">Hokkaido</text>
 			</a>
 			<a class="area" href="#tokyo" aria-label="Tokyo — jump to Tokyo snacks">
 				<rect class="hit" x="742" y="575" width="202" height="185" />
-				<text class="label" x="840" y="660"><tspan class="emoji">🗼</tspan> Tokyo</text>
+				<text class="label" x="840" y="660">Tokyo</text>
 			</a>
 			<!-- Kansai cell, split horizontally: top half → Kyoto, bottom half → Osaka -->
 			<a class="area" href="#kyoto" aria-label="Kyoto — jump to Kyoto snacks">
 				<rect class="hit" x="490" y="612" width="162" height="106" />
-				<text class="label two" x="570" y="700"><tspan class="emoji">⛩️</tspan> Kyoto</text>
+				<text class="label two" x="570" y="700">Kyoto</text>
 			</a>
 			<a class="area" href="#osaka" aria-label="Osaka — jump to Osaka snacks">
 				<rect class="hit" x="490" y="718" width="162" height="106" />
-				<text class="label two" x="570" y="734"><tspan class="emoji">🐙</tspan> Osaka</text>
+				<text class="label two" x="570" y="734">Osaka</text>
 			</a>
 			<a class="area" href="#kyushu" aria-label="Kyushu — jump to Kyushu snacks">
 				<rect class="hit" x="88" y="655" width="140" height="255" />
-				<text class="label sm" x="160" y="790"><tspan class="emoji">🌋</tspan> Kyushu</text>
+				<text class="label sm" x="160" y="790">Kyushu</text>
 			</a>
 			<a class="area" href="#okinawa" aria-label="Okinawa — jump to Okinawa snacks">
 				<rect class="hit" x="14" y="800" width="230" height="120" />
-				<text class="label sm side" x="92" y="870"><tspan class="emoji">🌺</tspan> Okinawa</text>
+				<text class="label sm side" x="92" y="870">Okinawa</text>
 			</a>
 		</svg>
 	</div>
@@ -114,9 +114,6 @@ import mapImage from '../assets/illust/japan-map.webp';
 	}
 	.label.side {
 		text-anchor: start;
-	}
-	.emoji {
-		stroke: none;
 	}
 
 	/* --- active (linked) regions --- */
