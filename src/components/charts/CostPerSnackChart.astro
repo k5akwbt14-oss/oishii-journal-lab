@@ -1,0 +1,142 @@
+---
+// Cost-per-snack comparison: Amazon variety pack vs. three subscription boxes.
+// Horizontal range strips on a shared $0-$2.60 axis. Emphasis form: the Amazon
+// point wears the site accent, the subscription ranges wear a de-emphasis gray.
+// Static data from official pricing pages, July 2026. No props.
+const MAX = 2.6; // axis domain in dollars
+const pct = (v: number) => ((v / MAX) * 100).toFixed(2);
+
+const rows = [
+	{ name: 'Amazon variety pack', min: 0.87, max: 0.87, label: '$0.87' },
+	{ name: 'Sakuraco', min: 1.6, max: 1.9, label: '$1.60–$1.90' },
+	{ name: 'Bokksu', min: 1.6, max: 2.0, label: '$1.60–$2.00' },
+	{ name: 'TokyoTreat', min: 1.65, max: 2.5, label: '$1.65–$2.50' },
+];
+
+const ticks = [
+	{ at: 0, label: '$0' },
+	{ at: 1, label: '$1' },
+	{ at: 2, label: '$2' },
+];
+---
+
+<figure class="chart">
+	<p class="chart-title">Cost per snack</p>
+	<p class="sr-only">
+		Chart comparing cost per snack. Amazon variety pack: $0.87 per snack.
+		Sakuraco: $1.60 to $1.90 per snack. Bokksu: $1.60 to $2.00 per snack.
+		TokyoTreat: $1.65 to $2.50 per snack. The Amazon variety pack works out to
+		roughly half the per-snack cost of the subscription boxes.
+	</p>
+	<div class="plot" aria-hidden="true">
+		{
+			rows.map((r) => (
+				<div class="row">
+					<p class="row-head">
+						<span class="row-name">{r.name}</span>
+						<span class="row-val">{r.label}</span>
+					</p>
+					<div class="track">
+						{r.min === r.max ? (
+							<span class="dot" style={`left:${pct(r.min)}%`} />
+						) : (
+							<span
+								class="pill"
+								style={`left:${pct(r.min)}%; width:${(((r.max - r.min) / MAX) * 100).toFixed(2)}%`}
+							/>
+						)}
+					</div>
+				</div>
+			))
+		}
+		<div class="axis">
+			{
+				ticks.map((t) => (
+					<span class={`tick${t.at === 0 ? ' tick-first' : ''}`} style={`left:${pct(t.at)}%`}>
+						{t.label}
+					</span>
+				))
+			}
+		</div>
+	</div>
+	<figcaption>Data from official pricing pages as of July 2026.</figcaption>
+</figure>
+
+<style>
+	.chart {
+		margin: 2.5em 0;
+	}
+	.chart-title {
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin: 0 0 0.75em;
+	}
+	.plot {
+		max-width: 560px;
+	}
+	.row {
+		margin-bottom: 0.9em;
+	}
+	.row-head {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0 0.75em;
+		margin: 0 0 0.25em;
+		font-size: 0.75em;
+		line-height: 1.4;
+	}
+	.row-name {
+		font-weight: 600;
+		color: rgb(var(--black));
+	}
+	.row-val {
+		color: rgb(var(--gray-dark));
+	}
+	.track {
+		position: relative;
+		height: 12px;
+		border-radius: 6px;
+		background: rgb(var(--gray-light));
+	}
+	.pill {
+		position: absolute;
+		top: 0;
+		height: 12px;
+		border-radius: 6px;
+		background: rgb(var(--gray));
+	}
+	.dot {
+		position: absolute;
+		top: 50%;
+		width: 14px;
+		height: 14px;
+		border-radius: 50%;
+		background: var(--accent);
+		transform: translate(-50%, -50%);
+		box-shadow: 0 0 0 2px var(--cream); /* surface ring */
+	}
+	.axis {
+		position: relative;
+		height: 1.5em;
+		margin-top: 0.25em;
+		border-top: 1px solid rgba(var(--gray), 45%);
+	}
+	.tick {
+		position: absolute;
+		top: 0.2em;
+		transform: translateX(-50%);
+		font-size: 0.7em;
+		color: rgb(var(--gray));
+		font-variant-numeric: tabular-nums;
+	}
+	.tick-first {
+		transform: none;
+	}
+	figcaption {
+		margin-top: 0.75em;
+		font-size: 0.75em;
+		color: rgb(var(--gray));
+	}
+</style>

@@ -10,12 +10,15 @@ import InaripoBubble from '../../components/InaripoBubble.astro';
 import Callout from '../../components/Callout.astro';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import AffiliateButton from '../../components/AffiliateButton.astro';
+import CostPerSnackChart from '../../components/charts/CostPerSnackChart.astro';
+import PlanLadderChart from '../../components/charts/PlanLadderChart.astro';
+import WhatsInsideChart from '../../components/charts/WhatsInsideChart.astro';
 
 {/* NOTE: Box buttons point at each official site UNMONETIZED until the affiliate applications (Bokksu via Impact, Sakuraco, TokyoTreat) are approved — swap each href for the real tracking link, then remove this note. Amazon links are live (tag oishiijournal-20). Prices/themes verified against the official sites 2026-07-19. */}
 
 Every month, thousands of Americans pay a company in Tokyo about $35 to mail them a box of snacks they did not choose and mostly cannot pronounce. Framed that way, it sounds like an expensive hobby. Framed another way — twenty items that never reach US shelves, a tea, and a guide explaining all of it — it might be the best $35 on your credit card statement.
 
-The honest answer depends on what you are buying snacks *for*. If the goal is maximum snacks for minimum money, no subscription survives the math — Amazon wins every time. If the goal is things you cannot buy in the US, with the story attached, the boxes earn their price — and which box depends on which kind of snack person you are.
+The honest answer depends on what you are buying snacks *for*. Maximum snacks for minimum money? No subscription survives the math — Amazon wins every time. Things you cannot buy in the US, with the story attached? The boxes earn their price — and which box depends on which kind of snack person you are.
 
 <AffiliateDisclosure amazon={true} />
 
@@ -63,7 +66,36 @@ The honest answer depends on what you are buying snacks *for*. If the goal is ma
   .ratebox td span { color: var(--accent, #c8412c); letter-spacing: 0.12em; }
 `}</style>
 
-Where those stars come from: **value** goes to Sakuraco because roughly the same checkout money buys ~20 snacks *plus* a paired tea *plus* a monthly home good — the other two deliver snacks and paper. **Discovery** goes to Bokksu, whose regional makers mostly do not export at all, while Sakuraco works a known traditional lane and TokyoTreat remixes brands you already recognize. **Giftability** is a two-way tie — Bokksu's culture guide and Sakuraco's keepsake both explain the gift for you — while TokyoTreat is a party box you open yourself, not one you wrap.
+<style>{`
+  .persona-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1rem; margin: 1.5rem 0; }
+  .persona-card { background: #fff; border: 1px solid var(--accent-tint, #fdeee8); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 4px rgba(130, 110, 104, 0.15); display: flex; flex-direction: column; }
+  .persona-quote { margin: 0; background: var(--accent, #c8412c); color: #fff; font-family: var(--font-heading), serif; font-size: 1em; line-height: 1.35; padding: 0.8em 1em; }
+  .persona-body { padding: 0.9em 1em 1em; font-size: 0.88em; line-height: 1.55; display: flex; flex-direction: column; flex: 1; }
+  .persona-pick { margin: 0 0 0.4em; font-family: var(--font-heading), serif; font-size: 1.3em; color: rgb(32, 24, 22); }
+  .persona-body ul { margin: 0 0 0.8em; padding-left: 1.15em; }
+  .persona-body li { margin-bottom: 0.35em; }
+  .persona-body li:last-child { margin-bottom: 0; }
+  .persona-stars { margin: auto 0 0; color: var(--accent-dark, #9c3020); font-size: 0.92em; border-top: 1px solid var(--accent-tint, #fdeee8); padding-top: 0.6em; }
+  .skip-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 0.8rem; margin: 1.2rem 0; }
+  .skip-card { background: var(--accent-tint, #fdeee8); border-radius: 10px; padding: 0.9em 1em; font-size: 0.86em; line-height: 1.5; }
+  .skip-title { margin: 0 0 0.35em; font-family: var(--font-heading), serif; font-weight: 700; font-size: 1.08em; color: var(--accent-dark, #9c3020); }
+  .skip-card p { margin: 0; }
+  .vs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 0.8rem; margin: 1.2rem 0; }
+  .vs-card { background: #fff; border: 1px solid var(--accent-tint, #fdeee8); border-left: 4px solid var(--accent, #c8412c); border-radius: 8px; padding: 0.8em 1em; font-size: 0.9em; line-height: 1.5; }
+  .vs-head { margin: 0 0 0.3em; font-family: var(--font-heading), serif; font-weight: 700; color: var(--accent-dark, #9c3020); }
+  .vs-card p { margin: 0; }
+  .verdict { background: #fff; border: 1px solid var(--accent-tint, #fdeee8); border-radius: 12px; padding: 1.1em 1.2em; margin: 1.2rem 0; }
+  .verdict-lead { margin: 0 0 0.7em; font-size: 0.95em; line-height: 1.55; }
+  .verdict-row { display: flex; flex-wrap: wrap; gap: 0.3em 0.8em; align-items: baseline; padding: 0.55em 0 0; margin-top: 0.55em; border-top: 1px solid var(--accent-tint, #fdeee8); font-size: 0.92em; line-height: 1.5; }
+  .verdict-name { flex: 0 0 6.2em; font-family: var(--font-heading), serif; font-weight: 700; color: var(--accent, #c8412c); }
+  .verdict-row span:last-child { flex: 1 1 12em; }
+`}</style>
+
+**Where the stars come from:**
+
+- **Value → Sakuraco.** Roughly the same checkout money buys ~20 snacks *plus* a paired tea *plus* a monthly home good — the other two deliver snacks and paper.
+- **Discovery → Bokksu.** Its regional makers mostly do not export at all; Sakuraco works a known traditional lane, and TokyoTreat remixes brands you already recognize.
+- **Giftability → a Bokksu–Sakuraco tie.** The culture guide and the keepsake explain the gift for you; TokyoTreat is a party box you open yourself, not one you wrap.
 
 <Callout title="The 10-second answer">
 - **Bokksu** — worth it for discovery and gifting; for a first subscription, you can't go wrong with it.
@@ -75,7 +107,7 @@ Where those stars come from: **value** goes to Sakuraco because roughly the same
 
 ## How much do Japanese snack boxes actually cost?
 
-There is no single sticker price, which is the first thing the marketing pages will not tell you plainly. Every service prices by plan length, and two of the three only reveal the real total at checkout.
+There is no single sticker price: every service prices by plan length, and two of the three only reveal the real total at checkout.
 
 | Box | Per month | What's inside | Cost per snack |
 |---|---|---|---|
@@ -85,21 +117,38 @@ There is no single sticker price, which is the first thing the marketing pages w
 
 <small>*Snacks only — the tea and the ceramic or cloth keepsake ride along free in that math.</small>
 
-Bokksu is the only one that publishes a clean ladder: $39.99 for month-to-month, $35.99 on 3 months, $33.99 on 6, $32.99 on 12, with small welcome gifts on the 3-month-and-up plans as of July 2026. Sakuraco and TokyoTreat calculate the total at checkout, where plan length and promotions move the number inside that ~$32.50–37.50 band.
+<WhatsInsideChart />
+
+<PlanLadderChart />
+
+Bokksu is the only one that publishes a clean ladder — with small welcome gifts on the 3-month-and-up plans as of July 2026 — while Sakuraco and TokyoTreat calculate the total at checkout, where plan length and promotions move the number inside that ~$32.50–37.50 band.
 
 So the cost question resolves to a decision flow, not a number:
 
 - **Testing one month?** Budget the top rate — $39.99 at Bokksu, the upper end of the checkout band elsewhere.
-- **Committing for a year?** About $33 a month, which is roughly $396 a year — judge it as an annual hobby line, because that is what it becomes.
+- **Committing for a year?** About $33 a month — roughly $396 a year — so judge it as an annual hobby line.
 - **Buying one box as a gift?** The month-to-month price is the only number that matters; ignore the ladder.
 
 ## Is a subscription cheaper than buying snacks on Amazon?
 
-No — and it is not close. A [Japanese snack variety pack on Amazon](https://www.amazon.com/s?k=japanese+snack+variety+pack&tag=oishiijournal-20) runs about $25.97 for 30 pieces, or roughly $0.87 per snack. The boxes land at $1.60–2.00 and up. Per snack, Amazon is half the price or better.
+No — and it is not close. A [Japanese snack variety pack on Amazon](https://www.amazon.com/s?k=japanese+snack+variety+pack&tag=oishiijournal-20) runs about $25.97 for 30 pieces — roughly $0.87 per snack, half the box price or better.
 
-But the comparison bends the other way at the edges. Import *singles* — one specific bag of a Japan-only flavor — typically sell in the US at two to five times their Japanese store price, and many of the small-maker items in a Bokksu or Sakuraco box are not exported at any price. Amazon is cheaper per snack; it is not selling the same snacks.
+<CostPerSnackChart />
 
-The honest framing: Amazon is cheaper when the snack is the product. A subscription is cheaper when the *discovery* is the product — twenty things you could not have found, plus the guide that explains them. Decide which one you are actually shopping for, and the price question answers itself.
+The comparison bends the other way at the edges, though. Import *singles* — one specific bag of a Japan-only flavor — typically sell in the US at two to five times their Japanese store price, and many of the small-maker items in a Bokksu or Sakuraco box are not exported at any price. Amazon is cheaper per snack; it is not selling the same snacks.
+
+<div class="vs-grid">
+  <div class="vs-card">
+    <p class="vs-head">Amazon is cheaper when</p>
+    <p>The snack is the product.</p>
+  </div>
+  <div class="vs-card">
+    <p class="vs-head">A box is cheaper when</p>
+    <p>The <em>discovery</em> is the product — twenty things you could not have found, plus the guide that explains them.</p>
+  </div>
+</div>
+
+Decide which one you are actually shopping for, and the price question answers itself.
 
 <InaripoBubble expression="happy">
 I'm Inaripo, snack investigator. Research method: eating. For this article the budget office made me use spreadsheets instead — three pricing pages, a stack of past box manifests, zero snacks expensed. The math above is what survived the audit.
@@ -109,33 +158,85 @@ I'm Inaripo, snack investigator. Research method: eating. For this article the b
 
 The per-box profiles, matched to the person actually ordering. For the full side-by-side — themes, fine print, head-to-head calls — see the [three-box comparison](/blog/japanese-snack-box-comparison/).
 
-### "I want to discover things I can't buy here" → Bokksu
-
-Bokksu's 20–22 items lean on small regional makers whose products do not leave Japan through normal retail, and the 20–24 page culture guide turns each one from a mystery into a story. That guide is also why the box gifts so well — the recipient gets context, not just calories. *Value ★★☆ · Discovery ★★★ · Giftability ★★★.* The per-item math and plan-length advice get a [full Bokksu breakdown](/blog/bokksu-review/) of their own.
-
-### "I want tea, tradition, and a keepsake" → Sakuraco
-
-About 20 items, mostly *wagashi* (traditional Japanese sweets), a Japanese tea paired to the month's theme, and the showpiece: a monthly home good — ceramics, chopsticks, or a *furoshiki* (a square wrapping cloth) — from traditional makers. The August 2026 theme, "Discovering Mt. Fuji," continues a deliberate Yamanashi arc; this is Japan as a quiet monthly ritual. *Value ★★★ · Discovery ★★☆ · Giftability ★★★.*
-
-### "I want big brands, drinks, and fun" → TokyoTreat
-
-Fifteen to twenty full-size items built around Japan-exclusive runs from brands Americans already know — KitKat, Pocky, Hi-Chew, Calbee — plus Japanese drinks and sodas, which neither competitor includes. August 2026 is "Okinawa Snackin' Paradise," with orders closing August 15. Loud, current, and best opened with other people in the room. *Value ★★☆ · Discovery ★★☆ · Giftability ★☆☆.*
-
-### "I just want specific snacks, cheap" → Amazon singles
-
-If you already know you want matcha KitKats and nothing else, skip the subscription entirely. Singles and variety packs cost less per snack, arrive faster, and involve zero surprises — our [list of Japanese snacks Americans get hooked on](/blog/japanese-snacks-americans-love/) is the shopping list.
+<div class="persona-grid">
+  <div class="persona-card">
+    <p class="persona-quote">"I want to discover things I can't buy here"</p>
+    <div class="persona-body">
+      <p class="persona-pick">→ Bokksu</p>
+      <ul>
+        <li>20–22 items leaning on small regional makers whose products do not leave Japan through normal retail</li>
+        <li>A 20–24 page culture guide turns each item from a mystery into a story</li>
+        <li>That guide is why it gifts so well — the recipient gets context, not just calories</li>
+        <li>Per-item math and plan-length advice: <a href="/blog/bokksu-review/">the full Bokksu breakdown</a></li>
+      </ul>
+      <p class="persona-stars">Value ★★☆ · Discovery ★★★ · Giftability ★★★</p>
+    </div>
+  </div>
+  <div class="persona-card">
+    <p class="persona-quote">"I want tea, tradition, and a keepsake"</p>
+    <div class="persona-body">
+      <p class="persona-pick">→ Sakuraco</p>
+      <ul>
+        <li>About 20 items, mostly <em>wagashi</em> (traditional Japanese sweets), plus a Japanese tea paired to the month's theme</li>
+        <li>The showpiece: a monthly home good from traditional makers — ceramics, chopsticks, or a <em>furoshiki</em> (a square wrapping cloth)</li>
+        <li>August 2026 theme "Discovering Mt. Fuji" continues a deliberate Yamanashi arc — this is Japan as a quiet monthly ritual</li>
+      </ul>
+      <p class="persona-stars">Value ★★★ · Discovery ★★☆ · Giftability ★★★</p>
+    </div>
+  </div>
+  <div class="persona-card">
+    <p class="persona-quote">"I want big brands, drinks, and fun"</p>
+    <div class="persona-body">
+      <p class="persona-pick">→ TokyoTreat</p>
+      <ul>
+        <li>15–20 full-size items built around Japan-exclusive runs from brands Americans already know — KitKat, Pocky, Hi-Chew, Calbee</li>
+        <li>Japanese drinks and sodas, which neither competitor includes</li>
+        <li>August 2026 is "Okinawa Snackin' Paradise," orders closing August 15 — loud, current, best opened with other people in the room</li>
+      </ul>
+      <p class="persona-stars">Value ★★☆ · Discovery ★★☆ · Giftability ★☆☆</p>
+    </div>
+  </div>
+  <div class="persona-card">
+    <p class="persona-quote">"I just want specific snacks, cheap"</p>
+    <div class="persona-body">
+      <p class="persona-pick">→ Amazon singles</p>
+      <ul>
+        <li>Already know you want matcha KitKats and nothing else? Skip the subscription entirely</li>
+        <li>Singles and variety packs cost less per snack, arrive faster, and involve zero surprises</li>
+        <li>The shopping list: <a href="/blog/japanese-snacks-americans-love/">Japanese snacks Americans get hooked on</a></li>
+      </ul>
+      <p class="persona-stars">No box needed — buy exactly what you want</p>
+    </div>
+  </div>
+</div>
 
 ## When is a snack subscription NOT worth it?
 
 Three cases where the answer is a clear no:
 
-- **You have a strict food allergy.** Every box is a surprise selection by design, and allergen information lives in the booklet that arrives *with* the snacks. Buy specific single items you can vet first instead.
-- **You only want the classics.** If the wish list is Pocky, ramune, and familiar KitKats, a box charges you a discovery premium for discoveries you did not order.
-- **You are optimizing snacks per dollar.** At $0.87 per snack, the Amazon variety pack beats every subscription on this page, permanently. No box will out-math it, and none of them is trying to.
+<div class="skip-grid">
+  <div class="skip-card">
+    <p class="skip-title">Strict food allergy</p>
+    <p>Every box is a surprise selection by design, and allergen info lives in the booklet that arrives <em>with</em> the snacks. Buy specific single items you can vet first instead.</p>
+  </div>
+  <div class="skip-card">
+    <p class="skip-title">You only want the classics</p>
+    <p>If the wish list is Pocky, ramune, and familiar KitKats, a box charges you a discovery premium for discoveries you did not order.</p>
+  </div>
+  <div class="skip-card">
+    <p class="skip-title">Optimizing snacks per dollar</p>
+    <p>At $0.87 per snack, the Amazon variety pack beats every subscription on this page, permanently. No box will out-math it, and none of them is trying to.</p>
+  </div>
+</div>
 
 ## So, worth it?
 
-For the right person, yes — and the right person is specific. If you want a guided tour of snacks that never reach US shelves, or a gift that explains itself, a subscription is worth the roughly $33–40 a month, and for most first-timers you can't go wrong with **Bokksu**. If your ideal is tea, tradition, and a keepsake, **Sakuraco** quietly offers the most for the money. If it is big brands and sodas with the family, **TokyoTreat** — just not as a wrapped gift.
+<div class="verdict">
+  <p class="verdict-lead">For the right person, yes — a guided tour of snacks that never reach US shelves, or a gift that explains itself, is worth the roughly $33–40 a month.</p>
+  <div class="verdict-row"><span class="verdict-name">Bokksu</span><span>For most first-timers you can't go wrong with Bokksu.</span></div>
+  <div class="verdict-row"><span class="verdict-name">Sakuraco</span><span>Tea, tradition, and a keepsake — quietly the most for the money.</span></div>
+  <div class="verdict-row"><span class="verdict-name">TokyoTreat</span><span>Big brands and sodas with the family — just not as a wrapped gift.</span></div>
+</div>
 
 Start with the shortest plan, and let the first box make the long-term call.
 

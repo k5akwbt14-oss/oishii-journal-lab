@@ -1,0 +1,180 @@
+---
+// "What ~$35 buys you": side-by-side stacks of labeled blocks, one column per
+// box, colored by item type (snacks / tea / home good / paper guide). Every
+// block carries its own text label, so color is never the only channel.
+// Palette validated with the dataviz six-checks script on the cream surface.
+// Static data as of July 2026. No props.
+type Item = { type: 'snacks' | 'tea' | 'good' | 'guide'; label: string; sub?: string };
+
+const boxes: { name: string; items: Item[] }[] = [
+	{
+		name: 'Bokksu',
+		items: [
+			{ type: 'snacks', label: '20–22 snacks' },
+			{ type: 'tea', label: 'Tea' },
+			{ type: 'guide', label: 'Culture guide', sub: '20–24 pages' },
+		],
+	},
+	{
+		name: 'Sakuraco',
+		items: [
+			{ type: 'snacks', label: 'About 20 snacks' },
+			{ type: 'tea', label: 'Paired tea' },
+			{ type: 'good', label: 'Home good', sub: 'ceramics, chopsticks, or furoshiki' },
+			{ type: 'guide', label: 'Guide', sub: '24 pages' },
+		],
+	},
+	{
+		name: 'TokyoTreat',
+		items: [
+			{ type: 'snacks', label: '15–20 full-size snacks and drinks' },
+			{ type: 'guide', label: 'Booklet', sub: 'about 20 pages' },
+		],
+	},
+];
+
+const key = [
+	{ type: 'snacks', label: 'Snacks' },
+	{ type: 'tea', label: 'Tea' },
+	{ type: 'good', label: 'Home good' },
+	{ type: 'guide', label: 'Paper guide' },
+];
+---
+
+<figure class="chart">
+	<p class="chart-title">What about $35 a month buys you</p>
+	<div class="key" aria-hidden="true">
+		{
+			key.map((k) => (
+				<span class="chip">
+					<span class={`swatch ${k.type}`} />
+					{k.label}
+				</span>
+			))
+		}
+	</div>
+	<div class="boxes">
+		{
+			boxes.map((b) => (
+				<section class="box">
+					<p class="box-name">{b.name}</p>
+					<ul class="stack">
+						{b.items.map((i) => (
+							<li class={`block ${i.type}`}>
+								<span class="block-label">{i.label}</span>
+								{i.sub && <span class="block-sub">{i.sub}</span>}
+							</li>
+						))}
+					</ul>
+				</section>
+			))
+		}
+	</div>
+	<figcaption>Box contents as of July 2026.</figcaption>
+</figure>
+
+<style>
+	.chart {
+		margin: 2.5em 0;
+	}
+	.chart-title {
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin: 0 0 0.5em;
+	}
+	.key {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35em 1.1em;
+		margin-bottom: 0.9em;
+		font-size: 0.72em;
+		color: rgb(var(--gray-dark));
+	}
+	.chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4em;
+	}
+	.swatch {
+		width: 10px;
+		height: 10px;
+		border-radius: 3px;
+		flex: none;
+	}
+	.boxes {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 12px;
+		align-items: start;
+	}
+	.box-name {
+		font-weight: 600;
+		color: rgb(var(--black));
+		text-align: center;
+		font-size: 0.8em;
+		margin: 0 0 0.5em;
+	}
+	.stack {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 2px; /* surface gap between segments */
+	}
+	.block {
+		border-radius: 4px;
+		padding: 0.6em 0.5em;
+		text-align: center;
+		font-size: 0.72em;
+		line-height: 1.35;
+	}
+	.block-label {
+		display: block;
+		font-weight: 600;
+	}
+	.block-sub {
+		display: block;
+		font-size: 0.9em;
+		margin-top: 0.15em;
+	}
+	/* Item-type colors — categorical trio validated on the cream surface;
+	   the guide block is a deliberate light neutral (context, not a series). */
+	.snacks {
+		background: var(--accent);
+		color: #fff;
+	}
+	.block.snacks {
+		min-height: 6em;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	.tea {
+		background: #35804e;
+		color: #fff;
+	}
+	.good {
+		background: #c08a2e;
+		color: rgb(var(--black));
+	}
+	.guide {
+		background: rgb(var(--gray-light));
+		color: rgb(var(--gray-dark));
+	}
+	figcaption {
+		margin-top: 0.75em;
+		font-size: 0.75em;
+		color: rgb(var(--gray));
+	}
+
+	@media (max-width: 480px) {
+		.boxes {
+			grid-template-columns: 1fr;
+			gap: 1.25em;
+		}
+		.block.snacks {
+			min-height: 3.5em;
+		}
+	}
+</style>
