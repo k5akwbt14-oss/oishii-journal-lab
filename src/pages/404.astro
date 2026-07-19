@@ -1,0 +1,117 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Inaripo from '../components/Inaripo.astro';
+import PostCard from '../components/PostCard.astro';
+import { SITE_TITLE } from '../consts';
+
+const DESCRIPTION = 'That page seems to have been eaten. Here are some guides worth a detour.';
+
+const popular = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Page not found | ${SITE_TITLE}`} description={DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="lost">
+				<Inaripo expression="surprise" size={96} />
+				<h1>404 — page not found</h1>
+				<p>
+					I'm Inaripo, snack investigator. I investigated this page and found nothing edible — or
+					readable. The link may be old, or the page moved.
+				</p>
+				<div class="actions">
+					<a class="btn" href="/">Back to the homepage</a>
+					<a class="btn btn-ghost" href="/blog">Browse all guides</a>
+				</div>
+			</section>
+
+			{
+				popular.length > 0 && (
+					<section class="rescue" aria-labelledby="rescue-heading">
+						<h2 id="rescue-heading">Worth the detour</h2>
+						<div class="rescue-grid">
+							{popular.map((post) => (
+								<PostCard post={post} />
+							))}
+						</div>
+					</section>
+				)
+			}
+		</main>
+		<Footer />
+
+		<style>
+			main {
+				width: 960px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+				padding: 3em 0;
+			}
+			.lost {
+				text-align: center;
+				margin-bottom: 3em;
+			}
+			.lost h1 {
+				font-size: 2.4em;
+				margin: 0.5em 0 0.35em;
+			}
+			.lost p {
+				max-width: 42em;
+				margin: 0 auto 1.4em;
+				color: rgb(var(--gray-dark));
+			}
+			.actions {
+				display: flex;
+				gap: 0.8em;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+			.btn {
+				display: inline-block;
+				text-decoration: none;
+				padding: 0.7em 1.5em;
+				border-radius: 999px;
+				font-weight: 700;
+				background: var(--accent);
+				color: #fff;
+			}
+			.btn:hover {
+				background: var(--accent-dark);
+				color: #fff;
+			}
+			.btn-ghost {
+				background: transparent;
+				color: var(--accent);
+				border: 2px solid var(--accent);
+			}
+			.btn-ghost:hover {
+				background: var(--accent);
+				color: #fff;
+			}
+			.rescue h2 {
+				font-size: 1.5em;
+				margin: 0 0 0.8em;
+			}
+			.rescue-grid {
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1.1em;
+			}
+			@media (max-width: 900px) {
+				.rescue-grid {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
+	</body>
+</html>

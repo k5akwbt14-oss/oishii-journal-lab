@@ -4,23 +4,56 @@
 import '../styles/global.css';
 import type { ImageMetadata } from 'astro';
 import FallbackImage from '../assets/illust/og-default.jpg';
-import { SITE_TITLE } from '../consts';
+import Logo from '../assets/logo.png';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { Font } from 'astro:assets';
 
 interface Props {
 	title: string;
 	description: string;
 	image?: ImageMetadata;
+	/** 'article' for blog posts (adds article:* meta); defaults to 'website'. */
+	type?: 'website' | 'article';
+	publishedTime?: Date;
+	modifiedTime?: Date;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image = FallbackImage } = Astro.props;
+const { title, description, image = FallbackImage, type = 'website', publishedTime, modifiedTime } = Astro.props;
 
 // Google Analytics 4 (property "Oishii Journal Lab Website", stream 15282493033).
-// Emitted only in production builds so localhost visits never pollute the data.
+// Two guards against polluted data: (1) build-time — dev builds and Cloudflare
+// Pages preview-branch builds (CF_PAGES_BRANCH !== 'main') never emit the tag;
+// import.meta.env.PROD alone is NOT enough because it is also true on preview
+// deploys. (2) runtime — the tag only initializes on the real domain, so even a
+// stale build opened elsewhere sends nothing.
 const GA_MEASUREMENT_ID = 'G-3VN9H9H7PN';
-const isProd = import.meta.env.PROD;
+const cfBranch = process.env.CF_PAGES_BRANCH;
+const emitAnalytics = import.meta.env.PROD && (cfBranch === undefined || cfBranch === 'main');
+
+// Organization + WebSite entities, emitted on the home page only.
+const isHome = Astro.url.pathname === '/';
+const homeJsonLd = isHome
+	? JSON.stringify([
+			{
+				'@context': 'https://schema.org',
+				'@type': 'Organization',
+				'@id': new URL('/#organization', Astro.site).href,
+				name: SITE_TITLE,
+				url: Astro.site?.href,
+				logo: new URL(Logo.src, Astro.site).href,
+			},
+			{
+				'@context': 'https://schema.org',
+				'@type': 'WebSite',
+				name: SITE_TITLE,
+				description: SITE_DESCRIPTION,
+				url: Astro.site?.href,
+				publisher: { '@id': new URL('/#organization', Astro.site).href },
+			},
+		])
+	: null;
 ---
 
 <!-- Global Metadata -->
@@ -39,7 +72,7 @@ const isProd = import.meta.env.PROD;
 
 <!-- Google tag (gtag.js) -->
 {
-	isProd && (
+	emitAnalytics && (
 		<>
 			<script
 				is:inline
@@ -51,8 +84,23 @@ const isProd = import.meta.env.PROD;
 				function gtag() {
 					dataLayer.push(arguments);
 				}
-				gtag('js', new Date());
-				gtag('config', GA_MEASUREMENT_ID);
+				if (location.hostname === 'oishiijournal.com' || location.hostname === 'www.oishiijournal.com') {
+					gtag('js', new Date());
+					gtag('config', GA_MEASUREMENT_ID);
+					// Outbound affiliate-click tracking: every monetized link on the site
+					// carries rel="sponsored", so one delegated listener covers articles,
+					// /regional explorer, and /boxes alike.
+					document.addEventListener('click', (event) => {
+						const link =
+							event.target instanceof Element ? event.target.closest('a[rel~="sponsored"]') : null;
+						if (!link) return;
+						gtag('event', 'affiliate_click', {
+							link_url: link.href,
+							link_domain: link.hostname,
+							page_path: location.pathname,
+						});
+					});
+				}
 			</script>
 		</>
 	)
@@ -69,11 +117,23 @@ const isProd = import.meta.env.PROD;
 <meta name="description" content={description} />
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
+<meta property="og:type" content={type} />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image.src, Astro.url)} />
+<meta property="og:site_name" content={SITE_TITLE} />
+{type === 'article' && publishedTime && (
+	<meta property="article:published_time" content={publishedTime.toISOString()} />
+)}
+{type === 'article' && modifiedTime && (
+	<meta property="article:modified_time" content={modifiedTime.toISOString()} />
+)}
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={new URL(image.src, Astro.url)} />
+
+{homeJsonLd && <script type="application/ld+json" set:html={homeJsonLd} />}

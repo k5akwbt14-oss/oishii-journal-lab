@@ -11,19 +11,19 @@ import Callout from '../../components/Callout.astro';
 import AffiliateDisclosure from '../../components/AffiliateDisclosure.astro';
 import AffiliateButton from '../../components/AffiliateButton.astro';
 
-{/* NOTE: Affiliate links are placeholders (href="#") until the affiliate applications are approved. Swap each href for the real tracking link, then remove this note. */}
+{/* NOTE: Box buttons point at each official site UNMONETIZED until the affiliate applications (Bokksu via Impact, Sakuraco, TokyoTreat) are approved — swap each href for the real tracking link, then remove this note. The Amazon link below is live (tag oishiijournal-20). */}
 
 Three boxes rule the world of Japanese snack subscriptions: Bokksu, Sakuraco, and TokyoTreat. They look similar at a glance — and they're built for completely different people.
 
 Pick wrong and you'll be disappointed. Pick right and it's the best $35 you spend that month. Here's how to choose.
 
-<AffiliateDisclosure />
+<AffiliateDisclosure amazon={true} />
 
 <InaripoBubble expression="happy">
 Hi, I'm Inaripo. I've sized up all three — give me about two minutes and I'll find you the right one. 🦊
 </InaripoBubble>
 
-<Callout title="🎯 The 10-second answer">
+<Callout title="The 10-second answer">
 - **Want hard-to-find sweets with the story behind them?** → **Bokksu**
 - **Want traditional Japanese sweets, tea, and a handmade keepsake?** → **Sakuraco**
 - **Want a big, fun, pop-culture box of snacks and drinks?** → **TokyoTreat**
@@ -31,7 +31,7 @@ Hi, I'm Inaripo. I've sized up all three — give me about two minutes and I'll 
 
 ## Side by side
 
-| | 🎁 Bokksu | 🍵 Sakuraco | 🎉 TokyoTreat |
+| | Bokksu | Sakuraco | TokyoTreat |
 |---|---|---|---|
 | **Style** | Hand-picked & hard-to-find | Traditional Japanese sweets | Pop culture & fun |
 | **Items per box** | 20–22 | ~20 | ~15–20 |
@@ -42,17 +42,17 @@ Hi, I'm Inaripo. I've sized up all three — give me about two minutes and I'll 
 | **Vibe** | Refined discovery | Quiet & traditional | Loud & playful |
 | **Price (per month)** | From $39.99 | ~$32.50–37.50* | ~$32.50–37.50* |
 
-<Callout title="💴 A note on pricing">
+<Callout title="A note on pricing">
 Bokksu's $39.99 is the month-to-month rate as shown on its official site; longer plans step it down ($35.99 for 3 months, $33.99 for 6, $32.99 for 12) — that's the "from $32.99" on the buttons below. Sakuraco and TokyoTreat don't publish one flat price on their homepages — costs shift with plan length and promotions, so the figures above are approximate. Always check each service's current pricing before you subscribe.
 </Callout>
 
-## 🎁 Bokksu — best for authentic discovery
+## Bokksu — best for authentic discovery
 
 Bokksu is the "premium discovery" box: 20–22 snacks from small regional Japanese makers — things you genuinely won't find outside Japan — plus tea and a culture guide that actually explains each item.
 
 **Best for:** Beginners and gift-givers who want authentic sweets with real stories, not just the usual classics.
 
-<AffiliateButton href="#" variant="solid" price="From $32.99/mo on longer plans">Check out Bokksu &rarr;</AffiliateButton>
+<AffiliateButton href="https://www.bokksu.com/" variant="solid" price="From $32.99/mo on longer plans">Check out Bokksu &rarr;</AffiliateButton>
 
 Want the deep dive? Read the [full Bokksu review](/blog/bokksu-review/).
 
@@ -60,21 +60,21 @@ Want the deep dive? Read the [full Bokksu review](/blog/bokksu-review/).
 If it's all new to you, Bokksu is the gentlest, most satisfying place to start. 📖
 </InaripoBubble>
 
-## 🍵 Sakuraco — best for tradition and tea
+## Sakuraco — best for tradition and tea
 
 Sakuraco leans traditional: *wagashi* (traditional Japanese sweets) from local artisans, a tea pairing, and — the real showpiece — a **handmade keepsake** each month: ceramics, chopsticks, or a *furoshiki* wrapping cloth. The star here is a quiet, cultural moment, not novelty.
 
 **Best for:** People who love teatime, traditional sweets, and a keepsake they'll actually use.
 
-<AffiliateButton href="#" variant="outline">Check out Sakuraco &rarr;</AffiliateButton>
+<AffiliateButton href="https://sakura.co/" variant="outline">Check out Sakuraco &rarr;</AffiliateButton>
 
-## 🎉 TokyoTreat — best for fun and pop culture
+## TokyoTreat — best for fun and pop culture
 
 TokyoTreat is the party box: **Japan-only, limited-run, pop-culture snacks** — mostly big and boldly flavored — plus **Japanese drinks and sodas**, and sometimes a DIY candy kit. Themes run from Akihabara (Tokyo's game-and-anime district) to seasonal specials.
 
 **Best for:** Families, kids, and anyone who wants the *fun*, shareable "what IS this?" snack experience.
 
-<AffiliateButton href="#" variant="outline">Check out TokyoTreat &rarr;</AffiliateButton>
+<AffiliateButton href="https://tokyotreat.com/" variant="outline">Check out TokyoTreat &rarr;</AffiliateButton>
 
 <InaripoBubble expression="surprise">
 If you want the unboxing to be an *event*, this is the one. 🎉
@@ -82,7 +82,7 @@ If you want the unboxing to be an *event*, this is the one. 🎉
 
 ## Still can't decide?
 
-<Callout title="🧭 Choose by what matters most">
+<Callout title="Choose by what matters most">
 - **"I want to learn and discover"** → Bokksu
 - **"I want tea, tradition, and a keepsake"** → Sakuraco
 - **"I want family-friendly snacks and drinks"** → TokyoTreat

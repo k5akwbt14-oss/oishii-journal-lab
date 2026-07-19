@@ -89,18 +89,15 @@ const latest = posts.slice(0, 3);
 
 					<!-- ---- Regional picker ---- -->
 					<section class="areas" aria-labelledby="areas-heading">
-						<h2 id="areas-heading">
-							<span class="pin" aria-hidden="true">📍</span>
-							Explore by region
-						</h2>
+						<h2 id="areas-heading">Explore by region</h2>
 						<p class="areas-sub">Gems you can only buy where they're made. Pick a destination.</p>
 						<ul class="area-grid">
 							{
 								REGIONS.map((r) => (
 									<li>
 										<a href={`/regional/#${r.id}`}>
-											<span class="area-emoji" aria-hidden="true">
-												{r.emoji}
+											<span class="area-kanji" aria-hidden="true">
+												{r.kanji}
 											</span>
 											<span class="area-text">
 												<span class="area-name">
@@ -354,9 +351,6 @@ const latest = posts.slice(0, 3);
 				font-size: 1.5em;
 				margin: 0 0 0.2em;
 			}
-			.pin {
-				font-size: 0.8em;
-			}
 			.areas-sub {
 				margin: 0 0 1.2em;
 				font-size: 0.82em;
@@ -392,10 +386,19 @@ const latest = posts.slice(0, 3);
 				transform: translateY(-2px);
 				box-shadow: 0 5px 14px rgba(var(--gray), 26%);
 			}
-			.area-emoji {
-				font-size: 1.6em;
-				line-height: 1;
+			.area-kanji {
 				flex: none;
+				width: 2.1em;
+				height: 2.1em;
+				display: grid;
+				place-items: center;
+				border-radius: 10px;
+				background: var(--accent-tint);
+				color: var(--accent-dark);
+				font-family: var(--font-heading), serif;
+				font-size: 1.15em;
+				font-weight: 700;
+				line-height: 1;
 			}
 			.area-text {
 				min-width: 0;

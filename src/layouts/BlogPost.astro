@@ -5,15 +5,71 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
+import Logo from '../assets/logo.png';
+import { CATEGORIES, SITE_TITLE } from '../consts';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroImageAlt, category } = Astro.props;
+
+const heroAlt = heroImageAlt ?? `Illustration for ${title}`;
+const categoryInfo = CATEGORIES.find((c) => c.id === category);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const organizationId = new URL('/#organization', Astro.site).href;
+
+// Article + BreadcrumbList for rich-results eligibility. Author/publisher is the
+// site Organization — no invented person, and no Product/Review schema by policy.
+const articleJsonLd = JSON.stringify([
+	{
+		'@context': 'https://schema.org',
+		'@type': 'Article',
+		headline: title,
+		description,
+		url: canonicalURL.href,
+		mainEntityOfPage: canonicalURL.href,
+		datePublished: pubDate.toISOString(),
+		dateModified: (updatedDate ?? pubDate).toISOString(),
+		...(heroImage ? { image: new URL(heroImage.src, Astro.site).href } : {}),
+		author: { '@type': 'Organization', '@id': organizationId, name: SITE_TITLE },
+		publisher: {
+			'@type': 'Organization',
+			'@id': organizationId,
+			name: SITE_TITLE,
+			logo: { '@type': 'ImageObject', url: new URL(Logo.src, Astro.site).href },
+		},
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: [
+			{ '@type': 'ListItem', position: 1, name: 'Home', item: new URL('/', Astro.site).href },
+			...(categoryInfo
+				? [
+						{
+							'@type': 'ListItem',
+							position: 2,
+							name: categoryInfo.title,
+							item: new URL(categoryInfo.href, Astro.site).href,
+						},
+					]
+				: []),
+			{ '@type': 'ListItem', position: categoryInfo ? 3 : 2, name: title, item: canonicalURL.href },
+		],
+	},
+]);
 ---
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead
+			title={title}
+			description={description}
+			image={heroImage}
+			type="article"
+			publishedTime={pubDate}
+			modifiedTime={updatedDate}
+		/>
+		<script type="application/ld+json" set:html={articleJsonLd} />
 		<style>
 			main {
 				width: calc(100% - 2em);
@@ -60,7 +116,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 		<main>
 			<article>
 				<div class="hero-image">
-					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+					{heroImage && <Image width={1020} height={510} src={heroImage} alt={heroAlt} />}
 				</div>
 				<div class="prose">
 					<div class="title">

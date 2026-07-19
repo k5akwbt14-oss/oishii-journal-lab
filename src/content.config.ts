@@ -14,6 +14,9 @@ const blog = defineCollection({
 			pubDate: z.coerce.date(),
 			updatedDate: z.coerce.date().optional(),
 			heroImage: z.optional(image()),
+			// Descriptive alt for heroImage (image SEO + accessibility). Falls back to
+			// an "Illustration for <title>" string in the layout when omitted.
+			heroImageAlt: z.string().optional(),
 			// Home page pillars: 定番 / ご当地 / 特集
 			category: z.enum(['classics', 'regional', 'features']).default('features'),
 			// Only for category: 'regional' — matches an id in REGIONS (src/consts.ts).

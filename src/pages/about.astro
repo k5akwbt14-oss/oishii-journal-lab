@@ -85,10 +85,19 @@ const description =
 				border-radius: 14px;
 				padding: 1.4em;
 			}
-			.card .emoji {
-				font-size: 1.8em;
-				display: block;
-				margin-bottom: 0.35em;
+			.card .tile {
+				width: 2em;
+				height: 2em;
+				display: grid;
+				place-items: center;
+				border-radius: 10px;
+				background: var(--accent-tint);
+				color: var(--accent-dark);
+				font-family: var(--font-heading), serif;
+				font-size: 1.3em;
+				font-weight: 700;
+				line-height: 1;
+				margin-bottom: 0.45em;
 			}
 			.card h3 {
 				font-size: 1.12em;
@@ -268,17 +277,17 @@ const description =
 			<section class="wrap">
 				<div class="grid">
 					<div class="card">
-						<span class="emoji">🍡</span>
+						<span class="tile" aria-hidden="true">菓</span>
 						<h3>Souvenir Sweets</h3>
 						<p>Gifts you can't go wrong with — and the pretty boxes that are only pretty boxes.</p>
 					</div>
 					<div class="card">
-						<span class="emoji">🏪</span>
+						<span class="tile" aria-hidden="true">店</span>
 						<h3>Convenience-Store Gems</h3>
 						<p>The snacks locals buy on repeat.</p>
 					</div>
 					<div class="card">
-						<span class="emoji">📊</span>
+						<span class="tile" aria-hidden="true">評</span>
 						<h3>No-Nonsense Rankings</h3>
 						<p>Taste, price, where to buy — decide in seconds.</p>
 					</div>

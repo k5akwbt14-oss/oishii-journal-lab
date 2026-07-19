@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "gemini": "node --env-file=.env tools/ask-gemini.mjs"
+    "gemini": "node --env-file=.env tools/ask-gemini.mjs",
+    "check-links": "node tools/check-links.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",

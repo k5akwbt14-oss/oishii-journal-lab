@@ -45,21 +45,25 @@ export type CategoryId = (typeof CATEGORIES)[number]['id'];
  */
 export const REGIONS = [
 	// known: fact-hook copy (EN loop, panel-voted). Rule: no "Ryukyu", no "roe", no "Hakata".
-	{ id: 'hokkaido', name: 'Hokkaido', nameJa: '北海道', emoji: '🐻', known: 'Chocolate so fresh it needs a fridge' },
-	{ id: 'tokyo', name: 'Tokyo', nameJa: '東京', emoji: '🗼', known: 'Tokyo Banana: 2 billion sold' },
-	{ id: 'kyoto', name: 'Kyoto', nameJa: '京都', emoji: '⛩️', known: 'Matcha’s home turf' },
-	{ id: 'osaka', name: 'Osaka', nameJa: '大阪', emoji: '🐙', known: 'Takoyaki flavor — trust the octopus' },
-	{ id: 'kyushu', name: 'Kyushu', nameJa: '九州', emoji: '🌋', known: 'The spicy flavor Japan swears by' },
-	{ id: 'okinawa', name: 'Okinawa', nameJa: '沖縄', emoji: '🌺', known: 'Brown-sugar island sweets' },
+	// kanji: single-character tile per the no-emoji ruling (kanji tiles are the approved icon fallback).
+	{ id: 'hokkaido', name: 'Hokkaido', nameJa: '北海道', kanji: '北', known: 'Chocolate so fresh it needs a fridge' },
+	{ id: 'tokyo', name: 'Tokyo', nameJa: '東京', kanji: '東', known: 'Tokyo Banana: 2 billion sold' },
+	{ id: 'kyoto', name: 'Kyoto', nameJa: '京都', kanji: '京', known: 'Matcha’s home turf' },
+	{ id: 'osaka', name: 'Osaka', nameJa: '大阪', kanji: '大', known: 'Takoyaki flavor — trust the octopus' },
+	{ id: 'kyushu', name: 'Kyushu', nameJa: '九州', kanji: '九', known: 'The spicy flavor Japan swears by' },
+	{ id: 'okinawa', name: 'Okinawa', nameJa: '沖縄', kanji: '沖', known: 'Brown-sugar island sweets' },
 ] as const;
 
 /**
  * The money page (/boxes) + sidebar rail.
  *
- * Links stay '#' until Bokksu (Impact) etc. are approved — see CLAUDE.md
- * "Monetization rules". Deliberately NO prices or item counts here: those must be
- * verified against the live source before publishing, so the page sends readers to
- * the box's own site for numbers rather than quoting figures we haven't checked.
+ * Links point at each box's official site, UNMONETIZED, until the affiliate
+ * programs (Bokksu via Impact, Sakuraco, TokyoTreat) are approved — then swap each
+ * href for the real tracking link. Never a dead '#': a working plain link earns
+ * nothing but keeps the page honest and useful. Deliberately NO prices or item
+ * counts here: those must be verified against the live source before publishing,
+ * so the page sends readers to the box's own site for numbers rather than quoting
+ * figures we haven't checked.
  */
 export const SNACK_BOXES = [
 	{
@@ -69,7 +73,7 @@ export const SNACK_BOXES = [
 		rating: 5,
 		blurb: 'Artisan sweets from Japan’s small family-run makers, shipped direct.',
 		offer: '10% off your first box',
-		href: '#',
+		href: 'https://www.bokksu.com/',
 		bestFor: 'Quality over quantity',
 		points: [
 			'Sweets from small family-run makers across Japan',
@@ -85,7 +89,7 @@ export const SNACK_BOXES = [
 		rating: 4,
 		blurb: 'Traditional Japanese sweets and tea, every month — a real Japanese teatime, boxed.',
 		offer: '10% off your first box',
-		href: '#',
+		href: 'https://sakura.co/',
 		bestFor: 'A quieter taste of Japan',
 		points: [
 			'Mostly traditional sweets: mochi (soft rice cakes), yokan (a dense red-bean jelly)',
@@ -101,7 +105,7 @@ export const SNACK_BOXES = [
 		rating: 4,
 		blurb: 'Convenience-store exclusives and the flavors everyone’s talking about. What Japan is eating right now, delivered.',
 		offer: '$5 off your first box',
-		href: '#',
+		href: 'https://tokyotreat.com/',
 		bestFor: 'Your first box',
 		points: [
 			'Limited-run flavors and trending new releases',

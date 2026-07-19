@@ -67,7 +67,7 @@ const related = (await getCollection('blog', ({ data }) => data.category === 'fe
 							</ul>
 
 							<p class="catch">
-								<span aria-hidden="true">⚠️</span>
+								<span class="catch-label">The catch</span>
 								{box.catch}
 							</p>
 
@@ -228,6 +228,18 @@ const related = (await getCollection('blog', ({ data }) => data.category === 'fe
 				left: 0;
 				color: var(--accent);
 				font-weight: 700;
+			}
+			.catch-label {
+				flex: none;
+				align-self: flex-start;
+				background: #fff;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 999px;
+				padding: 0.15em 0.6em;
+				font-size: 0.9em;
+				font-weight: 700;
+				color: var(--accent-dark);
+				white-space: nowrap;
 			}
 			.catch {
 				display: flex;

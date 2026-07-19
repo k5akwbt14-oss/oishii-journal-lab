@@ -2,6 +2,7 @@
 // FTC-compliant affiliate disclosure. US law (16 CFR Part 255) requires this to be
 // "clear and conspicuous" and placed BEFORE the first affiliate link in a post.
 // Usage: <AffiliateDisclosure /> near the top of a review/comparison article.
+import Inaripo from './Inaripo.astro';
 interface Props {
 	/** Optional: override the default wording. */
 	text?: string;
@@ -17,7 +18,7 @@ const amazonText = "As an Amazon Associate, we earn from qualifying purchases.";
 ---
 
 <aside class="affiliate-disclosure" role="note" aria-label="Affiliate disclosure">
-	<span class="icon" aria-hidden="true">🦊</span>
+	<span class="icon" aria-hidden="true"><Inaripo expression="happy" size={30} /></span>
 	<p>{text}{amazon ? ` ${amazonText}` : ''}</p>
 </aside>
 
