@@ -1,0 +1,301 @@
+---
+// Clickable deformed "bento-block" map of Japan for the /regional hub.
+// Original SVG artwork (no stock assets). Active areas link to the region
+// sections below (#hokkaido etc. — ids come from REGIONS in consts.ts);
+// gray areas are not yet covered and pop an Inaripo "still investigating"
+// bubble instead. Active = solid stroke + emoji, inactive = dashed stroke,
+// so the two states never rely on color alone.
+import Inaripo from './Inaripo.astro';
+---
+
+<figure class="jmap" aria-label="Map of Japan — pick a region">
+	<svg viewBox="0 0 900 760" role="group" aria-label="Deformed map of Japan. Colored regions link to their snack sections; gray regions are still under investigation.">
+		<!-- ===== Hokkaido (active) ===== -->
+		<a class="area" href="#hokkaido" aria-label="Hokkaido — jump to Hokkaido snacks">
+			<rect class="cell" x="690" y="50" width="160" height="80" rx="14" />
+			<rect class="cell" x="650" y="136" width="200" height="62" rx="14" />
+			<rect class="cell" x="640" y="204" width="80" height="42" rx="12" />
+			<text class="label" x="750" y="176"><tspan class="emoji">🐻</tspan> Hokkaido</text>
+		</a>
+
+		<!-- ===== Tohoku (soon) ===== -->
+		<g class="soon" role="button" tabindex="0" data-name="Tohoku" aria-label="Tohoku — still under investigation">
+			<rect class="cell" x="680" y="250" width="80" height="54" rx="12" />
+			<rect class="cell" x="766" y="250" width="80" height="54" rx="12" />
+			<rect class="cell" x="680" y="310" width="80" height="54" rx="12" />
+			<rect class="cell" x="766" y="310" width="80" height="54" rx="12" />
+			<rect class="cell" x="680" y="370" width="80" height="54" rx="12" />
+			<rect class="cell" x="766" y="370" width="80" height="54" rx="12" />
+			<text class="label" x="763" y="342">Tohoku</text>
+		</g>
+
+		<!-- ===== Tokyo / Kanto (active) ===== -->
+		<a class="area" href="#tokyo" aria-label="Tokyo — jump to Tokyo snacks">
+			<rect class="cell" x="640" y="455" width="86" height="56" rx="12" />
+			<rect class="cell" x="732" y="455" width="86" height="56" rx="12" />
+			<rect class="cell" x="640" y="517" width="86" height="56" rx="12" />
+			<rect class="cell" x="732" y="517" width="86" height="56" rx="12" />
+			<text class="label" x="729" y="522"><tspan class="emoji">🗼</tspan> Tokyo</text>
+		</a>
+
+		<!-- ===== Chubu (soon) ===== -->
+		<g class="soon" role="button" tabindex="0" data-name="Chubu" aria-label="Chubu — still under investigation">
+			<rect class="cell" x="448" y="398" width="34" height="26" rx="9" />
+			<rect class="cell" x="430" y="430" width="90" height="52" rx="12" />
+			<rect class="cell" x="526" y="430" width="90" height="52" rx="12" />
+			<rect class="cell" x="430" y="488" width="90" height="52" rx="12" />
+			<rect class="cell" x="526" y="488" width="90" height="52" rx="12" />
+			<text class="label" x="523" y="490">Chubu</text>
+		</g>
+
+		<!-- ===== Kansai: Kyoto & Osaka (active) ===== -->
+		<a class="area" href="#kyoto" aria-label="Kansai: Kyoto and Osaka — jump to Kyoto snacks">
+			<rect class="hit" x="255" y="440" width="165" height="135" />
+			<rect class="cell" x="270" y="455" width="64" height="50" rx="12" />
+			<rect class="cell" x="340" y="455" width="64" height="50" rx="12" />
+			<rect class="cell" x="270" y="511" width="64" height="50" rx="12" />
+			<rect class="cell" x="340" y="511" width="64" height="50" rx="12" />
+			<text class="label two" x="337" y="497"><tspan class="emoji">⛩️</tspan> Kyoto</text>
+			<text class="label two" x="337" y="534"><tspan class="emoji">🐙</tspan> Osaka</text>
+		</a>
+
+		<!-- ===== Chugoku (soon) ===== -->
+		<g class="soon" role="button" tabindex="0" data-name="Chugoku" aria-label="Chugoku — still under investigation">
+			<rect class="cell" x="100" y="430" width="76" height="48" rx="12" />
+			<rect class="cell" x="182" y="430" width="76" height="48" rx="12" />
+			<rect class="cell" x="100" y="484" width="76" height="48" rx="12" />
+			<rect class="cell" x="182" y="484" width="76" height="48" rx="12" />
+			<text class="label" x="179" y="487">Chugoku</text>
+		</g>
+
+		<!-- ===== Shikoku (soon) ===== -->
+		<g class="soon" role="button" tabindex="0" data-name="Shikoku" aria-label="Shikoku — still under investigation">
+			<rect class="cell" x="170" y="565" width="70" height="44" rx="12" />
+			<rect class="cell" x="246" y="565" width="70" height="44" rx="12" />
+			<text class="label" x="243" y="592">Shikoku</text>
+		</g>
+
+		<!-- ===== Kyushu (active) ===== -->
+		<a class="area" href="#kyushu" aria-label="Kyushu — jump to Kyushu snacks">
+			<rect class="hit" x="14" y="542" width="155" height="180" />
+			<rect class="cell" x="28" y="555" width="60" height="48" rx="12" />
+			<rect class="cell" x="94" y="555" width="60" height="48" rx="12" />
+			<rect class="cell" x="28" y="609" width="60" height="48" rx="12" />
+			<rect class="cell" x="94" y="609" width="60" height="48" rx="12" />
+			<rect class="cell" x="28" y="663" width="60" height="44" rx="12" />
+			<text class="label sm" x="91" y="637"><tspan class="emoji">🌋</tspan> Kyushu</text>
+		</a>
+
+		<!-- ===== Okinawa (active) ===== -->
+		<a class="area" href="#okinawa" aria-label="Okinawa — jump to Okinawa snacks">
+			<rect class="hit" x="8" y="700" width="230" height="58" />
+			<rect class="frame" x="20" y="712" width="90" height="46" rx="10" />
+			<rect class="cell" x="32" y="722" width="66" height="26" rx="9" />
+			<text class="label side" x="122" y="742"><tspan class="emoji">🌺</tspan> Okinawa</text>
+		</a>
+	</svg>
+
+	<figcaption class="legend">
+		<span class="key active-key"><i></i> Investigated — tap to jump</span>
+		<span class="key soon-key"><i></i> Still sniffing around</span>
+	</figcaption>
+
+	<!-- Inaripo's "not yet" bubble for gray regions -->
+	<div class="bubble" role="status" hidden>
+		<Inaripo expression="surprise" size={52} />
+		<p><strong class="bubble-region">This region</strong> is still under investigation. My nose is on the case — check back soon.</p>
+	</div>
+</figure>
+
+<script>
+	const map = document.querySelector('.jmap');
+	if (map) {
+		const bubble = map.querySelector<HTMLElement>('.bubble')!;
+		const regionEl = bubble.querySelector('.bubble-region')!;
+		const close = () => {
+			bubble.hidden = true;
+		};
+		map.querySelectorAll<SVGGElement>('.soon').forEach((g) => {
+			const open = () => {
+				regionEl.textContent = g.dataset.name ?? 'This region';
+				bubble.hidden = false;
+			};
+			g.addEventListener('click', open);
+			g.addEventListener('keydown', (e) => {
+				if (e.key === 'Enter' || e.key === ' ') {
+					e.preventDefault();
+					open();
+				}
+			});
+		});
+		document.addEventListener('click', (e) => {
+			if (!bubble.hidden && e.target instanceof Node && !map.contains(e.target)) close();
+		});
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') close();
+		});
+		// Jumping to a real region also dismisses the bubble.
+		map.querySelectorAll('.area').forEach((a) => a.addEventListener('click', close));
+	}
+</script>
+
+<style>
+	.jmap {
+		position: relative;
+		margin: 0;
+		background: #fff;
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 16px;
+		padding: 1.1em 1.1em 0.8em;
+	}
+	svg {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+
+	/* --- shared cell look --- */
+	.cell {
+		stroke-width: 3;
+		transition: fill 0.15s ease;
+	}
+	.hit {
+		fill: transparent;
+	}
+	.label {
+		font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+		font-size: 24px;
+		font-weight: 800;
+		text-anchor: middle;
+		paint-order: stroke;
+		stroke: #fff;
+		stroke-width: 5;
+		stroke-linejoin: round;
+		pointer-events: none;
+	}
+	.label.two {
+		font-size: 21px;
+	}
+	.label.side {
+		text-anchor: start;
+		font-size: 20px;
+	}
+	.label.sm {
+		font-size: 19px;
+	}
+	.emoji {
+		stroke: none;
+	}
+
+	/* --- active (linked) regions --- */
+	.area {
+		cursor: pointer;
+	}
+	.area .cell,
+	.area .frame {
+		fill: var(--accent-tint);
+		stroke: var(--accent);
+	}
+	.area .frame {
+		fill: none;
+		stroke-dasharray: 4 6;
+		stroke-width: 2;
+	}
+	.area .label {
+		fill: var(--accent-dark);
+	}
+	.area:hover .cell,
+	.area:focus-visible .cell {
+		fill: #fbd9cb;
+	}
+	.area:hover,
+	.area:focus-visible {
+		outline: none;
+	}
+	.area:focus-visible .cell {
+		stroke-width: 5;
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.area {
+			transition: transform 0.15s ease;
+		}
+		.area:hover,
+		.area:focus-visible {
+			transform: translateY(-3px);
+		}
+	}
+
+	/* --- not-yet regions --- */
+	.soon {
+		cursor: help;
+	}
+	.soon .cell {
+		fill: #efe9dd;
+		stroke: #c7bda9;
+		stroke-dasharray: 7 5;
+	}
+	.soon .label {
+		fill: #948a76;
+		font-size: 21px;
+	}
+	.soon:hover .cell,
+	.soon:focus-visible .cell {
+		fill: #e7dfcf;
+	}
+	.soon:focus-visible {
+		outline: none;
+	}
+	.soon:focus-visible .cell {
+		stroke-width: 4;
+	}
+
+	/* --- legend: parked in the map's empty top-left "ocean" --- */
+	.legend {
+		position: absolute;
+		top: 1.2em;
+		left: 1.4em;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5em;
+		font-size: 0.75em;
+		color: rgb(var(--gray-dark));
+		pointer-events: none;
+	}
+	.key {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45em;
+	}
+	.key i {
+		width: 0.95em;
+		height: 0.95em;
+		border-radius: 4px;
+	}
+	.active-key i {
+		background: var(--accent-tint);
+		border: 2px solid var(--accent);
+	}
+	.soon-key i {
+		background: #efe9dd;
+		border: 2px dashed #c7bda9;
+	}
+
+	/* --- Inaripo bubble --- */
+	.bubble[hidden] {
+		display: none;
+	}
+	.bubble {
+		display: flex;
+		align-items: center;
+		gap: 0.8em;
+		margin-top: 0.8em;
+		padding: 0.8em 1em;
+		background: var(--accent-tint);
+		border-radius: 12px;
+		font-size: 0.85em;
+		line-height: 1.5;
+	}
+	.bubble p {
+		margin: 0;
+	}
+</style>
