@@ -43,9 +43,13 @@ import mapImage from '../assets/illust/japan-map.webp';
 				<rect class="hit" x="742" y="575" width="202" height="185" />
 				<text class="label" x="840" y="660"><tspan class="emoji">🗼</tspan> Tokyo</text>
 			</a>
-			<a class="area" href="#kyoto" aria-label="Kansai: Kyoto and Osaka — jump to Kyoto snacks">
-				<rect class="hit" x="490" y="612" width="162" height="212" />
+			<!-- Kansai cell, split horizontally: top half → Kyoto, bottom half → Osaka -->
+			<a class="area" href="#kyoto" aria-label="Kyoto — jump to Kyoto snacks">
+				<rect class="hit" x="490" y="612" width="162" height="106" />
 				<text class="label two" x="570" y="700"><tspan class="emoji">⛩️</tspan> Kyoto</text>
+			</a>
+			<a class="area" href="#osaka" aria-label="Osaka — jump to Osaka snacks">
+				<rect class="hit" x="490" y="718" width="162" height="106" />
 				<text class="label two" x="570" y="734"><tspan class="emoji">🐙</tspan> Osaka</text>
 			</a>
 			<a class="area" href="#kyushu" aria-label="Kyushu — jump to Kyushu snacks">
