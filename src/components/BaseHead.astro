@@ -16,6 +16,11 @@ interface Props {
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const { title, description, image = FallbackImage } = Astro.props;
+
+// Google Analytics 4 (property "Oishii Journal Lab Website", stream 15282493033).
+// Emitted only in production builds so localhost visits never pollute the data.
+const GA_MEASUREMENT_ID = 'G-3VN9H9H7PN';
+const isProd = import.meta.env.PROD;
 ---
 
 <!-- Global Metadata -->
@@ -31,6 +36,27 @@ const { title, description, image = FallbackImage } = Astro.props;
 	href={new URL('rss.xml', Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
+
+<!-- Google tag (gtag.js) -->
+{
+	isProd && (
+		<>
+			<script
+				is:inline
+				async
+				src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+			/>
+			<script is:inline define:vars={{ GA_MEASUREMENT_ID }}>
+				window.dataLayer = window.dataLayer || [];
+				function gtag() {
+					dataLayer.push(arguments);
+				}
+				gtag('js', new Date());
+				gtag('config', GA_MEASUREMENT_ID);
+			</script>
+		</>
+	)
+}
 
 <Font cssVariable="--font-heading" preload />
 <Font cssVariable="--font-body" preload />
