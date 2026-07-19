@@ -4,6 +4,7 @@ import CategoryPage from '../layouts/CategoryPage.astro';
 import Inaripo from '../components/Inaripo.astro';
 import JapanMap from '../components/JapanMap.astro';
 import PostCard from '../components/PostCard.astro';
+import RegionExplorer from '../components/RegionExplorer.astro';
 import { REGIONS } from '../consts';
 
 const posts = (await getCollection('blog', ({ data }) => data.category === 'regional')).sort(
@@ -19,20 +20,12 @@ const areas = REGIONS.map((region) => ({
 <CategoryPage category="regional" posts={posts}>
 	<div slot="intro" class="intro">
 		<JapanMap />
-		<nav class="jump" aria-label="Jump to a region">
-			{
-				REGIONS.map((r) => (
-					<a href={`#${r.id}`}>
-						<span aria-hidden="true">{r.emoji}</span> {r.name}
-					</a>
-				))
-			}
-		</nav>
+		<RegionExplorer />
 	</div>
 
 	{
 		areas.map((area) => (
-			<section id={area.id} class="area">
+			<section id={`guide-${area.id}`} class="area">
 				<h2>
 					<span class="emoji" aria-hidden="true">
 						{area.emoji}
@@ -65,27 +58,6 @@ const areas = REGIONS.map((region) => ({
 		display: grid;
 		gap: 0.9em;
 	}
-	.jump {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5em;
-	}
-	.jump a {
-		background: #fff;
-		border: 1px solid rgb(var(--gray-light));
-		border-radius: 999px;
-		padding: 0.4em 0.9em;
-		font-size: 0.78em;
-		font-weight: 700;
-		text-decoration: none;
-		color: rgb(var(--black));
-	}
-	.jump a:hover {
-		border-color: var(--accent);
-		background: var(--accent-tint);
-		color: var(--accent-dark);
-	}
-
 	.area {
 		scroll-margin-top: 5.5em;
 	}

@@ -1,38 +1,37 @@
 ---
-// Clickable Japan map for the /regional hub — v3.
+// Clickable Japan map for the /regional hub — v4.
 // Base artwork: the operator-supplied deformed prefecture map (licensed,
 // per operator 2026-07-19), recolored to the site palette with
 // tools/recolor-japan-map.mjs (cell-exact, deterministic). On top sits an
-// invisible SVG overlay with the labels and hit areas: pink regions link to
-// the region sections below (#hokkaido etc. — ids from REGIONS in consts.ts),
-// greige regions pop an Inaripo "still investigating" bubble.
-// Active = pink cells + emoji + red label; inactive = greige + gray label.
+// invisible SVG overlay with the labels and hit areas. Every cell links into
+// the RegionExplorer below via hash (#hokkaido, #tohoku, …): pink cells are
+// regions with taste-tested guides, greige cells have quick picks only.
 import { Image } from 'astro:assets';
-import Inaripo from './Inaripo.astro';
 import mapImage from '../assets/illust/japan-map.webp';
 ---
 
 <figure class="jmap" aria-label="Map of Japan — pick a region">
 	<div class="map-wrap">
 		<Image src={mapImage} alt="" widths={[640, 1074]} sizes="(max-width: 800px) 100vw, 760px" />
-		<svg viewBox="0 0 1074 976" role="group" aria-label="Deformed map of Japan. Pink regions link to their snack sections; gray regions are still under investigation.">
-			<!-- gray regions first so active hit areas win overlaps -->
-			<g class="soon" role="button" tabindex="0" data-name="Tohoku" aria-label="Tohoku — still under investigation">
+		<svg viewBox="0 0 1074 976" role="group" aria-label="Deformed map of Japan. Every region opens the omiyage explorer below; pink regions also have taste-tested guides.">
+			<!-- greige regions first so pink hit areas win overlaps; every cell now
+			     opens its block in the omiyage explorer below -->
+			<a class="area soon" href="#tohoku" aria-label="Tohoku — browse Tohoku omiyage">
 				<rect class="hit" x="748" y="293" width="195" height="278" />
 				<text class="label" x="845" y="440">Tohoku</text>
-			</g>
-			<g class="soon" role="button" tabindex="0" data-name="Chubu" aria-label="Chubu — still under investigation">
+			</a>
+			<a class="area soon" href="#chubu" aria-label="Chubu — browse Chubu omiyage">
 				<polygon class="hit" points="585,612 640,482 775,538 748,575 748,822 652,822 652,702 555,702 555,645" />
 				<text class="label" x="690" y="645">Chubu</text>
-			</g>
-			<g class="soon" role="button" tabindex="0" data-name="Chugoku" aria-label="Chugoku — still under investigation">
+			</a>
+			<a class="area soon" href="#chugoku" aria-label="Chugoku — browse Chugoku omiyage">
 				<rect class="hit" x="258" y="616" width="238" height="130" />
 				<text class="label" x="380" y="690">Chugoku</text>
-			</g>
-			<g class="soon" role="button" tabindex="0" data-name="Shikoku" aria-label="Shikoku — still under investigation">
+			</a>
+			<a class="area soon" href="#shikoku" aria-label="Shikoku — browse Shikoku omiyage">
 				<rect class="hit" x="225" y="752" width="245" height="153" />
 				<text class="label" x="350" y="833">Shikoku</text>
-			</g>
+			</a>
 
 			<!-- active regions -->
 			<a class="area" href="#hokkaido" aria-label="Hokkaido — jump to Hokkaido snacks">
@@ -64,48 +63,10 @@ import mapImage from '../assets/illust/japan-map.webp';
 	</div>
 
 	<figcaption class="legend">
-		<span class="key active-key"><i></i> Investigated — tap to jump</span>
-		<span class="key soon-key"><i></i> Still sniffing around</span>
+		<span class="key active-key"><i></i> Taste-tested guide</span>
+		<span class="key soon-key"><i></i> Quick picks below</span>
 	</figcaption>
-
-	<!-- Inaripo's "not yet" bubble for gray regions -->
-	<div class="bubble" role="status" hidden>
-		<Inaripo expression="surprise" size={52} />
-		<p><strong class="bubble-region">This region</strong> is still under investigation. My nose is on the case — check back soon.</p>
-	</div>
 </figure>
-
-<script>
-	const map = document.querySelector('.jmap');
-	if (map) {
-		const bubble = map.querySelector<HTMLElement>('.bubble')!;
-		const regionEl = bubble.querySelector('.bubble-region')!;
-		const close = () => {
-			bubble.hidden = true;
-		};
-		map.querySelectorAll<SVGGElement>('.soon').forEach((g) => {
-			const open = () => {
-				regionEl.textContent = g.dataset.name ?? 'This region';
-				bubble.hidden = false;
-			};
-			g.addEventListener('click', open);
-			g.addEventListener('keydown', (e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
-					e.preventDefault();
-					open();
-				}
-			});
-		});
-		document.addEventListener('click', (e) => {
-			if (!bubble.hidden && e.target instanceof Node && !map.contains(e.target)) close();
-		});
-		document.addEventListener('keydown', (e) => {
-			if (e.key === 'Escape') close();
-		});
-		// Jumping to a real region also dismisses the bubble.
-		map.querySelectorAll('.area').forEach((a) => a.addEventListener('click', close));
-	}
-</script>
 
 <style>
 	.jmap {
@@ -186,10 +147,7 @@ import mapImage from '../assets/illust/japan-map.webp';
 		stroke-dasharray: 8 6;
 	}
 
-	/* --- not-yet regions --- */
-	.soon {
-		cursor: help;
-	}
+	/* --- quick-picks-only regions (greige cells) --- */
 	.soon .label {
 		fill: #948a76;
 		font-size: 24px;
@@ -236,24 +194,5 @@ import mapImage from '../assets/illust/japan-map.webp';
 	.soon-key i {
 		background: #eae2d1;
 		border: 2px solid #7c5c49;
-	}
-
-	/* --- Inaripo bubble --- */
-	.bubble[hidden] {
-		display: none;
-	}
-	.bubble {
-		display: flex;
-		align-items: center;
-		gap: 0.8em;
-		margin-top: 0.8em;
-		padding: 0.8em 1em;
-		background: #fce4d8;
-		border-radius: 12px;
-		font-size: 0.85em;
-		line-height: 1.5;
-	}
-	.bubble p {
-		margin: 0;
 	}
 </style>
