@@ -1,0 +1,109 @@
+---
+// The TokyoTreat price ladder: monthly price by plan length. Single-series
+// column chart, zero baseline, every cap direct-labeled (so no y-axis is
+// needed). Same form as PlanLadderChart (the Bokksu ladder).
+// Static data as of July 2026.
+//
+// `showPromo` (default false) toggles the time-limited KIRBY26 sign-up gifts
+// note — it expires Aug 15, 2026, so it is never baked into the chart body.
+interface Props {
+	showPromo?: boolean;
+}
+const { showPromo = false } = Astro.props;
+
+const PLOT = 150; // px height of the $0-$40 plot area
+const barHeight = (price: number) => Math.round((price / 40) * PLOT);
+
+const plans = [
+	{ term: '1 mo', price: 37.5, label: '$37.50' },
+	{ term: '3 mo', price: 35.5, label: '$35.50' },
+	{ term: '6 mo', price: 33.5, label: '$33.50' },
+	{ term: '12 mo', price: 32.5, label: '$32.50' },
+];
+---
+
+<figure class="chart">
+	<p class="chart-title">TokyoTreat monthly price by plan length</p>
+	<p class="sr-only">
+		Column chart of TokyoTreat's monthly price by plan length. 1-month plan:
+		$37.50 per month. 3-month plan: $35.50. 6-month plan: $33.50. 12-month
+		plan: $32.50 per month, which works out to about $60 saved per year
+		compared with the month-to-month rate. Prices are before shipping; with
+		shipping added, a box comes to roughly $52 all-in per month.
+	</p>
+	<div class="cols" aria-hidden="true">
+		{
+			plans.map((p) => (
+				<div class="cell">
+					<span class="val">{p.label}</span>
+					<span class="bar" style={`height:${barHeight(p.price)}px`} />
+				</div>
+			))
+		}
+		{plans.map((p) => <span class="term">{p.term}</span>)}
+	</div>
+	<p class="note">
+		The 12-month rate saves about $60 a year vs. paying month to month.
+	</p>
+	<p class="note">+ shipping (~$52 all-in per month)</p>
+	{
+		showPromo && (
+			<p class="note">
+				Sign-up gifts with code KIRBY26 through Aug 15, 2026: a gummy on the
+				3-month plan, a figure and towel on 6 months, a towel and fan on 12
+				months.
+			</p>
+		)
+	}
+	<figcaption>Monthly price by plan length, before shipping, as of July 2026.</figcaption>
+</figure>
+
+<style>
+	.chart {
+		margin: 2.5em 0;
+	}
+	.chart-title {
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin: 0 0 0.75em;
+	}
+	.cols {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		max-width: 380px;
+	}
+	.cell {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		border-bottom: 1px solid rgba(var(--gray), 45%); /* shared baseline */
+	}
+	.val {
+		font-size: 0.75em;
+		color: rgb(var(--gray-dark));
+		margin-bottom: 0.35em;
+	}
+	.bar {
+		width: 24px;
+		background: var(--accent);
+		border-radius: 4px 4px 0 0; /* rounded cap, square at the baseline */
+	}
+	.term {
+		text-align: center;
+		padding-top: 0.4em;
+		font-size: 0.75em;
+		color: rgb(var(--gray));
+	}
+	.note {
+		margin: 0.75em 0 0;
+		font-size: 0.75em;
+		color: rgb(var(--gray-dark));
+		max-width: 380px;
+	}
+	figcaption {
+		margin-top: 0.75em;
+		font-size: 0.75em;
+		color: rgb(var(--gray));
+	}
+</style>

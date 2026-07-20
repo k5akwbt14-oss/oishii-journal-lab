@@ -1,0 +1,232 @@
+---
+// July 2026 "Akiba Snack Quest" box: all 12 items as labeled color blocks,
+// grouped by category — the WhatsInsideChart form, one block per item so a
+// category's area tracks its item count. Every block carries the item name,
+// so color is never the only channel.
+// Category palette validated with the dataviz six-checks script on the cream
+// surface (#fdf7f2) in this exact stack order:
+//   #c8412c, #c08a2e, #8a4a1a, #c9577d, #2f6bb5, #35804e, #7a5aa0 — all pass;
+//   the gold carries the same sub-3:1 contrast WARN as the house .good color,
+//   relieved by the direct labels on every block.
+// Static data as of July 2026. `issue` prop picks the box (default: july).
+type Cat = 'candy' | 'salty' | 'choc' | 'baked' | 'drink' | 'savory' | 'noodles';
+type Item = { label: string; sub?: string };
+type Group = { cat: Cat; name: string; items: Item[] };
+
+interface Props {
+	issue?: 'july' | 'may';
+}
+const { issue = 'july' } = Astro.props;
+
+const DATA: Record<'july' | 'may', { title: string; caption: string; groups: Group[] }> = {
+	july: {
+		title: 'Inside the July 2026 box: all 12 items by category',
+		caption: 'The July 2026 "Akiba Snack Quest" box lineup, per TokyoTreat.',
+		groups: [
+			{
+				cat: 'candy',
+				name: 'Candy',
+				items: [
+					{ label: 'Gapuri Soft Candy' },
+					{ label: 'Ramune Candy with Toy' },
+					{ label: 'Candy-KARA Microphone' },
+				],
+			},
+			{
+				cat: 'salty',
+				name: 'Salty snacks',
+				items: [{ label: 'Pakkuru Cheese Corn Puffs' }, { label: 'Zunoupan Bread Bites' }],
+			},
+			{
+				cat: 'choc',
+				name: 'Chocolate',
+				items: [
+					{ label: 'Cookies & Cream KitKat', sub: 'full-size bag' },
+					{ label: 'Crunky Chocolate Balls' },
+				],
+			},
+			{
+				cat: 'baked',
+				name: 'Baked & cake',
+				items: [{ label: 'Pandaro Cookie' }, { label: 'Puri Puri Prince Cake' }],
+			},
+			{ cat: 'drink', name: 'Drink', items: [{ label: 'Nomu Nomu Jelly Drink' }] },
+			{ cat: 'savory', name: 'Savory', items: [{ label: '100,000,000 Yen Fish Jerky' }] },
+			{ cat: 'noodles', name: 'Noodles', items: [{ label: 'Vegan Potage Ramen' }] },
+		],
+	},
+	may: {
+		title: 'Inside the May 2026 box: all 13 items by category',
+		caption: 'The May 2026 "Osaka Snacktacular" box lineup, per TokyoTreat.',
+		groups: [
+			{
+				cat: 'candy',
+				name: 'Candy',
+				items: [
+					{ label: 'Cola Mochi Bites' },
+					{ label: 'Sherbet Pero' },
+					{ label: 'Vanilla & Choc Chip Candy Bar' },
+					{ label: 'Sour Lemon Gummies' },
+					{ label: 'Nigi Nigi Sushi Gummy', sub: 'DIY kit' },
+					{ label: 'Ramune' },
+				],
+			},
+			{
+				cat: 'salty',
+				name: 'Salty snacks',
+				items: [{ label: 'Octopus Senbei' }, { label: 'Nori Salt Potato Chips' }],
+			},
+			{
+				cat: 'choc',
+				name: 'Chocolate',
+				items: [{ label: 'Salted Caramel KitKat', sub: 'full-size bag' }],
+			},
+			{
+				cat: 'baked',
+				name: 'Baked & cake',
+				items: [
+					{ label: 'Pai no Mi, Maple Butter' },
+					{ label: 'Karinto', sub: 'fried brown-sugar snack' },
+					{ label: 'Mini Sugar Donuts' },
+				],
+			},
+			{ cat: 'noodles', name: 'Noodles', items: [{ label: 'Yakisoba' }] },
+		],
+	},
+};
+
+const { title, caption, groups } = DATA[issue];
+const TOTAL = groups.reduce((n, g) => n + g.items.length, 0);
+---
+
+<figure class="chart">
+	<p class="chart-title">{title}</p>
+	<div class="groups">
+		{
+			groups.map((g) => (
+				<section class="group">
+					<p class="group-head">
+						<span class="group-name">{g.name}</span>
+						<span class="group-count">
+							{g.items.length} {g.items.length === 1 ? 'item' : 'items'}
+						</span>
+					</p>
+					<ul class="stack">
+						{g.items.map((i) => (
+							<li class={`block ${g.cat}`}>
+								<span class="block-label">{i.label}</span>
+								{i.sub && <span class="block-sub">{i.sub}</span>}
+							</li>
+						))}
+					</ul>
+				</section>
+			))
+		}
+	</div>
+	<figcaption>{caption}</figcaption>
+</figure>
+
+<style>
+	.chart {
+		margin: 2.5em 0;
+	}
+	.chart-title {
+		font-weight: 700;
+		color: rgb(var(--black));
+		margin: 0 0 0.75em;
+	}
+	.groups {
+		max-width: 660px;
+		columns: 2;
+		column-gap: 1.2rem;
+	}
+	@media (max-width: 520px) {
+		.groups {
+			columns: 1;
+			max-width: 420px;
+		}
+	}
+	.group {
+		margin-bottom: 0.9em;
+		break-inside: avoid;
+	}
+	.group-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0 0.75em;
+		margin: 0 0 0.3em;
+		font-size: 0.75em;
+		line-height: 1.4;
+	}
+	.group-name {
+		font-weight: 600;
+		color: rgb(var(--black));
+	}
+	.group-count {
+		background: var(--accent-tint, #fdeee8);
+		color: var(--accent-dark, #9c3020);
+		font-weight: 700;
+		font-size: 1.05em;
+		border-radius: 999px;
+		padding: 0.15em 0.75em;
+		white-space: nowrap;
+	}
+	.stack {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 2px; /* surface gap between segments */
+	}
+	.block {
+		border-radius: 4px;
+		padding: 0.55em 0.6em;
+		font-size: 0.72em;
+		line-height: 1.35;
+	}
+	.block-label {
+		display: block;
+		font-weight: 600;
+	}
+	.block-sub {
+		display: block;
+		font-size: 0.9em;
+		margin-top: 0.15em;
+	}
+	/* Category colors — validated on the cream surface in this stack order. */
+	.candy {
+		background: #c8412c; /* = var(--accent) */
+		color: #fff;
+	}
+	.salty {
+		background: #c08a2e;
+		color: rgb(var(--black));
+	}
+	.choc {
+		background: #8a4a1a;
+		color: #fff;
+	}
+	.baked {
+		background: #c9577d;
+		color: #fff;
+	}
+	.drink {
+		background: #2f6bb5;
+		color: #fff;
+	}
+	.savory {
+		background: #35804e;
+		color: #fff;
+	}
+	.noodles {
+		background: #7a5aa0;
+		color: #fff;
+	}
+	figcaption {
+		margin-top: 0.75em;
+		font-size: 0.75em;
+		color: rgb(var(--gray));
+	}
+</style>
