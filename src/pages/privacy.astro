@@ -1,0 +1,144 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE } from '../consts';
+
+const description = `Privacy policy for ${SITE_TITLE} — what data we collect, how cookies and analytics are used, and your choices.`;
+const lastUpdated = 'July 20, 2026';
+const contactEmail = 'hello@oishiijournal.com';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={`Privacy Policy · ${SITE_TITLE}`} description={description} />
+		<style>
+			main {
+				width: 100%;
+				max-width: 100%;
+				padding: 0;
+			}
+			.wrap {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: 0 auto;
+			}
+			.hero {
+				padding: 3.5em 0 1em;
+			}
+			.hero h1 {
+				font-size: 2.4em;
+				line-height: 1.1;
+				margin-bottom: 0.3em;
+			}
+			.hero .updated {
+				color: rgb(var(--gray));
+				font-size: 0.95em;
+			}
+			.legal {
+				padding: 1em 0 5em;
+			}
+			.legal h2 {
+				font-size: 1.3em;
+				margin: 2em 0 0.5em;
+			}
+			.legal h2:first-child {
+				margin-top: 0;
+			}
+			.legal p,
+			.legal li {
+				font-size: 1em;
+				line-height: 1.7;
+				color: rgb(var(--gray-dark));
+			}
+			.legal ul {
+				padding-left: 1.3em;
+				margin: 0.5em 0;
+			}
+			.legal a {
+				color: var(--accent);
+			}
+			@media (max-width: 720px) {
+				.hero {
+					padding: 2.5em 0 0.5em;
+				}
+				.hero h1 {
+					font-size: 1.9em;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="hero wrap">
+				<h1>Privacy Policy</h1>
+				<p class="updated">Last updated: {lastUpdated}</p>
+			</section>
+
+			<section class="legal wrap">
+				<h2>Overview</h2>
+				<p>
+					{SITE_TITLE} ("we," "us") publishes articles about Japanese snacks and souvenir sweets for readers in the United States. This
+					page explains what information we collect when you visit, how it's used, and the choices you have.
+				</p>
+
+				<h2>Information we collect</h2>
+				<p>
+					We don't require an account and don't collect personal information like your name or address just to read the site. The
+					data we do collect is limited to:
+				</p>
+				<ul>
+					<li><b>Usage data</b> — pages visited, approximate location (country/region), device and browser type, and how you found the
+						site, collected automatically via Google Analytics.</li>
+					<li><b>Voluntary contact info</b> — if you email us, we keep whatever you send so we can reply.</li>
+				</ul>
+
+				<h2>Cookies & similar technologies</h2>
+				<p>This site uses cookies and comparable technologies for a few purposes:</p>
+				<ul>
+					<li><b>Analytics</b> — Google Analytics sets cookies to measure traffic and how visitors use the site.</li>
+					<li><b>Affiliate tracking</b> — when you click a link to a retailer or subscription-box partner (for example Amazon,
+						Bokksu, Sakuraco, or TokyoTreat), that partner may set a cookie to record the referral so we can earn a commission on
+						qualifying purchases. We don't control these cookies once you leave our site — see the partner's own privacy policy for
+						details.</li>
+					<li><b>Advertising</b> — if this site displays ads (including through Google AdSense), Google and its partners may use
+						cookies to serve ads based on your visits here and to other sites. You can review or adjust ad personalization at
+						<a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer">Google Ads Settings</a>.</li>
+				</ul>
+				<p>Most browsers let you block or delete cookies in their settings. Blocking cookies may affect how some parts of the site work.</p>
+
+				<h2>Affiliate disclosure</h2>
+				<p>
+					{SITE_TITLE} is a participant in the Amazon Services LLC Associates Program and other affiliate programs, designed to
+					provide a means for sites to earn advertising fees by linking to partner sites. As an Amazon Associate we earn from
+					qualifying purchases, at no extra cost to you.
+				</p>
+
+				<h2>Third-party links</h2>
+				<p>
+					Articles link out to retailers and subscription services. Those sites have their own privacy policies; we aren't
+					responsible for their content or practices.
+				</p>
+
+				<h2>Children's privacy</h2>
+				<p>This site isn't directed at children under 13, and we don't knowingly collect personal information from them.</p>
+
+				<h2>Your choices</h2>
+				<p>
+					You can use browser settings or extensions to limit cookies and tracking, and opt out of Google Analytics using the
+					<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer">Google Analytics opt-out browser add-on</a>.
+					If you'd like us to delete an email or message you sent us, contact us using the address below.
+				</p>
+
+				<h2>Changes to this policy</h2>
+				<p>We may update this page as the site or its partners change. The "last updated" date above reflects the most recent revision.</p>
+
+				<h2>Contact</h2>
+				<p>Questions about this policy? Email us at <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
